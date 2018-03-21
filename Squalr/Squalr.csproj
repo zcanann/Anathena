@@ -9,6 +9,8 @@
     <RootNamespace>Squalr</RootNamespace>
     <AssemblyName>Squalr</AssemblyName>
     <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -28,6 +30,7 @@
     <IsWebBootstrapper>false</IsWebBootstrapper>
     <UseApplicationTrust>false</UseApplicationTrust>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -172,20 +175,17 @@
       <DependentUpon>ChangeLog.tt</DependentUpon>
     </Compile>
     <Compile Include="Content\Images.cs" />
-    <Compile Include="Content\Templates\CodeInjectionTemplate.cs" />
-    <Compile Include="Content\Templates\CodeInjectionTemplate1.cs">
+    <Compile Include="Content\Templates\CodeInjectionTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CodeInjectionTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="Content\Templates\GraphicsInjectionTemplate.cs" />
-    <Compile Include="Content\Templates\GraphicsInjectionTemplate1.cs">
+    <Compile Include="Content\Templates\GraphicsInjectionTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>GraphicsInjectionTemplate.tt</DependentUpon>
     </Compile>
-    <Compile Include="Content\Templates\ScriptTemplate.cs" />
-    <Compile Include="Content\Templates\ScriptTemplate1.cs">
+    <Compile Include="Content\Templates\ScriptTemplate.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ScriptTemplate.tt</DependentUpon>
@@ -467,15 +467,15 @@
     <Resource Include="Content\Images\X.png" />
     <Content Include="Content\Templates\CodeInjectionTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>CodeInjectionTemplate1.cs</LastGenOutput>
+      <LastGenOutput>CodeInjectionTemplate.cs</LastGenOutput>
     </Content>
     <Content Include="Content\Templates\GraphicsInjectionTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>GraphicsInjectionTemplate1.cs</LastGenOutput>
+      <LastGenOutput>GraphicsInjectionTemplate.cs</LastGenOutput>
     </Content>
     <Content Include="Content\Templates\ScriptTemplate.tt">
       <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>ScriptTemplate1.cs</LastGenOutput>
+      <LastGenOutput>ScriptTemplate.cs</LastGenOutput>
     </Content>
     <Resource Include="Layout.xml" />
   </ItemGroup>
@@ -616,6 +616,14 @@
     <ProjectReference Include="..\Engine\Engine.csproj">
       <Project>{081e218a-8f7c-430f-81a8-d9950c7e970c}</Project>
       <Name>Engine</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Engine\Internal\SqualrProxy32\SqualrProxy32.csproj">
+      <Project>{a5701dff-97c5-443b-a665-122ea1dc12df}</Project>
+      <Name>SqualrProxy32</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Engine\Internal\SqualrProxy64\SqualrProxy64.csproj">
+      <Project>{b6bad208-a6ad-4eee-b313-f3bfc1cea6ca}</Project>
+      <Name>SqualrProxy64</Name>
     </ProjectReference>
     <ProjectReference Include="..\Squalr.Wpf.AvalonDock\Squalr.Wpf.AvalonDock.csproj">
       <Project>{60d1d960-8aae-4f87-8d85-0c2bdd6254b1}</Project>

@@ -93,6 +93,13 @@
         {
             try
             {
+                CSScript.EvaluatorConfig.DebugBuild = true;
+                CSScript.EvaluatorConfig.RefernceDomainAsemblies = true;
+                //CSScript.EvaluatorConfig.Access = EvaluatorAccess.Singleton;
+
+                RoslynEvaluator.LoadCompilers();
+
+
                 script = this.PrecompileScript(script);
                 Assembly assembly = CSScript.RoslynEvaluator.CompileCode(script);
 

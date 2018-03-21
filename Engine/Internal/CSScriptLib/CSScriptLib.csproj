@@ -1,0 +1,48 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <AssemblyName>CSScriptLib</AssemblyName>
+    <PackageId>CS-Script.Core</PackageId>
+    <!--<NetStandardImplicitPackageVersion>1.6.0</NetStandardImplicitPackageVersion>-->
+    <!--<PackageTargetFallback>$(PackageTargetFallback);dnxcore50</PackageTargetFallback>-->
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyCompanyAttribute>false</GenerateAssemblyCompanyAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <!--<GenerateAssemblyFileVersionAttribute>false</GenerateAssemblyFileVersionAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>-->
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.0.3-HotFix</Version>
+    <Authors>Oleg Shilo</Authors>
+    <Description>CS-Script engine Class Library for .NET Core</Description>
+    <Copyright>(C) 2018 Oleg Shilo</Copyright>
+    <PackageLicenseUrl>https://github.com/oleg-shilo/cs-script/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/oleg-shilo/cs-script</PackageProjectUrl>
+    <PackageIconUrl>https://raw.githubusercontent.com/oleg-shilo/cs-script/master/Source/Logo/css_logo.ico</PackageIconUrl>
+    <RepositoryUrl>https://github.com/oleg-shilo/cs-script.git</RepositoryUrl>
+    <RepositoryType>Git</RepositoryType>
+    <PackageTags>C#, scripting, script, dynamic, .NET. .NET Core</PackageTags>
+    <PackageReleaseNotes>- Issue #106: Fix netstandard2 version to work in 4.6.1 and fix ReferenceDomainAssemblies 
+</PackageReleaseNotes>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <AssemblyVersion>1.0.0.3</AssemblyVersion>
+    <FileVersion>1.0.0.3</FileVersion>
+
+</PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DocumentationFile>bin\Debug\netstandard1.6\CSScriptLib.xml</DocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="output\Test.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Scripting" Version="2.7.0" />
+    <PackageReference Include="System.Runtime.Loader" Version="4.3.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyModel" Version="2.1.0-preview1-26216-03" />
+  </ItemGroup>
+
+</Project>
