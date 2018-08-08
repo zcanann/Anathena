@@ -53,10 +53,10 @@
             switch (elementType)
             {
                 case DataType type when type == DataType.Byte || type == typeof(Boolean):
-                    bytes = BitConverter.GetBytes((Byte)value);
+                    bytes = new Byte[] { (Byte)value };
                     break;
                 case DataType type when type == DataType.SByte:
-                    bytes = BitConverter.GetBytes((SByte)value);
+                    bytes = new Byte[] { unchecked((Byte)(SByte)value) };
                     break;
                 case DataType type when type == DataType.Char:
                     bytes = Encoding.UTF8.GetBytes(new Char[] { (Char)value });
