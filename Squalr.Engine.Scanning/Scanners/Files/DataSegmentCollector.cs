@@ -1,6 +1,7 @@
 ﻿namespace Squalr.Engine.Scanning.Scanners
 {
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Memory;
     using Squalr.Engine.Scanning.Snapshots;
     using System;
@@ -11,10 +12,10 @@
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
-    using static Squalr.Engine.TrackableTask;
+    using static Squalr.Engine.Common.TrackableTask;
 
     /// <summary>
-    /// Collect data segment values for a given snapshot
+    /// Collect data segment values for a given snapshot.
     /// </summary>
     public static class DataSegmentCollector
     {

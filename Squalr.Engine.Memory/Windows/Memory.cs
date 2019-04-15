@@ -1,12 +1,12 @@
 ﻿namespace Squalr.Engine.Memory.Windows
 {
     using Native;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.InteropServices;
-    using Utils;
-    using Utils.Extensions;
     using static Native.Enumerations;
     using static Native.Structures;
 

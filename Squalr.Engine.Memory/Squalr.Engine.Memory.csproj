@@ -14,16 +14,17 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="PeNet" Version="0.7.0" />
+    <PackageReference Include="PeNet" Version="1.0.3" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Squalr.Engine.Processes\Squalr.Engine.Processes.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Utils\Squalr.Engine.Common.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
   </PropertyGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Squalr.Engine\Squalr.Engine.csproj" />
-  </ItemGroup>
 
 </Project>

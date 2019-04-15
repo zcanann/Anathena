@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Engine.Scanning
 {
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Scanning.Windows;
     using System;
     using System.Threading;

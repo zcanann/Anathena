@@ -42,7 +42,10 @@
                         {
                             cancellationToken.ThrowIfCancellationRequested();
 
-                            PointerSize pointerSize = Processes.Default.IsOpenedProcess32Bit() ? PointerSize.Byte4 : PointerSize.Byte8;
+                            // Fix pointer size detection
+                            throw new NotImplementedException();
+                            PointerSize pointerSize = PointerSize.Byte4;
+                            // PointerSize pointerSize = this.ExternalProcess.Is32Bit() ? PointerSize.Byte4 : PointerSize.Byte8;
 
                             Stopwatch stopwatch = new Stopwatch();
                             stopwatch.Start();

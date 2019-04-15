@@ -1,8 +1,8 @@
 ﻿namespace Squalr.Engine.Input.Mouse
 {
-    using Logging;
     using SharpDX;
     using SharpDX.DirectInput;
+    using Squalr.Engine.Common.Logging;
     using System;
     using System.Collections.Generic;
 

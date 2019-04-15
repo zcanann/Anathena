@@ -1,12 +1,12 @@
 ﻿namespace Squalr.Engine.Input.Keyboard
 {
-    using Logging;
     using SharpDX;
     using SharpDX.DirectInput;
+    using Squalr.Engine.Common.Logging;
+    using Squalr.Engine.Common.Observables;
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Utils.Observables;
 
     /// <summary>
     /// Class to capture keyboard input.

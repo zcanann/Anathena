@@ -1,6 +1,5 @@
 ﻿namespace Squalr.Engine.Memory.Windows
 {
-    using Squalr.Engine.OS;
     using System;
     using System.Diagnostics;
 
@@ -19,8 +18,6 @@
         /// </summary>
         public WindowsMemoryAllocator()
         {
-            // Subscribe to process events
-            Processes.Default.Subscribe(this);
         }
 
         /// <summary>

@@ -2,11 +2,11 @@
 {
     using Keyboard;
     using SharpDX.DirectInput;
+    using Squalr.Engine.Common.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Runtime.Serialization;
-    using Utils.Extensions;
 
     /// <summary>
     /// A keyboard hotkey, which is activated by a given set of input.

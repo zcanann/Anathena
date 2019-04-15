@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Engine.Scanning.Scanners.Constraints
 {
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common.DataTypes;
     using System;
     using System.ComponentModel;
 

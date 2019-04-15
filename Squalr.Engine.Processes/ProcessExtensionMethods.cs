@@ -31,6 +31,26 @@
         }
 
         /// <summary>
+        /// Determines if a process is 32-bit.
+        /// </summary>
+        /// <param name="process">The process to check.</param>
+        /// <returns>A value indicating whether or not the given process is 32-bit.</returns>
+        public static Boolean Is32Bit(this Process process)
+        {
+            return Query.Default.IsProcess32Bit(process);
+        }
+
+        /// <summary>
+        /// Determines if a process is 64-bit.
+        /// </summary>
+        /// <param name="process">The process to check.</param>
+        /// <returns>A value indicating whether or not the given process is 64-bit.</returns>
+        public static Boolean Is64Bit(this Process process)
+        {
+            return Query.Default.IsProcess64Bit(process);
+        }
+
+        /// <summary>
         /// Fetches the icon associated with the provided process.
         /// </summary>
         /// <param name="process">The process to check.</param>

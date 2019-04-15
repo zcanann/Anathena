@@ -1,14 +1,14 @@
 ﻿namespace Squalr.Engine.Memory.Windows
 {
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.OS;
-    using Squalr.Engine.Utils.Extensions;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Common.Extensions;
+    using Squalr.Engine.Processes;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
-    using Utils;
 
     /// <summary>
     /// Class for memory editing a remote process.
@@ -20,24 +20,12 @@
         /// </summary>
         public WindowsMemoryReader()
         {
-            // Subscribe to process events
-            Processes.Default.Subscribe(this);
         }
 
         /// <summary>
         /// Gets a reference to the target process. This is an optimization to minimize accesses to the Processes component of the Engine.
         /// </summary>
-        public Process TargetProcess { get; set; }
-
-        /// <summary>
-        /// Recieves a process update. This is an optimization over grabbing the process from the <see cref="IProcessInfo"/> component
-        /// of the <see cref="EngineCore"/> every time we need it, which would be cumbersome when doing hundreds of thousands of memory read/writes.
-        /// </summary>
-        /// <param name="process">The newly selected process.</param>
-        public void Update(Process process)
-        {
-            this.TargetProcess = process;
-        }
+        public Process ExternalProcess { get; set; }
 
         /// <summary>
         /// Reads the value of a specified type in the remote process.
@@ -118,7 +106,7 @@
         /// <returns>The array of bytes.</returns>
         public Byte[] ReadBytes(UInt64 address, Int32 count, out Boolean success)
         {
-            return Memory.ReadBytes(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle, address, count, out success);
+            return Memory.ReadBytes(this.ExternalProcess == null ? IntPtr.Zero : this.ExternalProcess.Handle, address, count, out success);
         }
 
         /// <summary>
@@ -150,7 +138,7 @@
                 // Add and trace offsets
                 foreach (Int32 offset in offsets.Take(offsets.Count() - 1))
                 {
-                    if (Processes.Default.IsOpenedProcess32Bit())
+                    if (this.ExternalProcess.Is32Bit())
                     {
                         finalAddress = this.Read<UInt32>(finalAddress.Add(offset), out _);
                     }

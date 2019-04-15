@@ -1,7 +1,6 @@
 ﻿namespace Squalr.Engine.Memory.Windows
 {
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.OS;
+    using Squalr.Engine.Common.DataTypes;
     using System;
     using System.Diagnostics;
     using System.Text;
@@ -21,24 +20,12 @@
         /// </summary>
         public WindowsMemoryWriter()
         {
-            // Subscribe to process events
-            Processes.Default.Subscribe(this);
         }
 
         /// <summary>
         /// Gets or sets a reference to the target process.
         /// </summary>
         public Process ExternalProcess { get; set; }
-
-        /// <summary>
-        /// Recieves a process update. This is an optimization over grabbing the process from the <see cref="IProcessInfo"/> component
-        /// of the <see cref="EngineCore"/> every time we need it, which would be cumbersome when doing hundreds of thousands of memory read/writes.
-        /// </summary>
-        /// <param name="process">The newly selected process.</param>
-        public void Update(Process process)
-        {
-            this.ExternalProcess = process;
-        }
 
         /// <summary>
         /// Writes a value to memory in the opened process.

@@ -1,18 +1,18 @@
 ﻿namespace Squalr.Engine.Memory.Windows
 {
     using Native;
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataStructures;
+    using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Common.Extensions;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Memory.Windows.PEB;
-    using Squalr.Engine.OS;
-    using Squalr.Engine.Utils.DataStructures;
+    using Squalr.Engine.Processes;
     using System;
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Text;
-    using Utils;
-    using Utils.Extensions;
     using static Native.Enumerations;
     using static Native.Structures;
 
@@ -32,9 +32,6 @@
         public WindowsMemoryQuery()
         {
             this.ModuleCache = new TtlCache<Int32, List<NormalizedModule>>(TimeSpan.FromSeconds(10.0));
-
-            // Subscribe to process events
-            Processes.Default.Subscribe(this);
         }
 
         /// <summary>
@@ -46,17 +43,6 @@
         /// Gets or sets the module cache of process modules.
         /// </summary>
         private TtlCache<Int32, List<NormalizedModule>> ModuleCache { get; set; }
-
-        /// <summary>
-        /// Recieves a process update. This is an optimization over grabbing the process from the <see cref="IProcessInfo"/> component
-        /// of the <see cref="EngineCore"/> every time we need it, which would be cumbersome when doing hundreds of thousands of memory read/writes.
-        /// </summary>
-        /// <param name="process">The newly selected process.</param>
-        public void Update(Process process)
-        {
-            this.ExternalProcess = process;
-            this.ModuleCache.Invalidate();
-        }
 
         /// <summary>
         /// Gets the address of the stacks in the opened process.
@@ -216,7 +202,7 @@
         /// <returns>The maximum usermode address possible in the target process.</returns>
         public UInt64 GetMaxUsermodeAddress()
         {
-            if (Processes.Default.IsOpenedProcess32Bit())
+            if (this.ExternalProcess.Is32Bit())
             {
                 return Int32.MaxValue;
             }
@@ -272,7 +258,7 @@
                         NativeMethods.GetModuleInformation(this.ExternalProcess.Handle, modulePointers[index], out moduleInformation, (UInt32)(IntPtr.Size * modulePointers.Length));
 
                         // Ignore modules in 64-bit address space for WoW64 processes
-                        if (Processes.Default.IsOpenedProcess32Bit() && moduleInformation.ModuleBase.ToUInt64() > Int32.MaxValue)
+                        if (this.ExternalProcess.Is32Bit() && moduleInformation.ModuleBase.ToUInt64() > Int32.MaxValue)
                         {
                             continue;
                         }
@@ -301,7 +287,7 @@
         /// <returns>The module name and address offset. If not contained by a module, the original address is returned.</returns>
         public UInt64 AddressToModule(UInt64 address, out String moduleName)
         {
-            NormalizedModule containingModule = Query.Default.GetModules()
+            NormalizedModule containingModule = this.GetModules()
                 .Select(module => module)
                 .Where(module => module.ContainsAddress(address))
                 .FirstOrDefault();
@@ -321,7 +307,7 @@
             UInt64 result = 0;
 
             identifier = identifier?.RemoveSuffixes(true, ".exe", ".dll");
-            IEnumerable<NormalizedModule> modules = Query.Default.GetModules()
+            IEnumerable<NormalizedModule> modules = this.GetModules()
                 ?.ToList()
                 ?.Select(module => module)
                 ?.Where(module => module.Name.RemoveSuffixes(true, ".exe", ".dll").Equals(identifier, StringComparison.OrdinalIgnoreCase));

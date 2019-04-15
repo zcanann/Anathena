@@ -24,13 +24,12 @@ Scanners are JIT compiled into SSE, AVX, or AVX-512 instructions via RyuJIT thro
   </PropertyGroup>
   
   <ItemGroup>
-    <PackageReference Include="System.Memory" Version="4.5.0" />
+    <PackageReference Include="System.Memory" Version="4.5.2" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Squalr.Engine.Input\Squalr.Engine.Input.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Memory\Squalr.Engine.Memory.csproj" />
-    <ProjectReference Include="..\Squalr.Engine\Squalr.Engine.csproj" IncludeAssets="all" />
   </ItemGroup>
 
   <ItemGroup>

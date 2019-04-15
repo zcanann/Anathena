@@ -2,9 +2,9 @@
 {
     using Keyboard;
     using SharpDX.DirectInput;
+    using Squalr.Engine.Common.Extensions;
     using System;
     using System.Runtime.Serialization;
-    using Utils.Extensions;
 
     /// <summary>
     /// A keyboard hotkey builder, which is used to construct a keyboard hotkey.

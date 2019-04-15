@@ -1,28 +1,17 @@
 ﻿namespace Squalr.Engine.Networks
 {
     using Squalr.Engine.Engine.Hook;
-    using Squalr.Engine.OS;
     using System.Diagnostics;
 
-    public class Network : INetwork, IProcessObserver
+    public class Network : INetwork
     {
         public Network()
         {
-            Processes.Default.Subscribe(this);
         }
 
         private HookClient HookClient { get; set; }
 
         private Process TargetProcess { get; set; }
-
-        public void Update(Process process)
-        {
-            this.TargetProcess = process;
-
-            // Disabled for now
-            // this.UninstallHook();
-            // this.InstallHook();
-        }
 
         public void InstallHook()
         {

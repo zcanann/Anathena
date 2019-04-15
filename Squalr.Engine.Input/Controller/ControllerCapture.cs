@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Engine.Input.Controller
 {
-    using Logging;
     using SharpDX.DirectInput;
+    using Squalr.Engine.Common.Logging;
     using System;
     using System.Collections.Generic;
 

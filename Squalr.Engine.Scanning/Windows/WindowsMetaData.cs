@@ -2,9 +2,8 @@
 {
     using PeNet;
     using PeNet.Structures;
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.Logging;
-    using Squalr.Engine.OS;
+    using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Scanning.Snapshots;
     using System;
     using System.Collections.Generic;
@@ -21,8 +20,6 @@
         /// </summary>
         public WindowsMetaData()
         {
-            // Subscribe to process events
-            Processes.Default.Subscribe(this);
         }
 
         /// <summary>
@@ -33,16 +30,6 @@
         private static Dictionary<String, PeFile> PeCache = new Dictionary<string, PeFile>();
 
         private static Object CacheLock = new Object();
-
-        /// <summary>
-        /// Recieves a process update. This is an optimization over grabbing the process from the <see cref="IProcessInfo"/> component
-        /// of the <see cref="EngineCore"/> every time we need it, which would be cumbersome when doing hundreds of thousands of memory read/writes.
-        /// </summary>
-        /// <param name="process">The newly selected process.</param>
-        public void Update(Process process)
-        {
-            this.ExternalProcess = process;
-        }
 
         public IList<SnapshotRegion> GetDataSegments(UInt64 moduleBase, String modulePath)
         {

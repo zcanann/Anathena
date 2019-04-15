@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Engine.Engine.Hook
 {
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common.Logging;
     using SqualrHookClient.Source;
     using System;
 
