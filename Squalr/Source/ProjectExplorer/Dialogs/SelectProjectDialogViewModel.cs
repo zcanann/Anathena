@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Source.ProjectExplorer.Dialogs
 {
     using GalaSoft.MvvmLight;
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.Logging;
     using Squalr.Engine.Utils.Extensions;
     using Squalr.Properties;

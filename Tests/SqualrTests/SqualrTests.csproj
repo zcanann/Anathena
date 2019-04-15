@@ -65,10 +65,6 @@
       <Project>{0b78bebf-d43f-431c-8a5f-9734c6fda1b3}</Project>
       <Name>Squalr.Engine</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Squalr\Squalr.csproj">
-      <Project>{4f03a43b-1ddd-4f22-b8c0-9eb80c23b9cf}</Project>
-      <Name>Squalr</Name>
-    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">

@@ -1,583 +1,166 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{4F03A43B-1DDD-4F22-B8C0-9EB80C23B9CF}</ProjectGuid>
     <OutputType>WinExe</OutputType>
-    <RootNamespace>Squalr</RootNamespace>
+    <TargetFramework>netcoreapp3.0</TargetFramework>
+    <UseWPF>true</UseWPF>
     <AssemblyName>Squalr</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <WarningLevel>4</WarningLevel>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
+    <RootNamespace>Squalr</RootNamespace>
+    <!-- Ignore package downgrade warnings -->
+    <NoWarn>$(NoWarn);NU1605</NoWarn>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x64</PlatformTarget>
-    <DebugType>pdbonly</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <Prefer32Bit>false</Prefer32Bit>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
-  </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject>Squalr.App</StartupObject>
-  </PropertyGroup>
-  <PropertyGroup>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
-    <GenerateBindingRedirectsOutputType>true</GenerateBindingRedirectsOutputType>
-  </PropertyGroup>
-  <PropertyGroup>
-    <SignManifests>false</SignManifests>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>AppIcon.ico</ApplicationIcon>
-  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="CommonServiceLocator, Version=2.0.3.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0, processorArchitecture=MSIL">
-      <HintPath>..\packages\CommonServiceLocator.2.0.3\lib\net47\CommonServiceLocator.dll</HintPath>
-    </Reference>
-    <Reference Include="DeltaCompressionDotNet, Version=1.1.0.0, Culture=neutral, PublicKeyToken=1d14d6e5194e7f4a, processorArchitecture=MSIL">
-      <HintPath>..\packages\DeltaCompressionDotNet.1.1.0\lib\net20\DeltaCompressionDotNet.dll</HintPath>
-    </Reference>
-    <Reference Include="DeltaCompressionDotNet.MsDelta, Version=1.1.0.0, Culture=neutral, PublicKeyToken=46b2138a390abf55, processorArchitecture=MSIL">
-      <HintPath>..\packages\DeltaCompressionDotNet.1.1.0\lib\net20\DeltaCompressionDotNet.MsDelta.dll</HintPath>
-    </Reference>
-    <Reference Include="DeltaCompressionDotNet.PatchApi, Version=1.1.0.0, Culture=neutral, PublicKeyToken=3e8888ee913ed789, processorArchitecture=MSIL">
-      <HintPath>..\packages\DeltaCompressionDotNet.1.1.0\lib\net20\DeltaCompressionDotNet.PatchApi.dll</HintPath>
-    </Reference>
-    <Reference Include="Esent.Interop, Version=1.9.4.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\ManagedEsent.1.9.4\lib\net40\Esent.Interop.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight, Version=5.4.1.0, Culture=neutral, PublicKeyToken=e7570ab207bcb616, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Extras, Version=5.4.1.0, Culture=neutral, PublicKeyToken=669f0b5e8f868abf, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Extras.dll</HintPath>
-    </Reference>
-    <Reference Include="GalaSoft.MvvmLight.Platform, Version=5.4.1.0, Culture=neutral, PublicKeyToken=5f873c45e98af8a1, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\GalaSoft.MvvmLight.Platform.dll</HintPath>
-    </Reference>
-    <Reference Include="Garlic, Version=2.1.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Garlic.2.1.0.0\lib\net35\Garlic.dll</HintPath>
-    </Reference>
-    <Reference Include="ICSharpCode.AvalonEdit, Version=5.0.3.0, Culture=neutral, PublicKeyToken=9cc39be672370310, processorArchitecture=MSIL">
-      <HintPath>..\packages\AvalonEdit.5.0.4\lib\Net40\ICSharpCode.AvalonEdit.dll</HintPath>
-    </Reference>
-    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
-    </Reference>
-    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.Common.2.8.2\lib\netstandard1.3\Microsoft.CodeAnalysis.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.CSharp, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.2.8.2\lib\netstandard1.3\Microsoft.CodeAnalysis.CSharp.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.CSharp.Workspaces, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.CSharp.Workspaces.2.8.2\lib\netstandard1.3\Microsoft.CodeAnalysis.CSharp.Workspaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.VisualBasic, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.VisualBasic.2.8.2\lib\netstandard1.3\Microsoft.CodeAnalysis.VisualBasic.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.VisualBasic.Workspaces, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.VisualBasic.Workspaces.2.8.2\lib\netstandard1.3\Microsoft.CodeAnalysis.VisualBasic.Workspaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.Workspaces, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.Workspaces.Common.2.8.2\lib\net46\Microsoft.CodeAnalysis.Workspaces.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.CodeAnalysis.Workspaces.Desktop, Version=2.8.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.CodeAnalysis.Workspaces.Common.2.8.2\lib\net46\Microsoft.CodeAnalysis.Workspaces.Desktop.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.DotNet.PlatformAbstractions, Version=2.1.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.DotNet.PlatformAbstractions.2.1.0\lib\net45\Microsoft.DotNet.PlatformAbstractions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.Expression.Interactions, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MicrosoftExpressionInteractions.3.0.40218.0\lib\net45\Microsoft.Expression.Interactions.dll</HintPath>
-    </Reference>
-    <Reference Include="Microsoft.VisualStudio.Setup.Configuration.Interop, Version=1.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.VisualStudio.Setup.Configuration.Interop.1.16.30\lib\net35\Microsoft.VisualStudio.Setup.Configuration.Interop.dll</HintPath>
-      <EmbedInteropTypes>True</EmbedInteropTypes>
-    </Reference>
-    <Reference Include="Mono.Cecil, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Mdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Mdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Pdb, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Pdb.dll</HintPath>
-    </Reference>
-    <Reference Include="Mono.Cecil.Rocks, Version=0.9.6.0, Culture=neutral, PublicKeyToken=0738eb9f132ed756, processorArchitecture=MSIL">
-      <HintPath>..\packages\Mono.Cecil.0.9.6.1\lib\net45\Mono.Cecil.Rocks.dll</HintPath>
-    </Reference>
-    <Reference Include="NuGet.Squirrel, Version=3.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\squirrel.windows.1.8.0\lib\Net45\NuGet.Squirrel.dll</HintPath>
-    </Reference>
-    <Reference Include="PeNet, Version=0.7.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PeNet.0.7.0\lib\net461\PeNet.dll</HintPath>
-    </Reference>
-    <Reference Include="PeNet.Asn1, Version=1.2.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\PeNet.Asn1.1.2.0\lib\net461\PeNet.Asn1.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpCompress, Version=0.17.1.0, Culture=neutral, PublicKeyToken=afb0a02973931d96, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpCompress.0.17.1\lib\net45\SharpCompress.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDisasm, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDisasm.1.1.11\lib\net45\SharpDisasm.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.4.1.0-ci217\lib\net45\SharpDX.dll</HintPath>
-    </Reference>
-    <Reference Include="SharpDX.DirectInput, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b4dcf0f35e5521f1, processorArchitecture=MSIL">
-      <HintPath>..\packages\SharpDX.DirectInput.4.1.0-ci217\lib\net45\SharpDX.DirectInput.dll</HintPath>
-    </Reference>
-    <Reference Include="Splat, Version=1.6.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Splat.1.6.2\lib\Net45\Splat.dll</HintPath>
-    </Reference>
-    <Reference Include="Squirrel, Version=1.8.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\squirrel.windows.1.8.0\lib\Net45\Squirrel.dll</HintPath>
-    </Reference>
-    <Reference Include="Svg, Version=2.2.1.39233, Culture=neutral, PublicKeyToken=12a0bac221edeae2, processorArchitecture=MSIL">
-      <HintPath>..\packages\Svg.2.3.0\lib\net35\Svg.dll</HintPath>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.AppContext, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.AppContext.4.3.0\lib\net463\System.AppContext.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Buffers, Version=4.0.2.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Buffers.4.4.0\lib\netstandard2.0\System.Buffers.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ComponentModel.Composition" />
-    <Reference Include="System.Composition.AttributedModel, Version=1.0.27.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.AttributedModel.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.Convention, Version=1.0.27.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.Convention.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.Hosting, Version=1.0.27.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.Hosting.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.Runtime, Version=1.0.27.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.Runtime.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Composition.TypedParts, Version=1.0.27.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\Microsoft.Composition.1.0.27\lib\portable-net45+win8+wp8+wpa81\System.Composition.TypedParts.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Configuration" />
-    <Reference Include="System.Configuration.ConfigurationManager, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Configuration.ConfigurationManager.4.5.0\lib\net461\System.Configuration.ConfigurationManager.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Console, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Console.4.3.0\lib\net46\System.Console.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Data" />
-    <Reference Include="System.Data.OracleClient" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Diagnostics.FileVersionInfo, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.FileVersionInfo.4.3.0\lib\net46\System.Diagnostics.FileVersionInfo.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Diagnostics.StackTrace, Version=4.0.3.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Diagnostics.StackTrace.4.3.0\lib\net46\System.Diagnostics.StackTrace.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Drawing.Common, Version=4.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Drawing.Common.4.5.0\lib\net461\System.Drawing.Common.dll</HintPath>
-    </Reference>
-    <Reference Include="System.IO, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.4.3.0\lib\net462\System.IO.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.IO.Compression, Version=4.1.2.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.Compression.4.3.0\lib\net46\System.IO.Compression.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.IO.FileSystem, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.FileSystem.4.3.0\lib\net46\System.IO.FileSystem.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.IO.FileSystem.Primitives, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.IO.FileSystem.Primitives.4.3.0\lib\net46\System.IO.FileSystem.Primitives.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Linq, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Linq.4.3.0\lib\net463\System.Linq.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Linq.Expressions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Linq.Expressions.4.3.0\lib\net463\System.Linq.Expressions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Memory, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Memory.4.5.0\lib\netstandard2.0\System.Memory.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Net" />
-    <Reference Include="System.Numerics" />
-    <Reference Include="System.Numerics.Vectors, Version=4.1.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Numerics.Vectors.4.5.0\lib\net46\System.Numerics.Vectors.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Reflection, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.4.3.0\lib\net462\System.Reflection.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Reflection.Metadata, Version=1.4.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Reflection.Metadata.1.4.2\lib\portable-net45+win8\System.Reflection.Metadata.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.4.3.0\lib\net462\System.Runtime.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=4.0.4.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Runtime.Extensions, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.Extensions.4.3.0\lib\net462\System.Runtime.Extensions.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.InteropServices, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Runtime.InteropServices.4.3.0\lib\net463\System.Runtime.InteropServices.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.InteropServices.RuntimeInformation">
-      <HintPath>..\packages\System.Runtime.InteropServices.RuntimeInformation.4.3.0\lib\net45\System.Runtime.InteropServices.RuntimeInformation.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.Security" />
-    <Reference Include="System.Security.AccessControl, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.AccessControl.4.5.0\lib\net461\System.Security.AccessControl.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Algorithms, Version=4.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Algorithms.4.3.0\lib\net463\System.Security.Cryptography.Algorithms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Encoding, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Encoding.4.3.0\lib\net46\System.Security.Cryptography.Encoding.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.Primitives, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.Primitives.4.3.0\lib\net46\System.Security.Cryptography.Primitives.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Cryptography.X509Certificates, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Cryptography.X509Certificates.4.3.0\lib\net461\System.Security.Cryptography.X509Certificates.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Security.Permissions, Version=4.0.1.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Permissions.4.5.0\lib\net461\System.Security.Permissions.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Security.Principal.Windows, Version=4.1.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Security.Principal.Windows.4.5.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
-    </Reference>
-    <Reference Include="System.ServiceProcess" />
-    <Reference Include="System.Text.Encoding.CodePages, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Text.Encoding.CodePages.4.3.0\lib\net46\System.Text.Encoding.CodePages.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Tasks.Dataflow, Version=4.5.24.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Tasks.Dataflow.4.5.24\lib\portable-net45+win8+wpa81\System.Threading.Tasks.Dataflow.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Threading.Thread, Version=4.0.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Threading.Thread.4.3.0\lib\net46\System.Threading.Thread.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Transactions" />
-    <Reference Include="System.ValueTuple, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.5.0\lib\net47\System.ValueTuple.dll</HintPath>
-    </Reference>
-    <Reference Include="System.Web" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Windows.Interactivity, Version=4.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
-      <HintPath>..\packages\MvvmLightLibs.5.4.1\lib\net45\System.Windows.Interactivity.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml" />
-    <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xaml">
-      <RequiredTargetFramework>4.0</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="System.Xml.ReaderWriter, Version=4.1.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Xml.ReaderWriter.4.3.0\lib\net46\System.Xml.ReaderWriter.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml.XmlDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Xml.XmlDocument.4.3.0\lib\net46\System.Xml.XmlDocument.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml.XPath, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Xml.XPath.4.3.0\lib\net46\System.Xml.XPath.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System.Xml.XPath.XDocument, Version=4.0.2.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.Xml.XPath.XDocument.4.3.0\lib\net46\System.Xml.XPath.XDocument.dll</HintPath>
-      <Private>True</Private>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="WindowsBase" />
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
-    <Reference Include="WindowsFormsIntegration" />
-    <Reference Include="Xceed.Wpf.AvalonDock, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Aero, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Aero.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.Metro, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.Metro.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.AvalonDock.Themes.VS2010, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.AvalonDock.Themes.VS2010.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.DataGrid, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.DataGrid.dll</HintPath>
-    </Reference>
-    <Reference Include="Xceed.Wpf.Toolkit, Version=3.3.0.0, Culture=neutral, PublicKeyToken=3e4669d2f30244f4, processorArchitecture=MSIL">
-      <HintPath>..\packages\Extended.Wpf.Toolkit.3.3.0\lib\net40\Xceed.Wpf.Toolkit.dll</HintPath>
-    </Reference>
+    <None Remove="App.xaml" />
+    <None Remove="AppIcon.ico" />
+    <None Remove="Content\ChangeLog.tt" />
+    <None Remove="Content\CSharp.xshd" />
+    <None Remove="Content\DefaultLayout.xml" />
+    <None Remove="Content\Images\AppIcon.ico" />
+    <None Remove="Content\Images\BlueBlocks1.png" />
+    <None Remove="Content\Images\BlueBlocks2.png" />
+    <None Remove="Content\Images\BlueBlocks4.png" />
+    <None Remove="Content\Images\BlueBlocks8.png" />
+    <None Remove="Content\Images\Cancel.png" />
+    <None Remove="Content\Images\Changed.png" />
+    <None Remove="Content\Images\Cog.png" />
+    <None Remove="Content\Images\Coin.png" />
+    <None Remove="Content\Images\CollectValues.png" />
+    <None Remove="Content\Images\Connect.png" />
+    <None Remove="Content\Images\Connected.png" />
+    <None Remove="Content\Images\Cpu.png" />
+    <None Remove="Content\Images\Curse.png" />
+    <None Remove="Content\Images\Decreased.png" />
+    <None Remove="Content\Images\Disconnected.png" />
+    <None Remove="Content\Images\DownArrows.png" />
+    <None Remove="Content\Images\Edit.png" />
+    <None Remove="Content\Images\ENotation.png" />
+    <None Remove="Content\Images\Equal.png" />
+    <None Remove="Content\Images\Glitch.png" />
+    <None Remove="Content\Images\GreaterThan.png" />
+    <None Remove="Content\Images\GreaterThanOrEqual.png" />
+    <None Remove="Content\Images\Heart.png" />
+    <None Remove="Content\Images\Home.png" />
+    <None Remove="Content\Images\Increased.png" />
+    <None Remove="Content\Images\Intersection.png" />
+    <None Remove="Content\Images\Invert.png" />
+    <None Remove="Content\Images\LeftArrow.png" />
+    <None Remove="Content\Images\LeftArrows.png" />
+    <None Remove="Content\Images\LessThan.png" />
+    <None Remove="Content\Images\LessThanOrEqual.png" />
+    <None Remove="Content\Images\LetterP.png" />
+    <None Remove="Content\Images\LetterS.png" />
+    <None Remove="Content\Images\LogicalAND.png" />
+    <None Remove="Content\Images\LogicalOR.png" />
+    <None Remove="Content\Images\Maximize.png" />
+    <None Remove="Content\Images\Merge.png" />
+    <None Remove="Content\Images\MinusX.png" />
+    <None Remove="Content\Images\MoveDown.png" />
+    <None Remove="Content\Images\MoveLeft.png" />
+    <None Remove="Content\Images\MoveRight.png" />
+    <None Remove="Content\Images\MoveUp.png" />
+    <None Remove="Content\Images\Negation.png" />
+    <None Remove="Content\Images\New.png" />
+    <None Remove="Content\Images\Next.png" />
+    <None Remove="Content\Images\NextScan.png" />
+    <None Remove="Content\Images\NotEqual.png" />
+    <None Remove="Content\Images\Open.png" />
+    <None Remove="Content\Images\OrangeBlocks1.png" />
+    <None Remove="Content\Images\OrangeBlocks2.png" />
+    <None Remove="Content\Images\OrangeBlocks4.png" />
+    <None Remove="Content\Images\OrangeBlocks8.png" />
+    <None Remove="Content\Images\PlusX.png" />
+    <None Remove="Content\Images\Previous.png" />
+    <None Remove="Content\Images\Properties.png" />
+    <None Remove="Content\Images\PurpleBlocks1.png" />
+    <None Remove="Content\Images\PurpleBlocks2.png" />
+    <None Remove="Content\Images\PurpleBlocks4.png" />
+    <None Remove="Content\Images\PurpleBlocks8.png" />
+    <None Remove="Content\Images\Redo.png" />
+    <None Remove="Content\Images\RightArrow.png" />
+    <None Remove="Content\Images\RightArrows.png" />
+    <None Remove="Content\Images\Save.png" />
+    <None Remove="Content\Images\Script.png" />
+    <None Remove="Content\Images\Search.png" />
+    <None Remove="Content\Images\SelectProcess.png" />
+    <None Remove="Content\Images\Squalr.png" />
+    <None Remove="Content\Images\SqualrDev.png" />
+    <None Remove="Content\Images\Stop.png" />
+    <None Remove="Content\Images\Unchanged.png" />
+    <None Remove="Content\Images\Undo.png" />
+    <None Remove="Content\Images\Union.png" />
+    <None Remove="Content\Images\UnknownValue.png" />
+    <None Remove="Content\Images\X.png" />
+    <None Remove="View\ChangeCounter.xaml" />
+    <None Remove="View\ChangeLog.xaml" />
+    <None Remove="View\CodeTracer.xaml" />
+    <None Remove="View\Controls\HexDecBox.xaml" />
+    <None Remove="View\DataTemplateError.xaml" />
+    <None Remove="View\Dialogs\CreateProjectDialog.xaml" />
+    <None Remove="View\Dialogs\DeleteProjectDialog.xaml" />
+    <None Remove="View\Dialogs\RenameProjectDialog.xaml" />
+    <None Remove="View\Dialogs\SelectProjectDialog.xaml" />
+    <None Remove="View\Disassembly.xaml" />
+    <None Remove="View\DotNetExplorer.xaml" />
+    <None Remove="View\Editors\HotkeyEditor.xaml" />
+    <None Remove="View\Editors\OffsetEditor.xaml" />
+    <None Remove="View\Editors\ScriptEditor.xaml" />
+    <None Remove="View\Editors\TextEditor.xaml" />
+    <None Remove="View\Editors\ValueEditor.xaml" />
+    <None Remove="View\InputCorrelator.xaml" />
+    <None Remove="View\LabelThresholder.xaml" />
+    <None Remove="View\MainWindow.xaml" />
+    <None Remove="View\Output.xaml" />
+    <None Remove="View\PointerScanner.xaml" />
+    <None Remove="View\PointerScanResults.xaml" />
+    <None Remove="View\ProcessSelector.xaml" />
+    <None Remove="View\ProjectExplorer.xaml" />
+    <None Remove="View\PropertyViewer.xaml" />
+    <None Remove="View\ScanResults.xaml" />
+    <None Remove="View\Settings.xaml" />
+    <None Remove="View\SnapshotManager.xaml" />
   </ItemGroup>
+
   <ItemGroup>
-    <ApplicationDefinition Include="App.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </ApplicationDefinition>
-    <Compile Include="Content\Solution.cs">
-      <DependentUpon>Solution.tt</DependentUpon>
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-    </Compile>
-    <Compile Include="Content\ChangeLog.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>ChangeLog.tt</DependentUpon>
-    </Compile>
-    <Compile Include="Content\Images.cs" />
-    <Compile Include="Properties\SettingsViewModel.cs" />
-    <Compile Include="Source\Controls\HexDecBoxViewModel.cs" />
-    <Compile Include="Source\Mvvm\Converters\HexDecBoxColorConverter.cs" />
-    <Compile Include="Source\ProjectExplorer\Dialogs\CreateProjectDialogViewModel.cs" />
-    <Compile Include="Source\ProjectExplorer\Dialogs\RenameProjectDialogViewModel.cs" />
-    <Compile Include="Source\Updater\ApplicationUpdater.cs" />
-    <Compile Include="Source\Mvvm\Converters\ConstraintToIconConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\IsAddressItemConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\IsDirectoryItemConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\ProjectItemToIconConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\ValueConverterGroup.cs" />
-    <Compile Include="Source\ProjectExplorer\Dialogs\SelectProjectDialogViewModel.cs" />
-    <Compile Include="Source\ProjectExplorer\ProjectItems\DirectoryItemView.cs" />
-    <Compile Include="Source\ProjectExplorer\ProjectItems\ProjectItemView.cs" />
-    <Compile Include="Source\ProjectExplorer\ProjectItems\ScriptItemView.cs" />
-    <Compile Include="Source\ProjectExplorer\ProjectItems\JavaItemView.cs" />
-    <Compile Include="Source\ProjectExplorer\ProjectItems\InstructionItemView.cs" />
-    <Compile Include="Source\ProjectExplorer\ProjectItems\DotNetItemView.cs" />
-    <Compile Include="Source\ProjectExplorer\ProjectItems\PointerItemView.cs" />
-    <Compile Include="Source\ProjectExplorer\Dialogs\DeleteProjectDialogViewModel.cs" />
-    <Compile Include="Source\ProjectExplorer\ProjectExplorerViewModel.cs" />
-    <Compile Include="Source\Mvvm\Converters\ProjectItemDirectoryConverter.cs" />
-    <Compile Include="Source\Tasks\TaskTrackerViewModel.cs" />
-    <Compile Include="Source\Analytics\AnalyticsService.cs" />
-    <Compile Include="Source\ChangeLog\ChangeLogViewModel.cs" />
-    <Compile Include="Source\Controls\CenteredDialogBox.cs" />
-    <Compile Include="Source\Controls\ControlThreadingHelper.cs" />
-    <Compile Include="Source\Controls\DarkBrushes.cs" />
-    <Compile Include="Source\Controls\RichTextBoxHelper.cs" />
-    <Compile Include="Source\Controls\SortedCategory.cs" />
-    <Compile Include="Source\Controls\TreeViewItemViewModel.cs" />
-    <Compile Include="Source\Controls\WinformsHostingHelper.cs" />
-    <Compile Include="Source\Debugger\CodeTraceResult.cs" />
-    <Compile Include="Source\Debugger\CodeTracerViewModel.cs" />
-    <Compile Include="Source\Debugger\DebuggerViewModel.cs" />
-    <Compile Include="Source\Debugger\DisassemblyViewModel.cs" />
-    <Compile Include="Source\Docking\DockingViewModel.cs" />
-    <Compile Include="Source\Docking\PanesStyleSelector.cs" />
-    <Compile Include="Source\Docking\PaneViewModel.cs" />
-    <Compile Include="Source\Docking\ToolViewModel.cs" />
-    <Compile Include="Source\Docking\WindowHostViewModel.cs" />
-    <Compile Include="Source\DotNetExplorer\DotNetExplorerViewModel.cs" />
-    <Compile Include="Source\DotNetExplorer\DotNetObjectViewModel.cs" />
-    <Compile Include="Source\Editors\HotkeyEditor\HotkeyEditorModel.cs" />
-    <Compile Include="Source\Editors\HotkeyEditor\HotkeyEditorViewModel.cs" />
-    <Compile Include="Source\Editors\OffsetEditor\OffsetEditorModel.cs" />
-    <Compile Include="Source\Editors\OffsetEditor\OffsetEditorViewModel.cs" />
-    <Compile Include="Source\Editors\ScriptEditor\ScriptEditorModel.cs" />
-    <Compile Include="Source\Editors\ScriptEditor\ScriptEditorViewModel.cs" />
-    <Compile Include="Source\Editors\TextEditor\TextEditorModel.cs" />
-    <Compile Include="Source\Editors\TextEditor\TextEditorViewModel.cs" />
-    <Compile Include="Source\Editors\ValueEditor\ValueEditorModel.cs" />
-    <Compile Include="Source\Editors\ValueEditor\ValueEditorViewModel.cs" />
-    <Compile Include="Source\Main\MainViewModel.cs" />
-    <Compile Include="Source\Mvvm\AttachedBehaviors\ScrollToCenterBehavior.cs" />
-    <Compile Include="Source\Mvvm\AttachedBehaviors\ScrollToTopBehavior.cs" />
-    <Compile Include="Source\Mvvm\Converters\BooleanConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\DataGridIndexConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\DataTypeToIconConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\HotkeyToStringConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\IconConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\UInt64ToAddressConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\IntToHexConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\ListViewIndexConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\OffsetsToStringConverter.cs" />
-    <Compile Include="Source\Mvvm\Converters\ValueToMetricSize.cs" />
-    <Compile Include="Source\Mvvm\PrimitiveBinding.cs" />
-    <Compile Include="Source\Output\OutputViewModel.cs" />
-    <Compile Include="Source\PacketEditor\PacketEditorViewModel.cs" />
-    <Compile Include="Source\ProcessSelector\ProcessDecorator.cs" />
-    <Compile Include="Source\ProcessSelector\ProcessSelectorViewModel.cs" />
-    <Compile Include="Source\PropertyViewer\IPropertyViewerObserver.cs" />
-    <Compile Include="Source\PropertyViewer\PropertyViewerViewModel.cs" />
-    <Compile Include="Source\Results\IResultDataTypeObserver.cs" />
-    <Compile Include="Source\Results\PointerScanResultsViewModel.cs" />
-    <Compile Include="Source\Results\ScanResult.cs" />
-    <Compile Include="Source\Results\ScanResultsViewModel.cs" />
-    <Compile Include="Source\Scanners\ChangeCounterViewModel.cs" />
-    <Compile Include="Source\Scanners\InputCorrelatorViewModel.cs" />
-    <Compile Include="Source\Scanners\LabelThresholderViewModel.cs" />
-    <Compile Include="Source\Scanners\ManualScannerViewModel.cs" />
-    <Compile Include="Source\Scanners\PointerScannerViewModel.cs" />
-    <Compile Include="Source\Scanners\ValueCollectorViewModel.cs" />
-    <Compile Include="Source\Snapshots\SnapshotManagerViewModel.cs" />
-    <Compile Include="Source\Utils\Browser\NativeBrowser.cs" />
-    <Compile Include="Source\Utils\Browser\WebBrowserHelper.cs" />
-    <Compile Include="Source\Utils\Extensions\ColorExtensions.cs" />
-    <Compile Include="Source\Utils\Extensions\DependencyObjectExtensions.cs" />
-    <Compile Include="Source\Utils\ImageUtils.cs" />
-    <Compile Include="Source\Utils\Observables\Unsubscriber.cs" />
-    <Compile Include="Source\Utils\Observables\WeakObserver.cs" />
-    <Compile Include="Source\Utils\TypeConverters\AddressConverter.cs" />
-    <Compile Include="Source\Utils\TypeConverters\DataTypeConverter.cs" />
-    <Compile Include="Source\Utils\TypeConverters\DynamicConverter.cs" />
-    <Compile Include="Source\Utils\TypeConverters\HotKeyConverter.cs" />
-    <Compile Include="Source\Utils\TypeConverters\OffsetConverter.cs" />
-    <Compile Include="Source\Utils\TypeConverters\ScriptConverter.cs" />
-    <Compile Include="Source\Utils\TypeConverters\TextConverter.cs" />
-    <Compile Include="View\Controls\HexDecBox.xaml.cs">
-      <DependentUpon>HexDecBox.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Dialogs\CreateProjectDialog.xaml.cs">
-      <DependentUpon>CreateProjectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Dialogs\RenameProjectDialog.xaml.cs">
-      <DependentUpon>RenameProjectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Dialogs\DeleteProjectDialog.xaml.cs">
-      <DependentUpon>DeleteProjectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Dialogs\SelectProjectDialog.xaml.cs">
-      <DependentUpon>SelectProjectDialog.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Editors\HotkeyEditor.xaml.cs">
-      <DependentUpon>HotkeyEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Editors\OffsetEditor.xaml.cs">
-      <DependentUpon>OffsetEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Editors\ScriptEditor.xaml.cs">
-      <DependentUpon>ScriptEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Editors\TextEditor.xaml.cs">
-      <DependentUpon>TextEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Editors\ValueEditor.xaml.cs">
-      <DependentUpon>ValueEditor.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\MainWindow.xaml.cs">
-      <SubType>Code</SubType>
-      <DependentUpon>MainWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Output.xaml.cs">
-      <DependentUpon>Output.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PointerScanner.xaml.cs">
-      <DependentUpon>PointerScanner.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\PropertyViewer.xaml.cs">
-      <DependentUpon>PropertyViewer.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\Settings.xaml.cs">
-      <DependentUpon>Settings.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ViewModelLocator.cs" />
-    <Compile Include="View\ViewTemplateSelector.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Include="Properties\AssemblyInfo.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Content\CSharp.xshd" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Content\Images\Search.png" />
-    <Resource Include="Content\Images\Edit.png" />
-    <Resource Include="Content\Images\Properties.png" />
-    <Resource Include="AppIcon.ico" />
-    <Content Include="Content\Solution.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-      <LastGenOutput>Solution.cs</LastGenOutput>
-    </Content>
     <Content Include="Content\ChangeLog.tt">
-      <Generator>TextTemplatingFilePreprocessor</Generator>
+      <Generator>TextTemplatingFileGenerator</Generator>
       <LastGenOutput>ChangeLog.cs</LastGenOutput>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Content\CSharp.xshd" />
     <EmbeddedResource Include="Content\DefaultLayout.xml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Xaml.Behaviors.Wpf" Version="1.0.1" />
+    <PackageReference Include="MvvmLight" Version="5.4.1.1" />
+    <PackageReference Include="MvvmLightLibsStd10" Version="5.4.1.1" />
+    <PackageReference Include="System.Diagnostics.Debug" Version="4.3.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="4.6.0-preview3.19128.7" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Squalr.Engine.Architecture\Squalr.Engine.Architecture.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Debugger\Squalr.Engine.Debuggers.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Graphics\Squalr.Engine.Graphics.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Hook\Squalr.Engine.Hook.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Input\Squalr.Engine.Input.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Internal.HookServer\Squalr.Engine.HookServer.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Memory\Squalr.Engine.Memory.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Networking\Squalr.Engine.Networking.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Projects\Squalr.Engine.Projects.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Scanning\Squalr.Engine.Scanning.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Scripting\Squalr.Engine.Scripting.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.SpeedManipulator\Squalr.Engine.SpeedManipulator.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Unrandomizer\Squalr.Engine.Unrandomizer.csproj" />
+    <ProjectReference Include="..\Squalr.Engine\Squalr.Engine.csproj" />
+    <ProjectReference Include="..\Squalr.Theme\Squalr.Theme.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="AppIcon.ico" />
     <Resource Include="Content\Images\AppIcon.ico" />
     <Resource Include="Content\Images\BlueBlocks1.png" />
     <Resource Include="Content\Images\BlueBlocks2.png" />
@@ -595,6 +178,7 @@
     <Resource Include="Content\Images\Decreased.png" />
     <Resource Include="Content\Images\Disconnected.png" />
     <Resource Include="Content\Images\DownArrows.png" />
+    <Resource Include="Content\Images\Edit.png" />
     <Resource Include="Content\Images\ENotation.png" />
     <Resource Include="Content\Images\Equal.png" />
     <Resource Include="Content\Images\Glitch.png" />
@@ -632,6 +216,7 @@
     <Resource Include="Content\Images\OrangeBlocks8.png" />
     <Resource Include="Content\Images\PlusX.png" />
     <Resource Include="Content\Images\Previous.png" />
+    <Resource Include="Content\Images\Properties.png" />
     <Resource Include="Content\Images\PurpleBlocks1.png" />
     <Resource Include="Content\Images\PurpleBlocks2.png" />
     <Resource Include="Content\Images\PurpleBlocks4.png" />
@@ -641,6 +226,7 @@
     <Resource Include="Content\Images\RightArrows.png" />
     <Resource Include="Content\Images\Save.png" />
     <Resource Include="Content\Images\Script.png" />
+    <Resource Include="Content\Images\Search.png" />
     <Resource Include="Content\Images\SelectProcess.png" />
     <Resource Include="Content\Images\Squalr.png" />
     <Resource Include="Content\Images\SqualrDev.png" />
@@ -651,209 +237,156 @@
     <Resource Include="Content\Images\UnknownValue.png" />
     <Resource Include="Content\Images\X.png" />
   </ItemGroup>
+
   <ItemGroup>
-    <Page Include="View\ChangeCounter.xaml">
+    <ApplicationDefinition Update="App.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="View\ChangeLog.xaml">
+    </ApplicationDefinition>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Content\ChangeLog.cs">
+      <DependentUpon>ChangeLog.tt</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Update="View\Controls\HexDecBox.xaml.cs">
+      <DependentUpon>HexDecBox.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Dialogs\CreateProjectDialog.xaml.cs">
+      <DependentUpon>CreateProjectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Dialogs\DeleteProjectDialog.xaml.cs">
+      <DependentUpon>DeleteProjectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Dialogs\RenameProjectDialog.xaml.cs">
+      <DependentUpon>RenameProjectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Dialogs\SelectProjectDialog.xaml.cs">
+      <DependentUpon>SelectProjectDialog.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Editors\HotkeyEditor.xaml.cs">
+      <DependentUpon>HotkeyEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Editors\OffsetEditor.xaml.cs">
+      <DependentUpon>OffsetEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Editors\ScriptEditor.xaml.cs">
+      <DependentUpon>ScriptEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Editors\TextEditor.xaml.cs">
+      <DependentUpon>TextEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Editors\ValueEditor.xaml.cs">
+      <DependentUpon>ValueEditor.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\MainWindow.xaml.cs">
+      <SubType>Code</SubType>
+      <DependentUpon>MainWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Output.xaml.cs">
+      <DependentUpon>Output.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\PointerScanner.xaml.cs">
+      <DependentUpon>PointerScanner.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\PropertyViewer.xaml.cs">
+      <DependentUpon>PropertyViewer.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="View\Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Page Update="View\ChangeCounter.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Controls\HexDecBox.xaml">
-      <SubType>Designer</SubType>
+    <Page Update="View\ChangeLog.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="View\DataTemplateError.xaml">
+    <Page Update="View\CodeTracer.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\CodeTracer.xaml">
+    <Page Update="View\Controls\HexDecBox.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Dialogs\CreateProjectDialog.xaml">
+    <Page Update="View\DataTemplateError.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Dialogs\RenameProjectDialog.xaml">
+    <Page Update="View\Dialogs\CreateProjectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Dialogs\DeleteProjectDialog.xaml">
+    <Page Update="View\Dialogs\DeleteProjectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Dialogs\SelectProjectDialog.xaml">
+    <Page Update="View\Dialogs\RenameProjectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Disassembly.xaml">
+    <Page Update="View\Dialogs\SelectProjectDialog.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\DotNetExplorer.xaml">
+    <Page Update="View\Disassembly.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Editors\HotkeyEditor.xaml">
+    <Page Update="View\DotNetExplorer.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Editors\OffsetEditor.xaml">
+    <Page Update="View\Editors\HotkeyEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Editors\ScriptEditor.xaml">
+    <Page Update="View\Editors\OffsetEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Editors\TextEditor.xaml">
+    <Page Update="View\Editors\ScriptEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Editors\ValueEditor.xaml">
+    <Page Update="View\Editors\TextEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\InputCorrelator.xaml">
+    <Page Update="View\Editors\ValueEditor.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\LabelThresholder.xaml">
+    <Page Update="View\InputCorrelator.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\MainWindow.xaml">
-      <SubType>Designer</SubType>
+    <Page Update="View\LabelThresholder.xaml">
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Update="View\MainWindow.xaml">
       <Generator>XamlIntelliSenseFileGenerator</Generator>
     </Page>
-    <Page Include="View\Output.xaml">
+    <Page Update="View\Output.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\PointerScanner.xaml">
+    <Page Update="View\PointerScanner.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\PointerScanResults.xaml">
+    <Page Update="View\PointerScanResults.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ProcessSelector.xaml">
+    <Page Update="View\ProcessSelector.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\PropertyViewer.xaml">
+    <Page Update="View\ProjectExplorer.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ScanResults.xaml">
+    <Page Update="View\PropertyViewer.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\Settings.xaml">
+    <Page Update="View\ScanResults.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\SnapshotManager.xaml">
+    <Page Update="View\Settings.xaml">
       <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
-    <Page Include="View\ProjectExplorer.xaml">
-      <SubType>Designer</SubType>
+    <Page Update="View\SnapshotManager.xaml">
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
+
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\Squalr.Engine.Architecture\Squalr.Engine.Architecture.csproj">
-      <Project>{bf9b9bd8-1ec3-4f09-b90e-9f822ffaf407}</Project>
-      <Name>Squalr.Engine.Architecture</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.Debugger\Squalr.Engine.Debuggers.csproj">
-      <Project>{930c55ee-a79f-4f06-b843-0ae9cc375217}</Project>
-      <Name>Squalr.Engine.Debuggers</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.Graphics\Squalr.Engine.Graphics.csproj">
-      <Project>{dccb0fd1-5467-43cd-973c-289cb27ca2dc}</Project>
-      <Name>Squalr.Engine.Graphics</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.Hook\Squalr.Engine.Hook.csproj">
-      <Project>{2d9dae4d-3610-4c41-9c72-ca13d535078d}</Project>
-      <Name>Squalr.Engine.Hook</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.Input\Squalr.Engine.Input.csproj">
-      <Project>{53a598f0-69ed-4311-848e-5f74b4ae8e3f}</Project>
-      <Name>Squalr.Engine.Input</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.Memory\Squalr.Engine.Memory.csproj">
-      <Project>{77e64e71-8e26-4311-9c10-61d4cafd4fef}</Project>
-      <Name>Squalr.Engine.Memory</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.Networking\Squalr.Engine.Networking.csproj">
-      <Project>{e4bf8497-1d90-47e4-9e8d-4c1a33eb674c}</Project>
-      <Name>Squalr.Engine.Networking</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.Projects\Squalr.Engine.Projects.csproj">
-      <Project>{3278CCD2-5997-44F9-9237-9F15EF51CB91}</Project>
-      <Name>Squalr.Engine.Projects</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.Scanning\Squalr.Engine.Scanning.csproj">
-      <Project>{47faff79-44f7-4505-91ca-a2be28915ee2}</Project>
-      <Name>Squalr.Engine.Scanning</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.Scripting\Squalr.Engine.Scripting.csproj">
-      <Project>{0612f4dc-e843-4dd6-8856-98dad0033de3}</Project>
-      <Name>Squalr.Engine.Scripting</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.SpeedManipulator\Squalr.Engine.SpeedManipulator.csproj">
-      <Project>{d6175c09-0678-4aa1-a8d6-5e3284b2e3ce}</Project>
-      <Name>Squalr.Engine.SpeedManipulator</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine.Unrandomizer\Squalr.Engine.Unrandomizer.csproj">
-      <Project>{21d8d02c-5fe6-4c72-bec2-83b47b83b614}</Project>
-      <Name>Squalr.Engine.Unrandomizer</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Engine\Squalr.Engine.csproj">
-      <Project>{0b78bebf-d43f-431c-8a5f-9734c6fda1b3}</Project>
-      <Name>Squalr.Engine</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Squalr.Theme\Squalr.Theme.csproj">
-      <Project>{60d1d960-8aae-4f87-8d85-0c2bdd6254b1}</Project>
-      <Name>Squalr.Theme</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.7.1">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4.7.1 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.Analyzers.dll" />
-    <Analyzer Include="..\packages\Microsoft.CodeAnalysis.Analyzers.2.6.0\analyzers\dotnet\cs\Microsoft.CodeAnalysis.CSharp.Analyzers.dll" />
-  </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <Import Project="..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets" Condition="Exists('..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets')" />
-  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
-    <PropertyGroup>
-      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
-    </PropertyGroup>
-    <Error Condition="!Exists('..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.Packaging.Tools.1.0.0-preview2-25401-01\build\Microsoft.Packaging.Tools.targets'))" />
-    <Error Condition="!Exists('..\packages\NETStandard.Library.2.0.0-preview2-25401-01\build\netstandard2.0\NETStandard.Library.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\NETStandard.Library.2.0.0-preview2-25401-01\build\netstandard2.0\NETStandard.Library.targets'))" />
-  </Target>
-  <Import Project="..\packages\NETStandard.Library.2.0.0-preview2-25401-01\build\netstandard2.0\NETStandard.Library.targets" Condition="Exists('..\packages\NETStandard.Library.2.0.0-preview2-25401-01\build\netstandard2.0\NETStandard.Library.targets')" />
-  <PropertyGroup>
-    <PostBuildEvent>
-    </PostBuildEvent>
-  </PropertyGroup>
+
 </Project>

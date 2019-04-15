@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.Output
 {
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.Logging;
     using Squalr.Engine.Utils.Extensions;
     using Squalr.Source.Docking;
@@ -67,6 +67,7 @@
         {
             this.AccessLock = new Object();
             this.logText = new StringBuilder(OutputViewModel.LogCapacity);
+            Encoding.RegisterProvider(System.Text.CodePagesEncodingProvider.Instance);
 
             this.ClearOutputCommand = new RelayCommand(() => this.ClearOutput(), () => true);
 

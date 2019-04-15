@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.Editors.HotkeyEditor
 {
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.Input.HotKeys;
     using Squalr.Source.Docking;
     using System;

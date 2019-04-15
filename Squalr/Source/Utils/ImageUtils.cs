@@ -3,7 +3,6 @@
     using Squalr.Engine.Logging;
     using Squalr.Engine.Utils.DataStructures;
     using Squalr.Engine.Utils.Extensions;
-    using Svg;
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;
@@ -125,32 +124,6 @@
                 bitmapImage.Freeze();
 
                 return bitmapImage;
-            }
-        }
-
-        /// <summary>
-        /// Loads an svg image from the given path.
-        /// </summary>
-        /// <param name="uri">The path specifying from where to load the svg image.</param>
-        /// <returns>The bitmap image loaded from the given path.</returns>
-        public static Bitmap LoadSvg(String base64, Int32 width, Int32 height, System.Drawing.Color color)
-        {
-            using (MemoryStream memoryStream = new MemoryStream(Convert.FromBase64String(base64)))
-            {
-                SvgDocument svgDoc = SvgDocument.Open<SvgDocument>(memoryStream);
-
-                svgDoc.Children.Select(child => child)
-                    .Where(child => child.Fill as SvgColourServer != null && (child.Fill as SvgColourServer).Colour == System.Drawing.Color.White)
-                    .ForEach(child => child.Fill = new SvgColourServer(color));
-
-                svgDoc.Children.Select(child => child)
-                    .Where(child => child.Fill as SvgColourServer != null && (child.Fill as SvgColourServer).Colour == System.Drawing.Color.Black)
-                    .ForEach(child => child.Fill = new SvgColourServer(System.Drawing.Color.Transparent));
-
-                svgDoc.Width = width;
-                svgDoc.Height = height;
-
-                return new Bitmap(svgDoc.Draw());
             }
         }
     }

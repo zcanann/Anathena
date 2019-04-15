@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.Results
 {
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.DataTypes;
     using Squalr.Engine.Projects.Items;
     using Squalr.Engine.Scanning.Scanners.Pointers.Structures;

@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Source.DotNetExplorer
 {
     using Engine.AddressResolver.DotNet;
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.DataTypes;
     using Squalr.Engine.Memory.Clr;
     using Squalr.Engine.Projects.Items;

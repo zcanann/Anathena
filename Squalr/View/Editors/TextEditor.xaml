@@ -63,14 +63,15 @@
                     Style="{Binding}" />
             </shell:MenuItem>
         </shell:Menu>
-
+        <!-- 
         <avalonedit:TextEditor
             Name="TextEditorTextEditor"
             Margin="8"
             shell:Grid.Row="2"
             Background="{StaticResource SqualrColorBlack}"
             Foreground="{StaticResource SqualrColorWhite}" />
-
+           -->
+        
         <shell:Grid Grid.Row="3" Margin="8">
             <shell:Button
                 Width="96"

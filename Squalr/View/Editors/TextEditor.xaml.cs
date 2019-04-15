@@ -17,9 +17,9 @@
         public TextEditor(String text = null)
         {
             this.InitializeComponent();
-            this.TextEditorTextEditor.FontFamily = new FontFamily("Consolas");
-            this.TextEditorTextEditor.TextChanged += this.TextEditorTextEditorTextChanged;
-            this.TextEditorTextEditor.Text = text ?? String.Empty;
+            //this.TextEditorTextEditor.FontFamily = new FontFamily("Consolas");
+           // this.TextEditorTextEditor.TextChanged += this.TextEditorTextEditorTextChanged;
+           // this.TextEditorTextEditor.Text = text ?? String.Empty;
         }
 
         /// <summary>
@@ -40,7 +40,7 @@
         /// <param name="e">Event args.</param>
         private void TextEditorTextEditorTextChanged(Object sender, EventArgs e)
         {
-            this.TextEditorViewModel.UpdateTextCommand.Execute(this.TextEditorTextEditor.Text);
+          //  this.TextEditorViewModel.UpdateTextCommand.Execute(this.TextEditorTextEditor.Text);
         }
 
         /// <summary>

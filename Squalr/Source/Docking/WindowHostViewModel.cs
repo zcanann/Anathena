@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Source.Docking
 {
     using GalaSoft.MvvmLight;
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using System;
     using System.Windows;
     using System.Windows.Input;

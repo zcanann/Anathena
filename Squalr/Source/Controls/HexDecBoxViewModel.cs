@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Source.Controls
 {
     using GalaSoft.MvvmLight;
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.DataTypes;
     using Squalr.Engine.Utils;
     using System;

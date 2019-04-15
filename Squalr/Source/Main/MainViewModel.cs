@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.Main
 {
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.Logging;
     using Squalr.Engine.OS;
     using Squalr.Source.ChangeLog;
@@ -45,7 +45,7 @@
 
             Logger.Log(LogLevel.Info, "Squalr started");
 
-            this.DisplayChangeLogCommand = new RelayCommand(() => ChangeLogViewModel.GetInstance().DisplayChangeLog(new Content.ChangeLog().TransformText()), () => true);
+            // this.DisplayChangeLogCommand = new RelayCommand(() => ChangeLogViewModel.GetInstance().DisplayChangeLog(new Content.ChangeLog().TransformText()), () => true);
         }
 
         /// <summary>

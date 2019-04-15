@@ -1,6 +1,5 @@
 ﻿namespace Squalr.Source.Analytics
 {
-    using Garlic;
     using System;
     using System.ComponentModel;
     using System.Threading;
@@ -60,7 +59,7 @@
         /// <summary>
         /// Gets or sets the analytics session.
         /// </summary>
-        private AnalyticsSession Session { get; set; }
+        // private AnalyticsSession Session { get; set; }
 
         /// <summary>
         /// Gets a singleton instance of the <see cref="AnalyticsService"/> class.
@@ -76,7 +75,9 @@
         /// </summary>
         public void Start()
         {
+            /*
             this.Session = new AnalyticsSession(AnalyticsService.AnalyticsUrl, AnalyticsService.GoogleAnalyticsCode);
+            */
         }
 
         /// <summary>
@@ -107,9 +108,11 @@
         /// <param name="value">>The analytics value.</param>
         public void SendEvent(AnalyticsAction action, String label, String value)
         {
+            /*
             IAnalyticsPageViewRequest page = this.Session.CreatePageViewRequest("/", "Home page");
 
             page.SendEvent(AnalyticsService.AnalyticsServiceCategory, action.ToString(), label, value);
+            */
         }
     }
     //// End class

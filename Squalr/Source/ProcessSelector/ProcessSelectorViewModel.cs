@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.ProcessSelector
 {
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Content;
     using Squalr.Engine.OS;
     using Squalr.Engine.Utils.Extensions;

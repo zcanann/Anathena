@@ -5,8 +5,7 @@
     xmlns:content="clr-namespace:Squalr.Content"
     xmlns:converters="clr-namespace:Squalr.Source.Mvvm.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
-    xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:intr="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:proj="clr-namespace:Squalr.Source.ProjectExplorer.ProjectItems"
     xmlns:se="clr-namespace:Squalr.Source.ProjectExplorer"
@@ -200,7 +199,7 @@
                                 Source="{Binding Converter={StaticResource ProjectItemToIconConverter}}">
                                 <intr:Interaction.Triggers>
                                     <intr:EventTrigger EventName="PreviewMouseRightButtonDown">
-                                        <ei:ChangePropertyAction
+                                        <intr:ChangePropertyAction
                                             PropertyName="IsSelected"
                                             TargetObject="{Binding}"
                                             Value="true" />
@@ -214,7 +213,7 @@
                                 Text="{Binding Path=Name}">
                                 <intr:Interaction.Triggers>
                                     <intr:EventTrigger EventName="PreviewMouseRightButtonDown">
-                                        <ei:ChangePropertyAction
+                                        <intr:ChangePropertyAction
                                             PropertyName="IsSelected"
                                             TargetObject="{Binding}"
                                             Value="true" />
@@ -228,7 +227,7 @@
                                 Text="{Binding Path=DisplayValue}">
                                 <intr:Interaction.Triggers>
                                     <intr:EventTrigger EventName="PreviewMouseRightButtonDown">
-                                        <ei:ChangePropertyAction
+                                        <intr:ChangePropertyAction
                                             PropertyName="IsSelected"
                                             TargetObject="{Binding}"
                                             Value="true" />

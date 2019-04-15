@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.ProjectExplorer
 {
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.Logging;
     using Squalr.Engine.Projects.Items;
     using Squalr.Engine.Utils;

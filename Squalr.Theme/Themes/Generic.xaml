@@ -244,8 +244,7 @@
                                 Grid.Column="1"
                                 DropDownContextMenuDataContext="{Binding Path=LayoutItem, RelativeSource={RelativeSource TemplatedParent}}"
                                 Focusable="False"
-                                Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
-                                ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_CxMenu_Hint}">
+                                Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}">
                                 <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinMenu.png" />
                             </avalonDockControls:DropDownButton>
 
@@ -255,7 +254,6 @@
                                 Command="{Binding Path=LayoutItem.AutoHideCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                 Focusable="False"
                                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_BtnAutoHide_Hint}"
                                 Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinAutoHide.png" />
                             </Button>
@@ -266,7 +264,6 @@
                                 Command="{Binding Path=LayoutItem.HideCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                 Focusable="False"
                                 Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_BtnClose_Hint}"
                                 Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                 <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinClose.png" />
                             </Button>
@@ -514,39 +511,33 @@
     </DataTemplate>
 
     <ContextMenu x:Key="AnchorableContextMenu">
-        <MenuItem Command="{Binding Path=FloatCommand}" Header="{x:Static avalonDockProperties:Resources.Anchorable_Float}" />
-        <MenuItem Command="{Binding Path=DockCommand}" Header="{x:Static avalonDockProperties:Resources.Anchorable_Dock}" />
-        <MenuItem Command="{Binding Path=DockAsDocumentCommand}" Header="{x:Static avalonDockProperties:Resources.Anchorable_DockAsDocument}" />
-        <MenuItem Command="{Binding Path=AutoHideCommand}" Header="{x:Static avalonDockProperties:Resources.Anchorable_AutoHide}" />
+        <MenuItem Command="{Binding Path=FloatCommand}"  />
+        <MenuItem Command="{Binding Path=DockCommand}"  />
+        <MenuItem Command="{Binding Path=DockAsDocumentCommand}"  />
+        <MenuItem Command="{Binding Path=AutoHideCommand}" />
         <MenuItem
             Command="{Binding Path=HideCommand}"
-            Header="{x:Static avalonDockProperties:Resources.Anchorable_Hide}"
             Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
     </ContextMenu>
 
     <ContextMenu x:Key="DocumentContextMenu">
         <MenuItem
             Command="{Binding Path=CloseCommand}"
-            Header="{x:Static avalonDockProperties:Resources.Document_Close}"
             Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
-        <MenuItem Command="{Binding Path=CloseAllButThisCommand}" Header="{x:Static avalonDockProperties:Resources.Document_CloseAllButThis}" />
-        <MenuItem Command="{Binding Path=FloatCommand}" Header="{x:Static avalonDockProperties:Resources.Document_Float}" />
-        <MenuItem Command="{Binding Path=DockAsDocumentCommand}" Header="{x:Static avalonDockProperties:Resources.Document_DockAsDocument}" />
+        <MenuItem Command="{Binding Path=CloseAllButThisCommand}" />
+        <MenuItem Command="{Binding Path=FloatCommand}" />
+        <MenuItem Command="{Binding Path=DockAsDocumentCommand}" />
         <MenuItem
             Command="{Binding Path=NewHorizontalTabGroupCommand}"
-            Header="{x:Static avalonDockProperties:Resources.Document_NewHorizontalTabGroup}"
             Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
         <MenuItem
             Command="{Binding Path=NewVerticalTabGroupCommand}"
-            Header="{x:Static avalonDockProperties:Resources.Document_NewVerticalTabGroup}"
             Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
         <MenuItem
             Command="{Binding Path=MoveToNextTabGroupCommand}"
-            Header="{x:Static avalonDockProperties:Resources.Document_MoveToNextTabGroup}"
             Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
         <MenuItem
             Command="{Binding Path=MoveToPreviousTabGroupCommand}"
-            Header="{x:Static avalonDockProperties:Resources.Document_MoveToPreviousTabGroup}"
             Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}" />
     </ContextMenu>
 
@@ -674,7 +665,6 @@
                                     Margin="5,0,0,0"
                                     Command="{Binding Path=LayoutItem.CloseCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                     Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                    ToolTip="{x:Static avalonDockProperties:Resources.Document_Close}"
                                     Visibility="Hidden">
                                     <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinClose.png" />
                                 </Button>
@@ -811,7 +801,6 @@
                                         CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
                                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                        ToolTip="{x:Static avalonDockProperties:Resources.Window_Maximize}"
                                         Visibility="{Binding IsMaximized, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                                         <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinMaximize.png" />
                                     </Button>
@@ -823,7 +812,6 @@
                                         CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
                                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                        ToolTip="{x:Static avalonDockProperties:Resources.Window_Restore}"
                                         Visibility="{Binding IsMaximized, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinRestore.png" />
                                     </Button>
@@ -834,7 +822,6 @@
                                         Command="{Binding Path=RootDocumentLayoutItem.CloseCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
                                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                        ToolTip="{x:Static avalonDockProperties:Resources.Document_Close}"
                                         Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinClose.png" />
                                     </Button>
@@ -904,7 +891,6 @@
                                         DropDownContextMenuDataContext="{Binding Path=SingleContentLayoutItem, RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
                                         Style="{StaticResource {x:Static ToolBar.ToggleButtonStyleKey}}"
-                                        ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_CxMenu_Hint}"
                                         Visibility="{Binding Path=Model.IsSinglePane, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinMenu.png" />
                                     </avalonDockControls:DropDownButton>
@@ -916,7 +902,6 @@
                                         CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
                                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                        ToolTip="{x:Static avalonDockProperties:Resources.Window_Maximize}"
                                         Visibility="{Binding IsMaximized, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource InverseBoolToVisibilityConverter}}">
                                         <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinMaximize.png" />
                                     </Button>
@@ -928,7 +913,6 @@
                                         CommandParameter="{Binding RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
                                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                        ToolTip="{x:Static avalonDockProperties:Resources.Window_Restore}"
                                         Visibility="{Binding IsMaximized, RelativeSource={RelativeSource TemplatedParent}, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinRestore.png" />
                                     </Button>
@@ -939,7 +923,6 @@
                                         Command="{Binding HideWindowCommand, RelativeSource={RelativeSource TemplatedParent}}"
                                         Focusable="False"
                                         Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}"
-                                        ToolTip="{x:Static avalonDockProperties:Resources.Anchorable_BtnClose_Hint}"
                                         Visibility="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}, Mode=OneWay, Converter={StaticResource BoolToVisibilityConverter}}">
                                         <Image Source="/Squalr.Theme;component/Themes/Generic/Images/PinClose.png" />
                                     </Button>

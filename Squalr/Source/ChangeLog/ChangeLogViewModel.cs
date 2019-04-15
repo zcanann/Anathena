@@ -1,10 +1,8 @@
 ﻿namespace Squalr.Source.ChangeLog
 {
     using GalaSoft.MvvmLight;
-    using GalaSoft.MvvmLight.CommandWpf;
-    using Squalr.Engine.Logging;
+    using GalaSoft.MvvmLight.Command;
     using System;
-    using System.Deployment.Application;
     using System.Reflection;
     using System.Threading;
     using System.Windows;
@@ -82,23 +80,12 @@
         /// </summary>
         public void DisplayChangeLog(String changeLogText)
         {
-            try
-            {
-                if (!ApplicationDeployment.IsNetworkDeployed || !ApplicationDeployment.CurrentDeployment.IsFirstRun)
-                {
-                    return;
-                }
-            }
-            catch (Exception ex)
-            {
-                Logger.Log(LogLevel.Warn, "Error displaying change log", ex);
-                return;
-            }
-
+            /*
             this.ChangeLog = changeLogText;
             View.ChangeLog changeLog = new View.ChangeLog();
             changeLog.Owner = Application.Current.MainWindow;
             changeLog.ShowDialog();
+            */
         }
 
         /// <summary>

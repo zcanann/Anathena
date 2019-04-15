@@ -3,7 +3,6 @@
     using Squalr.Engine;
     using Squalr.Engine.Logging;
     using Squalr.Source.Tasks;
-    using Squirrel;
     using System;
     using System.IO;
     using System.Linq;
@@ -35,6 +34,7 @@
 
             Task.Run(async () =>
             {
+                /*
                 try
                 {
                     using (UpdateManager manager = await UpdateManager.GitHubUpdateManager(ApplicationUpdater.GithubRepositoryUrl))
@@ -129,6 +129,7 @@
                 {
                     Logger.Log(LogLevel.Error, "Error updating Squalr.", ex);
                 }
+                */
             });
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.Debugger
 {
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.Architecture;
     using Squalr.Engine.Memory;
     using Squalr.Engine.OS;

@@ -201,17 +201,6 @@
         }
 
         /// <summary>
-        /// Gets the Label Thresholder view model.
-        /// </summary>
-        public LabelThresholderViewModel LabelThresholderViewModel
-        {
-            get
-            {
-                return LabelThresholderViewModel.GetInstance();
-            }
-        }
-
-        /// <summary>
         /// Gets the Manual Scanner view model.
         /// </summary>
         public ManualScannerViewModel ManualScannerViewModel

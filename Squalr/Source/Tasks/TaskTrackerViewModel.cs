@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.Tasks
 {
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine;
     using Squalr.Engine.Utils.DataStructures;
     using Squalr.Source.Docking;

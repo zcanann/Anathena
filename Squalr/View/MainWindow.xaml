@@ -8,7 +8,7 @@
     xmlns:converters="clr-namespace:Squalr.Source.Mvvm.Converters"
     xmlns:coreView="clr-namespace:Squalr.View"
     xmlns:docking="clr-namespace:Squalr.Source.Docking"
-    xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:intr="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:layout="clr-namespace:Squalr.Theme.Layout;assembly=Squalr.Theme"
     xmlns:layoutControls="clr-namespace:Squalr.Theme.Controls;assembly=Squalr.Theme"
     xmlns:shell="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
@@ -883,12 +883,6 @@
                                 <view:InputCorrelator />
                             </shell:DataTemplate>
                         </view:ViewTemplateSelector.InputCorrelatorViewTemplate>
-                        <!--  Label Thresholder  -->
-                        <view:ViewTemplateSelector.LabelThresholderViewTemplate>
-                            <shell:DataTemplate>
-                                <view:LabelThresholder />
-                            </shell:DataTemplate>
-                        </view:ViewTemplateSelector.LabelThresholderViewTemplate>
                         <!--  Pointer Scanner  -->
                         <view:ViewTemplateSelector.PointerScannerViewTemplate>
                             <shell:DataTemplate>

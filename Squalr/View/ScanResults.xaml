@@ -6,7 +6,7 @@
     xmlns:content="clr-namespace:Squalr.Content"
     xmlns:converters="clr-namespace:Squalr.Source.Mvvm.Converters"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:intr="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+    xmlns:intr="http://schemas.microsoft.com/xaml/behaviors"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="SqualrScanResults"
     d:DesignHeight="256"

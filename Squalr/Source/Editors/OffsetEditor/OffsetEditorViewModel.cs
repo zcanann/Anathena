@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Source.Editors.OffsetEditor
 {
     using GalaSoft.MvvmLight;
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.Utils.DataStructures;
     using Squalr.Source.Mvvm;
     using System;

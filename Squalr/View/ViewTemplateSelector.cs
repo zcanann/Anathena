@@ -329,23 +329,6 @@
         }
 
         /// <summary>
-        /// Gets or sets the template for the Label Thresholder.
-        /// </summary>
-        public DataTemplate LabelThresholderViewTemplate
-        {
-            get
-            {
-                return this.labelThresholderViewTemplate;
-            }
-
-            set
-            {
-                this.labelThresholderViewTemplate = value;
-                this.DataTemplates[typeof(LabelThresholderViewModel)] = value;
-            }
-        }
-
-        /// <summary>
         /// Gets or sets the template for the Pointer Scanner.
         /// </summary>
         public DataTemplate PointerScannerViewTemplate

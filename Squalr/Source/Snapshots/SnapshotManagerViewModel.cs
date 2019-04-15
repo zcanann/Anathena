@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.Snapshots
 {
-    using GalaSoft.MvvmLight.CommandWpf;
+    using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.Scanning.Snapshots;
     using Squalr.Source.Docking;
     using System;
