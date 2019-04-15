@@ -1,11 +1,12 @@
 ﻿namespace Squalr.Cli
 {
+    using Squalr.Engine.Common;
     using System;
 
-    interface ICommandHandler
+    public interface ICommandHandler
     {
-        void TryHandleCommand(String command);
+        void TryHandle(ref Session session, Command command);
     }
-    //// End interface
+    //// End class
 }
 //// End namespace

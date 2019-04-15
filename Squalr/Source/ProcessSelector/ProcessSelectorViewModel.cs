@@ -2,8 +2,8 @@
 {
     using GalaSoft.MvvmLight.Command;
     using Squalr.Content;
-    using Squalr.Engine.OS;
-    using Squalr.Engine.Utils.Extensions;
+    using Squalr.Engine.Processes;
+    using Squalr.Engine.Common.Extensions;
     using Squalr.Source.Docking;
     using System;
     using System.Collections.Generic;
@@ -28,17 +28,17 @@
         /// <summary>
         /// A dummy process that detaches from the target process when selected.
         /// </summary>
-        private ProcessDecorator detachProcess;
+        private NormalizedProcess detachProcess;
 
         /// <summary>
         /// The selected process.
         /// </summary>
-        private ProcessDecorator selectedProcess;
+        private NormalizedProcess selectedProcess;
 
         /// <summary>
         /// The list of running processes.
         /// </summary>
-        private IEnumerable<ProcessDecorator> processList;
+        private IEnumerable<NormalizedProcess> processList;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="ProcessSelectorViewModel" /> class from being created.
@@ -47,8 +47,8 @@
         {
             this.IconSource = Images.SelectProcess;
             this.RefreshProcessListCommand = new RelayCommand(() => Task.Run(() => this.RefreshProcessList()), () => true);
-            this.SelectProcessCommand = new RelayCommand<ProcessDecorator>((process) => Task.Run(() => this.SelectProcess(process)), (process) => true);
-            this.detachProcess = new ProcessDecorator("-- Detach from Process --");
+            this.SelectProcessCommand = new RelayCommand<NormalizedProcess>((process) => Task.Run(() => this.SelectProcess(process)), (process) => true);
+            this.detachProcess = new NormalizedProcess("-- Detach from Process --");
 
             this.StartAutomaticProcessListRefresh();
 
@@ -71,7 +71,7 @@
         /// <summary>
         /// Gets or sets the list of processes running on the machine.
         /// </summary>
-        public IEnumerable<ProcessDecorator> ProcessList
+        public IEnumerable<NormalizedProcess> ProcessList
         {
             get
             {
@@ -90,7 +90,7 @@
         /// <summary>
         /// Gets the processes with a window running on the machine, as well as the selected process.
         /// </summary>
-        public IEnumerable<ProcessDecorator> WindowedProcessList
+        public IEnumerable<NormalizedProcess> WindowedProcessList
         {
             get
             {
@@ -105,7 +105,7 @@
         /// <summary>
         /// Gets or sets the selected process.
         /// </summary>
-        public ProcessDecorator SelectedProcess
+        public NormalizedProcess SelectedProcess
         {
             get
             {
@@ -133,7 +133,7 @@
         /// <summary>
         /// Gets or sets a dummy process that detaches from the target process when selected.
         /// </summary>
-        public ProcessDecorator DetachProcess
+        public NormalizedProcess DetachProcess
         {
             get
             {
@@ -195,7 +195,7 @@
         /// Makes the target process selection.
         /// </summary>
         /// <param name="process">The process being selected.</param>
-        private void SelectProcess(ProcessDecorator process)
+        private void SelectProcess(NormalizedProcess process)
         {
             this.SelectedProcess = process;
             this.IsVisible = false;
@@ -218,7 +218,7 @@
         /// </summary>
         private void RefreshProcessList()
         {
-            this.ProcessList = Processes.Default.GetProcesses().Select(process => new ProcessDecorator(process));
+            this.ProcessList = Processes.Default.GetProcesses().Select(process => new NormalizedProcess(process));
         }
     }
     //// End class

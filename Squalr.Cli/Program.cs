@@ -6,8 +6,12 @@
     {
         static void Main(String[] args)
         {
+            Console.SetOut(new PrefixedWriter());
+            CommandDispatcher commandDispatcher = new CommandDispatcher();
+
             while (true)
             {
+                Console.Write("");
                 String input = Console.ReadLine();
 
                 if (input.Equals("exit", StringComparison.OrdinalIgnoreCase) ||
@@ -17,7 +21,7 @@
                     break;
                 }
 
-                CommandDispatcher.Dispatch(input);
+                commandDispatcher.Dispatch(input);
             }
         }
     }
