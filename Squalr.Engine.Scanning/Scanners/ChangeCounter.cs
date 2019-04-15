@@ -1,6 +1,7 @@
 ﻿namespace Squalr.Engine.Scanning.Scanners
 {
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataTypes;
     using Squalr.Engine.Scanning.Snapshots;
     using System;
     using System.Collections.Generic;

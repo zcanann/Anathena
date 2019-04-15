@@ -1,14 +1,13 @@
 ﻿namespace Squalr.Engine.Memory
 {
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.OS;
+    using Squalr.Engine.Common.DataTypes;
     using System;
     using System.Collections.Generic;
 
     /// <summary>
     /// An interface for reading virtual memory.
     /// </summary>
-    public interface IMemoryReader : IProcessObserver
+    public interface IMemoryReader
     {
         /// <summary>
         /// Reads a value from the opened processes memory.

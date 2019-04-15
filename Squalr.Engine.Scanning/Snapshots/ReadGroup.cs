@@ -1,8 +1,8 @@
 ﻿namespace Squalr.Engine.Scanning.Snapshots
 {
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Common.OS;
     using Squalr.Engine.Memory;
-    using Squalr.Engine.OS;
     using System;
     using System.Collections.Generic;
 

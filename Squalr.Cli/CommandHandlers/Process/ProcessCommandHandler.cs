@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Cli
 {
     using CommandLine;
-    using Squalr.Engine.Common;
+    using Squalr.Engine;
     using System;
 
     public class ProcessCommandHandler : ICommandHandler
@@ -15,10 +15,11 @@
                 return;
             }
 
-            Parser.Default.ParseArguments<ProcessOpenOptions, ProcessListOptions>(command.Args)
+            Parser.Default.ParseArguments<ProcessOpenOptions, ProcessCloseOptions, ProcessListOptions>(command.Args)
                 .MapResult(
-                    (ProcessOpenOptions options) => ProcessOpenOptions.Handle(options),
-                    (ProcessListOptions options) => ProcessListOptions.Handle(options),
+                    (ProcessOpenOptions options) => options.Handle(),
+                    (ProcessCloseOptions options) => options.Handle(),
+                    (ProcessListOptions options) => options.Handle(),
                     errs => 1
                 );
 

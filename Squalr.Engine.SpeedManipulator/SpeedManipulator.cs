@@ -1,18 +1,16 @@
-﻿namespace Squalr.Engine.Speed
+﻿namespace Squalr.Engine.SpeedManipulator
 {
-    using Squalr.Engine.Engine.Hook;
-    using Squalr.Engine.OS;
     using System;
     using System.Diagnostics;
 
     /// <summary>
     /// Manipulates thread speed in a target process.
     /// </summary>
-    public class SpeedManipulator : ISpeedManipulator, IProcessObserver
+    public class SpeedManipulator : ISpeedManipulator
     {
-        public SpeedManipulator()
+        public SpeedManipulator(Process openedProcess)
         {
-            Processes.Default.Subscribe(this);
+            this.OpenedProcess = openedProcess;
         }
 
         /// <summary>
@@ -21,36 +19,20 @@
         /// <param name="speed">The speed multiplier.</param>
         public void SetSpeed(Double speed)
         {
-
         }
 
-        private HookClient HookClient { get; set; }
-
-        private Process TargetProcess { get; set; }
-
-        public void Update(Process process)
-        {
-            this.TargetProcess = process;
-
-            // this.UninstallHook();
-            // this.InstallHook();
-        }
+        private Process OpenedProcess { get; set; }
 
         public void InstallHook()
         {
-            if (this.TargetProcess == null)
+            if (this.OpenedProcess == null)
             {
                 return;
             }
-
-            this.HookClient = new HookClient();
-            this.HookClient?.Inject(this.TargetProcess.Id);
         }
 
         public void UninstallHook()
         {
-            this.HookClient?.Uninject();
-            this.HookClient = null;
         }
     }
     //// End interface

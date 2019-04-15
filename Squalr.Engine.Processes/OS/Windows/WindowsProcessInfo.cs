@@ -56,9 +56,9 @@
         /// Gets all running processes on the system.
         /// </summary>
         /// <returns>An enumeration of see <see cref="Process" />.</returns>
-        public IEnumerable<NormalizedProcess> GetProcesses()
+        public IEnumerable<Process> GetProcesses()
         {
-            return Process.GetProcesses().Select(x => new NormalizedProcess(x));
+            return Process.GetProcesses();
         }
 
         /// <summary>

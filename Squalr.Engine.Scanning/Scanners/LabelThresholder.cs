@@ -1,5 +1,6 @@
 ﻿namespace Squalr.Engine.Scanning.Scanners
 {
+    using Squalr.Engine.Common;
     using Squalr.Engine.Scanning.Snapshots;
     using System;
     using System.Collections.Concurrent;

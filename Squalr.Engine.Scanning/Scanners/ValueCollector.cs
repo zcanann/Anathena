@@ -1,12 +1,13 @@
 ﻿namespace Squalr.Engine.Scanning.Scanners
 {
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Scanning.Snapshots;
     using System;
     using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
-    using static Squalr.Engine.TrackableTask;
+    using static Squalr.Engine.Common.TrackableTask;
 
     /// <summary>
     /// Collect values for a given snapshot. The values are assigned to a new snapshot.

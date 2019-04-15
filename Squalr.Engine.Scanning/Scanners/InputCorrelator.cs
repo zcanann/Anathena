@@ -1,13 +1,14 @@
 ﻿namespace Squalr.Engine.Scanning.Scanners
 {
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataStructures;
+    using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Common.Extensions;
     using Squalr.Engine.Input;
     using Squalr.Engine.Input.HotKeys;
     using Squalr.Engine.Input.Keyboard;
     using Squalr.Engine.Scanning.Properties;
     using Squalr.Engine.Scanning.Snapshots;
-    using Squalr.Engine.Utils.DataStructures;
-    using Squalr.Engine.Utils.Extensions;
     using System;
     using System.Collections.Generic;
     using System.Linq;

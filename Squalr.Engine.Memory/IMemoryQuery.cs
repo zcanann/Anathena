@@ -1,13 +1,12 @@
 ﻿namespace Squalr.Engine.Memory
 {
-    using Squalr.Engine.OS;
     using System;
     using System.Collections.Generic;
 
     /// <summary>
     /// An interface for querying virtual memory.
     /// </summary>
-    public interface IMemoryQuery : IProcessObserver
+    public interface IMemoryQuery
     {
         /// <summary>
         /// Gets regions of memory allocated in the remote process based on provided parameters.

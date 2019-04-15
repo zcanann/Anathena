@@ -14,7 +14,7 @@
         /// Gets all running processes on the system.
         /// </summary>
         /// <returns>An enumeration of see <see cref="ExternalProcess" />.</returns>
-        IEnumerable<NormalizedProcess> GetProcesses();
+        IEnumerable<Process> GetProcesses();
 
         /// <summary>
         /// Fetches the icon associated with the provided process.

@@ -1,12 +1,11 @@
 ﻿namespace Squalr.Engine.Memory
 {
-    using Squalr.Engine.OS;
     using System;
 
     /// <summary>
     /// An interface for querying virtual memory.
     /// </summary>
-    public interface IMemoryAllocator : IProcessObserver
+    public interface IMemoryAllocator
     {
         /// <summary>
         /// Allocates memory in the opened process.

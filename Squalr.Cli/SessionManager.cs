@@ -2,9 +2,9 @@
 {
     using Squalr.Engine;
 
-    public interface ICommandHandler
+    public class SessionManager
     {
-        void TryHandle(ref Session session, Command command);
+        public static Session Session { get; set; }
     }
     //// End class
 }

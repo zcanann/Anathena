@@ -57,6 +57,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Squalr.Engine.SpeedManipulator\Squalr.Engine.SpeedManipulator.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Utils\Squalr.Engine.Common.csproj" />
   </ItemGroup>
 

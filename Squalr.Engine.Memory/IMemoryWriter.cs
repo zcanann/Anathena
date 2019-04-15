@@ -1,13 +1,12 @@
 ﻿namespace Squalr.Engine.Memory
 {
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.OS;
+    using Squalr.Engine.Common.DataTypes;
     using System;
 
     /// <summary>
     /// An interface for writing virtual memory.
     /// </summary>
-    public interface IMemoryWriter : IProcessObserver
+    public interface IMemoryWriter
     {
         /// <summary>
         /// Writes a value to memory in the opened process.

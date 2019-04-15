@@ -1,8 +1,8 @@
-﻿using Squalr.Engine.DataTypes;
-using System;
-
-namespace Squalr.Engine.Scanning.Scanners.Pointers.Structures
+﻿namespace Squalr.Engine.Scanning.Scanners.Pointers.Structures
 {
+    using Squalr.Engine.Common.DataTypes;
+    using System;
+
     public static class PointerSizeExtensions
     {
         public static Int32 ToSize(this PointerSize pointerSize)

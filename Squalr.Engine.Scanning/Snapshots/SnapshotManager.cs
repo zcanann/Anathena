@@ -1,7 +1,5 @@
 ﻿namespace Squalr.Engine.Scanning.Snapshots
 {
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.Logging;
     using Squalr.Engine.Memory;
     using Squalr.Engine.Scanning.Properties;
     using Squalr.Source.Prefilters;

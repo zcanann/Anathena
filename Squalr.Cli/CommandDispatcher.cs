@@ -1,9 +1,8 @@
 ﻿namespace Squalr.Cli
 {
-    using Squalr.Engine.Common;
+    using Squalr.Engine;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class CommandDispatcher
     {
@@ -14,6 +13,7 @@
             this.CommandHandlers = new List<ICommandHandler>()
             {
                 new ProcessCommandHandler(),
+                new ScanCommandHandler(),
             };
         }
 

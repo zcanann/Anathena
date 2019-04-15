@@ -1,4 +1,4 @@
-﻿namespace Squalr.Engine.Speed
+﻿namespace Squalr.Engine.SpeedManipulator
 {
     using System;
 

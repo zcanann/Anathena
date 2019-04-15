@@ -1,8 +1,8 @@
 ﻿namespace Squalr.Engine.Scanning.Scanners.Pointers.Structures
 {
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common.Extensions;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Scanning.Snapshots;
-    using Squalr.Engine.Utils.Extensions;
     using System;
     using System.Collections;
     using System.Collections.Generic;

@@ -1,8 +1,7 @@
-﻿using Squalr.Engine.OS;
-
-namespace Squalr.Engine.Scanning.Scanners.Pointers
+﻿namespace Squalr.Engine.Scanning.Scanners.Pointers
 {
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Scanning.Scanners.Pointers.Structures;
     using Squalr.Engine.Scanning.Snapshots;
     using System;
@@ -10,7 +9,7 @@ namespace Squalr.Engine.Scanning.Scanners.Pointers
     using System.Diagnostics;
     using System.Threading;
     using System.Threading.Tasks;
-    using static Squalr.Engine.TrackableTask;
+    using static Squalr.Engine.Common.TrackableTask;
 
     /// <summary>
     /// Scans for pointers in the target process.

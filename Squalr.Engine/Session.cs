@@ -1,34 +1,30 @@
-﻿namespace Squalr.Engine.Common
+﻿namespace Squalr.Engine
 {
     using Squalr.Engine.Common.Logging;
+    using Squalr.Engine.SpeedManipulator;
     using System.Diagnostics;
     using System.Threading.Tasks;
 
     public class Session
     {
-        private Process openedProcess;
-
         public Session(Process processToOpen)
         {
             Logger.Log(LogLevel.Info, "Attached to process: " + processToOpen?.ProcessName);
 
             this.OpenedProcess = processToOpen;
+
+            this.ListenForProcessDeath();
         }
 
         /// <summary>
         /// Gets a reference to the target process.
         /// </summary>
-        public Process OpenedProcess
-        {
-            get
-            {
-                return this.openedProcess;
-            }
+        public Process OpenedProcess { get; private set; }
 
-            set
-            {
-                this.openedProcess = value;
-            }
+        public ISpeedManipulator SpeedManipulator { get; private set; }
+
+        public void Destroy()
+        {
         }
 
         /// <summary>

@@ -4,41 +4,42 @@
     using Squalr.Engine.Processes;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
 
     [Verb("list", HelpText = "List running processes.")]
     public class ProcessListOptions
     {
-        public static Int32 Handle(ProcessListOptions options)
+        public Int32 Handle()
         {
-            IEnumerable<NormalizedProcess> processes = Query.Default.GetProcesses();
+            IEnumerable<Process> processes = Query.Default.GetProcesses();
 
-            if (options.IsWindowed)
+            if (this.IsWindowed)
             {
-                processes = processes.Where(x => x.HasWindow);
+                processes = processes.Where(x => x.HasWindow());
             }
 
-            if (!String.IsNullOrEmpty(options.SearchTerm))
+            if (!String.IsNullOrEmpty(this.SearchTerm))
             {
-                processes = Query.Default.GetProcesses().Where(x => x.ProcessName.Contains(options.SearchTerm, options.MatchCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase));
+                processes = Query.Default.GetProcesses().Where(x => x.ProcessName.Contains(this.SearchTerm, this.MatchCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase));
             }
 
-            if (!options.IncludeSystemProcesses)
+            if (!this.IncludeSystemProcesses)
             {
-                processes = processes.Where(x => !x.IsSystemProcess);
+                processes = processes.Where(x => !x.IsSystemProcess());
             }
 
-            if (options.Limit > 0)
+            if (this.Limit > 0)
             {
-                processes = processes.Take(options.Limit);
+                processes = processes.Take(this.Limit);
             }
 
             Console.WriteLine("PID" + "\t\t" + "Process Name");
             Console.WriteLine("--------------------------");
 
-            foreach (NormalizedProcess process in processes)
+            foreach (Process process in processes)
             {
-                Console.WriteLine(process.ProcessId + "\t\t" + process.ProcessName);
+                Console.WriteLine(process.Id + "\t\t" + process.ProcessName);
             }
 
             Console.WriteLine();

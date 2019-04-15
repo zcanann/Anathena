@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Engine.Memory
 {
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Memory.Windows;
     using System;
     using System.Threading;

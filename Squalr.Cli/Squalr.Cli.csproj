@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Squalr.Engine\Squalr.Engine.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="CommandHandlers\SpeedHack\" />
+  </ItemGroup>
+
 </Project>

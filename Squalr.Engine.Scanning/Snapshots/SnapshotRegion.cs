@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Engine.Scanning.Snapshots
 {
+    using Squalr.Engine.Common.Extensions;
     using Squalr.Engine.Scanning.Scanners.Constraints;
-    using Squalr.Engine.Utils.Extensions;
     using System;
     using System.Collections.Generic;
 

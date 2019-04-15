@@ -1,8 +1,8 @@
-﻿using Squalr.Engine.DataTypes;
-using System;
-
-namespace Squalr.Engine.Memory
+﻿namespace Squalr.Engine.Memory
 {
+    using Squalr.Engine.Common.DataTypes;
+    using System;
+
     public static class Extensions
     {
         /// <summary>

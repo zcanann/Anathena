@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Engine.Memory.Clr
 {
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common.DataTypes;
     using System;
     using System.Collections;
     using System.Collections.Generic;

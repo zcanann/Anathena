@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Engine.Memory
 {
-    using Logging;
-    using Squalr.Engine.Utils.Extensions;
+    using Squalr.Engine.Common.Extensions;
+    using Squalr.Engine.Common.Logging;
     using System;
     using System.Collections.Generic;
     using System.Linq;
