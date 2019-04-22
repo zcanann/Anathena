@@ -74,18 +74,6 @@
             this.AddSnapshotRegions(snapshotRegions);
         }
 
-        [Flags]
-        public enum SnapshotRetrievalMode
-        {
-            FromActiveSnapshot,
-            FromActiveSnapshotOrPrefilter,
-            FromSettings,
-            FromUserModeMemory,
-            FromHeaps,
-            FromStack,
-            FromModules,
-        }
-
         /// <summary>
         /// Gets the name associated with the method by which this snapshot was generated.
         /// </summary>

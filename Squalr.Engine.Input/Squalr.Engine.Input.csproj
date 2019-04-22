@@ -20,7 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Squalr.Engine\Squalr.Engine.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Utils\Squalr.Engine.Common.csproj" />
   </ItemGroup>
 
 </Project>

@@ -30,7 +30,7 @@
         /// <param name="alignment">The pointer scan alignment.</param>
         /// <param name="taskIdentifier">The unique identifier to prevent duplicate tasks.</param>
         /// <returns>Atrackable task that returns the scan results.</returns>
-        public static TrackableTask<PointerBag> Scan(UInt64 address, UInt32 maxOffset, Int32 depth, Int32 alignment, String taskIdentifier = null)
+        public static TrackableTask<PointerBag> Scan(UInt64 address, UInt32 maxOffset, Int32 depth, Int32 alignment, PointerSize pointerSize, String taskIdentifier = null)
         {
             try
             {
@@ -42,11 +42,6 @@
                         {
                             cancellationToken.ThrowIfCancellationRequested();
 
-                            // Fix pointer size detection
-                            throw new NotImplementedException();
-                            PointerSize pointerSize = PointerSize.Byte4;
-                            // PointerSize pointerSize = this.ExternalProcess.Is32Bit() ? PointerSize.Byte4 : PointerSize.Byte8;
-
                             Stopwatch stopwatch = new Stopwatch();
                             stopwatch.Start();
 
@@ -54,12 +49,12 @@
                             Snapshot targetAddress = new Snapshot(new SnapshotRegion[] { new SnapshotRegion(new ReadGroup(address, pointerSize.ToSize(), pointerSize.ToDataType(), alignment), 0, pointerSize.ToSize()) });
 
                             // Step 2) Collect static pointers
-                            Snapshot staticPointers = SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromModules, pointerSize.ToDataType());
+                            Snapshot staticPointers = SnapshotQuery.GetSnapshot(SnapshotQuery.SnapshotRetrievalMode.FromModules, pointerSize.ToDataType());
                             TrackableTask<Snapshot> valueCollector = ValueCollector.CollectValues(staticPointers);
                             staticPointers = valueCollector.Result;
 
                             // Step 3) Collect heap pointers
-                            Snapshot heapPointers = SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromHeaps, pointerSize.ToDataType());
+                            Snapshot heapPointers = SnapshotQuery.GetSnapshot(SnapshotQuery.SnapshotRetrievalMode.FromHeaps, pointerSize.ToDataType());
                             TrackableTask<Snapshot> heapValueCollector = ValueCollector.CollectValues(heapPointers);
                             heapPointers = heapValueCollector.Result;
 

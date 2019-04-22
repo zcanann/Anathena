@@ -4,7 +4,7 @@
     using System;
 
     [Verb("next", HelpText = "Starts the next scan")]
-    public class ScanOptions
+    public class NextScanOptions
     {
         public Int32 Handle()
         {

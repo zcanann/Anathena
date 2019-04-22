@@ -65,8 +65,6 @@
 
             SessionManager.Session = new Session(process);
 
-            Console.WriteLine("Opened process: " + process.ProcessName + " (" + process.Id.ToString() + ")");
-
             return 0;
         }
 

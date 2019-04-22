@@ -50,7 +50,7 @@
                         Snapshot targetAddress = new Snapshot(new SnapshotRegion[] { new SnapshotRegion(new ReadGroup(newAddress, oldPointerBag.PointerSize.ToSize(), oldPointerBag.PointerSize.ToDataType(), alignment), 0, oldPointerBag.PointerSize.ToSize()) });
 
                         // Step 2) Collect heap pointers
-                        Snapshot heapPointers = SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromHeaps, oldPointerBag.PointerSize.ToDataType());
+                        Snapshot heapPointers = SnapshotQuery.GetSnapshot(SnapshotQuery.SnapshotRetrievalMode.FromHeaps, oldPointerBag.PointerSize.ToDataType());
                         TrackableTask<Snapshot> heapValueCollector = ValueCollector.CollectValues(heapPointers);
                         heapPointers = heapValueCollector.Result;
 

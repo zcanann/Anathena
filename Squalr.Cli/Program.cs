@@ -1,5 +1,6 @@
 ﻿namespace Squalr.Cli
 {
+    using Squalr.Engine.Common.Logging;
     using System;
 
     class Program
@@ -8,6 +9,9 @@
         {
             Console.SetOut(new PrefixedWriter());
             CommandDispatcher commandDispatcher = new CommandDispatcher();
+            LogListener logListener = new LogListener();
+
+            Logger.Subscribe(logListener);
 
             while (true)
             {

@@ -1,68 +1,68 @@
 ﻿namespace Squalr.Engine.Scanning.Snapshots
 {
     using Squalr.Engine.Common.DataTypes;
-    using Squalr.Engine.Common.Logging;
-    using Squalr.Engine.Memory;
     using Squalr.Engine.Scanning.Properties;
     using Squalr.Source.Prefilters;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
     using System.Threading.Tasks;
 
-    public static class SnapshotManager
+    public class SnapshotManager
     {
         /// <summary>
         /// The size limit for snapshots to be saved in the snapshot history (256MB). TODO: Make this a setting.
         /// </summary>
         private const UInt64 SizeLimit = 1UL << 28;
 
-        static SnapshotManager()
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SnapshotManager" /> class.
+        /// </summary>
+        public SnapshotManager()
         {
-            SnapshotManager.AccessLock = new Object();
-            SnapshotManager.ObserverLock = new Object();
-            SnapshotManager.Snapshots = new Stack<Snapshot>();
-            SnapshotManager.DeletedSnapshots = new Stack<Snapshot>();
-            SnapshotManager.SnapshotObservers = new List<ISnapshotObserver>();
+            this.AccessLock = new Object();
+            this.ObserverLock = new Object();
+            this.Snapshots = new Stack<Snapshot>();
+            this.DeletedSnapshots = new Stack<Snapshot>();
+            this.SnapshotObservers = new List<ISnapshotObserver>();
         }
 
         /// <summary>
         /// Gets the snapshots being managed.
         /// </summary>
-        public static Stack<Snapshot> Snapshots { get; private set; }
+        public Stack<Snapshot> Snapshots { get; private set; }
 
         /// <summary>
         /// Gets the deleted snapshots for the capability of redoing after undo.
         /// </summary>
-        public static Stack<Snapshot> DeletedSnapshots { get; private set; }
+        public Stack<Snapshot> DeletedSnapshots { get; private set; }
 
         /// <summary>
         /// Gets or sets a lock to ensure multiple entities do not try and update the snapshot list at the same time.
         /// </summary>
-        private static Object AccessLock { get; set; }
+        private Object AccessLock { get; set; }
 
         /// <summary>
         /// Gets or sets a lock to ensure multiple entities do not try and update the snapshot list at the same time.
         /// </summary>
-        private static Object ObserverLock { get; set; }
+        private Object ObserverLock { get; set; }
 
         /// <summary>
         /// Gets or sets objects observing changes in the active snapshot.
         /// </summary>
-        private static List<ISnapshotObserver> SnapshotObservers { get; set; }
+        private List<ISnapshotObserver> SnapshotObservers { get; set; }
 
         /// <summary>
         /// Subscribes the given object to changes in the active snapshot.
         /// </summary>
         /// <param name="snapshotObserver">The object to observe active snapshot changes.</param>
-        public static void Subscribe(ISnapshotObserver snapshotObserver)
+        public void Subscribe(ISnapshotObserver snapshotObserver)
         {
-            lock (SnapshotManager.ObserverLock)
+            lock (this.ObserverLock)
             {
-                if (!SnapshotManager.SnapshotObservers.Contains(snapshotObserver))
+                if (!this.SnapshotObservers.Contains(snapshotObserver))
                 {
-                    SnapshotManager.SnapshotObservers.Add(snapshotObserver);
-                    snapshotObserver.Update(SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromActiveSnapshot, null));
+                    this.SnapshotObservers.Add(snapshotObserver);
+                    snapshotObserver.Update(this.GetActiveSnapshot());
                 }
             }
         }
@@ -71,43 +71,14 @@
         /// Unsubscribes the given object from changes in the active snapshot.
         /// </summary>
         /// <param name="snapshotObserver">The object to observe active snapshot changes.</param>
-        public static void Unsubscribe(ISnapshotObserver snapshotObserver)
+        public void Unsubscribe(ISnapshotObserver snapshotObserver)
         {
-            lock (SnapshotManager.ObserverLock)
+            lock (this.ObserverLock)
             {
-                if (SnapshotManager.SnapshotObservers.Contains(snapshotObserver))
+                if (this.SnapshotObservers.Contains(snapshotObserver))
                 {
-                    SnapshotManager.SnapshotObservers.Remove(snapshotObserver);
+                    this.SnapshotObservers.Remove(snapshotObserver);
                 }
-            }
-        }
-
-        /// <summary>
-        /// Gets a snapshot based on the provided mode. Will not read any memory.
-        /// </summary>
-        /// <param name="snapshotCreationMode">The method of snapshot retrieval.</param>
-        /// <returns>The collected snapshot.</returns>
-        public static Snapshot GetSnapshot(Snapshot.SnapshotRetrievalMode snapshotCreationMode, DataType dataType)
-        {
-            switch (snapshotCreationMode)
-            {
-                case Snapshot.SnapshotRetrievalMode.FromActiveSnapshot:
-                    return SnapshotManager.GetActiveSnapshot();
-                case Snapshot.SnapshotRetrievalMode.FromActiveSnapshotOrPrefilter:
-                    return SnapshotManager.GetActiveSnapshotCreateIfNone(dataType);
-                case Snapshot.SnapshotRetrievalMode.FromSettings:
-                    return SnapshotManager.CreateSnapshotFromSettings(dataType);
-                case Snapshot.SnapshotRetrievalMode.FromUserModeMemory:
-                    return SnapshotManager.CreateSnapshotFromUsermodeMemory(dataType);
-                case Snapshot.SnapshotRetrievalMode.FromModules:
-                    return SnapshotManager.CreateSnapshotFromModules(dataType);
-                case Snapshot.SnapshotRetrievalMode.FromHeaps:
-                    return SnapshotManager.CreateSnapshotFromHeaps(dataType);
-                case Snapshot.SnapshotRetrievalMode.FromStack:
-                    throw new NotImplementedException();
-                default:
-                    Logger.Log(LogLevel.Error, "Unknown snapshot retrieval mode");
-                    return null;
             }
         }
 
@@ -115,11 +86,11 @@
         /// Returns the memory regions associated with the current snapshot. If none exist, a query will be done. Will not read any memory.
         /// </summary>
         /// <returns>The current active snapshot of memory in the target process.</returns>
-        private static Snapshot GetActiveSnapshotCreateIfNone(DataType dataType)
+        private Snapshot GetActiveSnapshotCreateIfNone(DataType dataType)
         {
-            lock (SnapshotManager.AccessLock)
+            lock (this.AccessLock)
             {
-                if (SnapshotManager.Snapshots.Count == 0 || SnapshotManager.Snapshots.Peek() == null || SnapshotManager.Snapshots.Peek().ElementCount == 0)
+                if (this.Snapshots.Count == 0 || this.Snapshots.Peek() == null || this.Snapshots.Peek().ElementCount == 0)
                 {
                     Snapshot snapshot = Prefilter.GetInstance().GetPrefilteredSnapshot(dataType);
                     snapshot.Alignment = ScanSettings.Default.Alignment;
@@ -127,7 +98,7 @@
                 }
 
                 // Return the snapshot
-                return SnapshotManager.Snapshots.Peek();
+                return this.Snapshots.Peek();
             }
         }
 
@@ -135,191 +106,71 @@
         /// Returns the memory regions associated with the current snapshot. If none exist, a query will be done. Will not read any memory.
         /// </summary>
         /// <returns>The current active snapshot of memory in the target process.</returns>
-        private static Snapshot GetActiveSnapshot()
+        private Snapshot GetActiveSnapshot()
         {
-            lock (SnapshotManager.AccessLock)
+            lock (this.AccessLock)
             {
                 // Take a snapshot if there are none, or the current one is empty
-                if (SnapshotManager.Snapshots.Count == 0 || SnapshotManager.Snapshots.Peek() == null || SnapshotManager.Snapshots.Peek().ElementCount == 0)
+                if (this.Snapshots.Count == 0 || this.Snapshots.Peek() == null || this.Snapshots.Peek().ElementCount == 0)
                 {
                     return null;
                 }
 
                 // Return the snapshot
-                return SnapshotManager.Snapshots.Peek();
+                return this.Snapshots.Peek();
             }
-        }
-
-        /// <summary>
-        /// Creates a snapshot from all usermode memory. Will not read any memory.
-        /// </summary>
-        /// <returns>A snapshot created from usermode memory.</returns>
-        private static Snapshot CreateSnapshotFromUsermodeMemory(DataType dataType)
-        {
-            MemoryProtectionEnum requiredPageFlags = 0;
-            MemoryProtectionEnum excludedPageFlags = 0;
-            MemoryTypeEnum allowedTypeFlags = MemoryTypeEnum.None | MemoryTypeEnum.Private | MemoryTypeEnum.Image;
-
-            UInt64 startAddress = 0;
-            UInt64 endAddress = Query.Default.GetMaxUsermodeAddress();
-
-            List<ReadGroup> memoryRegions = new List<ReadGroup>();
-            IEnumerable<NormalizedRegion> virtualPages = Query.Default.GetVirtualPages(
-                requiredPageFlags,
-                excludedPageFlags,
-                allowedTypeFlags,
-                startAddress,
-                endAddress);
-
-            foreach (NormalizedRegion virtualPage in virtualPages)
-            {
-                memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Default.Alignment));
-            }
-
-            return new Snapshot(null, memoryRegions);
-        }
-
-        /// <summary>
-        /// Creates a new snapshot of memory in the target process. Will not read any memory.
-        /// </summary>
-        /// <returns>The snapshot of memory taken in the target process.</returns>
-        private static Snapshot CreateSnapshotFromSettings(DataType dataType)
-        {
-            MemoryProtectionEnum requiredPageFlags = SnapshotManager.GetRequiredProtectionSettings();
-            MemoryProtectionEnum excludedPageFlags = SnapshotManager.GetExcludedProtectionSettings();
-            MemoryTypeEnum allowedTypeFlags = SnapshotManager.GetAllowedTypeSettings();
-
-            UInt64 startAddress;
-            UInt64 endAddress;
-
-            if (ScanSettings.Default.IsUserMode)
-            {
-                startAddress = 0;
-                endAddress = Query.Default.GetMaxUsermodeAddress();
-            }
-            else
-            {
-                startAddress = ScanSettings.Default.StartAddress;
-                endAddress = ScanSettings.Default.EndAddress;
-            }
-
-            List<ReadGroup> memoryRegions = new List<ReadGroup>();
-            IEnumerable<NormalizedRegion> virtualPages = Query.Default.GetVirtualPages(
-                requiredPageFlags,
-                excludedPageFlags,
-                allowedTypeFlags,
-                startAddress,
-                endAddress);
-
-            // Convert each virtual page to a snapshot region
-            foreach (NormalizedRegion virtualPage in virtualPages)
-            {
-                memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Default.Alignment));
-            }
-
-            return new Snapshot(null, memoryRegions);
-        }
-
-        /// <summary>
-        /// Creates a snapshot from modules in the selected process.
-        /// </summary>
-        /// <returns>The created snapshot.</returns>
-        private static Snapshot CreateSnapshotFromModules(DataType dataType)
-        {
-            IList<ReadGroup> moduleGroups = Query.Default.GetModules().Select(region => new ReadGroup(region.BaseAddress, region.RegionSize, dataType, ScanSettings.Default.Alignment)).ToList();
-            Snapshot moduleSnapshot = new Snapshot(null, moduleGroups);
-
-            return moduleSnapshot;
-        }
-
-        /// <summary>
-        /// Creates a snapshot from modules in the selected process.
-        /// </summary>
-        /// <returns>The created snapshot.</returns>
-        private static Snapshot CreateSnapshotFromHeaps(DataType dataType)
-        {
-            // TODO: This currently grabs all usermode memory and excludes modules. A better implementation would involve actually grabbing heaps.
-            Snapshot snapshot = SnapshotManager.CreateSnapshotFromUsermodeMemory(dataType);
-            IEnumerable<NormalizedModule> modules = Query.Default.GetModules();
-
-            MemoryProtectionEnum requiredPageFlags = 0;
-            MemoryProtectionEnum excludedPageFlags = 0;
-            MemoryTypeEnum allowedTypeFlags = MemoryTypeEnum.None | MemoryTypeEnum.Private | MemoryTypeEnum.Image;
-
-            UInt64 startAddress = 0;
-            UInt64 endAddress = Query.Default.GetMaxUsermodeAddress();
-
-            List<ReadGroup> memoryRegions = new List<ReadGroup>();
-            IEnumerable<NormalizedRegion> virtualPages = Query.Default.GetVirtualPages(
-                requiredPageFlags,
-                excludedPageFlags,
-                allowedTypeFlags,
-                startAddress,
-                endAddress);
-
-            foreach (NormalizedRegion virtualPage in virtualPages)
-            {
-                if (modules.Any(x => x.BaseAddress == virtualPage.BaseAddress))
-                {
-                    continue;
-                }
-
-                memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Default.Alignment));
-            }
-
-            return new Snapshot(null, memoryRegions);
         }
 
         /// <summary>
         /// Reverses an undo action.
         /// </summary>
-        public static void RedoSnapshot()
+        public void RedoSnapshot()
         {
-            lock (SnapshotManager.AccessLock)
+            lock (this.AccessLock)
             {
-                if (SnapshotManager.DeletedSnapshots.Count == 0)
+                if (this.DeletedSnapshots.Count == 0)
                 {
                     return;
                 }
 
-                SnapshotManager.Snapshots.Push(SnapshotManager.DeletedSnapshots.Pop());
-                SnapshotManager.NotifyObservers();
+                this.Snapshots.Push(this.DeletedSnapshots.Pop());
+                this.NotifyObservers();
             }
         }
 
         /// <summary>
         /// Undoes the current active snapshot, reverting to the previous snapshot.
         /// </summary>
-        public static void UndoSnapshot()
+        public void UndoSnapshot()
         {
-            lock (SnapshotManager.AccessLock)
+            lock (this.AccessLock)
             {
-                if (SnapshotManager.Snapshots.Count == 0)
+                if (this.Snapshots.Count == 0)
                 {
                     return;
                 }
 
-                SnapshotManager.DeletedSnapshots.Push(SnapshotManager.Snapshots.Pop());
+                this.DeletedSnapshots.Push(this.Snapshots.Pop());
 
-                if (SnapshotManager.DeletedSnapshots.Peek() == null)
+                if (this.DeletedSnapshots.Peek() == null)
                 {
-                    SnapshotManager.DeletedSnapshots.Pop();
+                    this.DeletedSnapshots.Pop();
                 }
 
-                SnapshotManager.NotifyObservers();
+                this.NotifyObservers();
             }
         }
 
         /// <summary>
         /// Clears all snapshot records.
         /// </summary>
-        public static void ClearSnapshots()
+        public void ClearSnapshots()
         {
-            lock (SnapshotManager.AccessLock)
+            lock (this.AccessLock)
             {
-                SnapshotManager.Snapshots.Clear();
-                SnapshotManager.DeletedSnapshots.Clear();
-                SnapshotManager.NotifyObservers();
+                this.Snapshots.Clear();
+                this.DeletedSnapshots.Clear();
+                this.NotifyObservers();
 
                 // There can be multiple GB of deleted snapshots, so run the garbage collector ASAP for a performance boost.
                 Task.Run(() => GC.Collect());
@@ -330,125 +181,42 @@
         /// Saves a new snapshot, which will become the current active snapshot.
         /// </summary>
         /// <param name="snapshot">The snapshot to save.</param>
-        public static void SaveSnapshot(Snapshot snapshot)
+        public void SaveSnapshot(Snapshot snapshot)
         {
-            lock (SnapshotManager.AccessLock)
+            lock (this.AccessLock)
             {
                 // Remove null snapshot if exists
-                if (SnapshotManager.Snapshots.Count != 0 && SnapshotManager.Snapshots.Peek() == null)
+                if (this.Snapshots.Count != 0 && this.Snapshots.Peek() == null)
                 {
-                    SnapshotManager.Snapshots.Pop();
+                    this.Snapshots.Pop();
                 }
 
                 // Do not keep large snapshots in the undo history
-                if (SnapshotManager.Snapshots.Count != 0 && SnapshotManager.Snapshots.Peek() != null && SnapshotManager.Snapshots.Peek().ByteCount > SnapshotManager.SizeLimit)
+                if (this.Snapshots.Count != 0 && this.Snapshots.Peek() != null && this.Snapshots.Peek().ByteCount > SnapshotManager.SizeLimit)
                 {
-                    SnapshotManager.Snapshots.Pop();
+                    this.Snapshots.Pop();
                 }
 
-                SnapshotManager.Snapshots.Push(snapshot);
-                SnapshotManager.DeletedSnapshots.Clear();
-                SnapshotManager.NotifyObservers();
+                this.Snapshots.Push(snapshot);
+                this.DeletedSnapshots.Clear();
+                this.NotifyObservers();
             }
         }
 
         /// <summary>
         /// Notify all observing objects of an active snapshot change.
         /// </summary>
-        private static void NotifyObservers()
+        private void NotifyObservers()
         {
-            lock (SnapshotManager.ObserverLock)
+            lock (this.ObserverLock)
             {
-                Snapshot activeSnapshot = SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromActiveSnapshot, null);
+                Snapshot activeSnapshot = this.GetActiveSnapshot();
 
-                foreach (ISnapshotObserver observer in SnapshotManager.SnapshotObservers)
+                foreach (ISnapshotObserver observer in this.SnapshotObservers)
                 {
                     observer.Update(activeSnapshot);
                 }
             }
-        }
-
-        /// <summary>
-        /// Gets the allowed type settings for virtual memory queries based on the set type flags.
-        /// </summary>
-        /// <returns>The flags of the allowed types for virtual memory queries.</returns>
-        private static MemoryTypeEnum GetAllowedTypeSettings()
-        {
-            MemoryTypeEnum result = 0;
-
-            if (ScanSettings.Default.MemoryTypeNone)
-            {
-                result |= MemoryTypeEnum.None;
-            }
-
-            if (ScanSettings.Default.MemoryTypePrivate)
-            {
-                result |= MemoryTypeEnum.Private;
-            }
-
-            if (ScanSettings.Default.MemoryTypeImage)
-            {
-                result |= MemoryTypeEnum.Image;
-            }
-
-            if (ScanSettings.Default.MemoryTypeMapped)
-            {
-                result |= MemoryTypeEnum.Mapped;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets the required protection settings for virtual memory queries based on the set type flags.
-        /// </summary>
-        /// <returns>The flags of the required protections for virtual memory queries.</returns>
-        private static MemoryProtectionEnum GetRequiredProtectionSettings()
-        {
-            MemoryProtectionEnum result = 0;
-
-            if (ScanSettings.Default.RequiredWrite)
-            {
-                result |= MemoryProtectionEnum.Write;
-            }
-
-            if (ScanSettings.Default.RequiredExecute)
-            {
-                result |= MemoryProtectionEnum.Execute;
-            }
-
-            if (ScanSettings.Default.RequiredCopyOnWrite)
-            {
-                result |= MemoryProtectionEnum.CopyOnWrite;
-            }
-
-            return result;
-        }
-
-        /// <summary>
-        /// Gets the excluded protection settings for virtual memory queries based on the set type flags.
-        /// </summary>
-        /// <returns>The flags of the excluded protections for virtual memory queries.</returns>
-        private static MemoryProtectionEnum GetExcludedProtectionSettings()
-        {
-            MemoryProtectionEnum result = 0;
-
-            if (ScanSettings.Default.ExcludedWrite)
-            {
-                result |= MemoryProtectionEnum.Write;
-            }
-
-            if (ScanSettings.Default.ExcludedExecute)
-            {
-                result |= MemoryProtectionEnum.Execute;
-            }
-
-            if (ScanSettings.Default.ExcludedCopyOnWrite)
-            {
-                result |= MemoryProtectionEnum.CopyOnWrite;
-            }
-
-            return result;
         }
     }
     //// End class

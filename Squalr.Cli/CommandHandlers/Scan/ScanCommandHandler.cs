@@ -22,10 +22,10 @@
                 return;
             }
 
-            Parser.Default.ParseArguments<NewScanOptions, ScanOptions>(command.Args)
+            Parser.Default.ParseArguments<NewScanOptions, NextScanOptions>(command.Args)
                 .MapResult(
                     (NewScanOptions options) => options.Handle(),
-                    (ScanOptions options) => options.Handle(),
+                    (NextScanOptions options) => options.Handle(),
                     errs => 1
                 );
         }
