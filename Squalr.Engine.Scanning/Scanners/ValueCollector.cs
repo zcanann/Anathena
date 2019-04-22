@@ -31,6 +31,8 @@
                         {
                             Int32 processedRegions = 0;
 
+                            Logger.Log(LogLevel.Info, "Reading values from memory...");
+
                             Stopwatch stopwatch = new Stopwatch();
                             stopwatch.Start();
 

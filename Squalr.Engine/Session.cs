@@ -18,6 +18,7 @@
             Logger.Log(LogLevel.Info, "Attached to process: " + processToOpen.ProcessName + " (" + processToOpen.Id.ToString() + ")");
 
             this.OpenedProcess = processToOpen;
+            this.SnapshotManager = new SnapshotManager();
 
             this.ListenForProcessDeath();
         }

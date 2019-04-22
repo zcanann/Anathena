@@ -2,7 +2,6 @@
 {
     using Squalr.Engine.Common.DataTypes;
     using Squalr.Engine.Scanning.Properties;
-    using Squalr.Source.Prefilters;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
@@ -86,13 +85,13 @@
         /// Returns the memory regions associated with the current snapshot. If none exist, a query will be done. Will not read any memory.
         /// </summary>
         /// <returns>The current active snapshot of memory in the target process.</returns>
-        private Snapshot GetActiveSnapshotCreateIfNone(DataType dataType)
+        public Snapshot GetActiveSnapshotCreateIfNone(DataType dataType)
         {
             lock (this.AccessLock)
             {
                 if (this.Snapshots.Count == 0 || this.Snapshots.Peek() == null || this.Snapshots.Peek().ElementCount == 0)
                 {
-                    Snapshot snapshot = Prefilter.GetInstance().GetPrefilteredSnapshot(dataType);
+                    Snapshot snapshot = SnapshotQuery.GetSnapshot(SnapshotQuery.SnapshotRetrievalMode.FromSettings, dataType);
                     snapshot.Alignment = ScanSettings.Default.Alignment;
                     return snapshot;
                 }
@@ -103,10 +102,10 @@
         }
 
         /// <summary>
-        /// Returns the memory regions associated with the current snapshot. If none exist, a query will be done. Will not read any memory.
+        /// Gets the current active snapshot.
         /// </summary>
         /// <returns>The current active snapshot of memory in the target process.</returns>
-        private Snapshot GetActiveSnapshot()
+        public Snapshot GetActiveSnapshot()
         {
             lock (this.AccessLock)
             {
