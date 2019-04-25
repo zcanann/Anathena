@@ -19,7 +19,7 @@
     /// <summary>
     /// Class for memory editing a remote process.
     /// </summary>
-    internal class WindowsMemoryQuery : IMemoryQuery
+    internal class WindowsMemoryQuery : IMemoryQueryer
     {
         /// <summary>
         /// The chunk size for memory regions. Prevents large allocations.
@@ -27,17 +27,19 @@
         private const Int32 ChunkSize = 2000000000;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowsAdapter"/> class.
+        /// Initializes a new instance of the <see cref="WindowsMemoryQuery"/> class.
         /// </summary>
-        public WindowsMemoryQuery()
+        /// <param name="targetProcess">The target process.</param>
+        public WindowsMemoryQuery(Process targetProcess)
         {
+            this.TargetProcess = targetProcess;
             this.ModuleCache = new TtlCache<Int32, List<NormalizedModule>>(TimeSpan.FromSeconds(10.0));
         }
 
         /// <summary>
-        /// Gets a reference to the target process. This is an optimization to minimize accesses to the Processes component of the Engine.
+        /// Gets or sets a reference to the target process.
         /// </summary>
-        public Process ExternalProcess { get; set; }
+        public Process TargetProcess { get; set; }
 
         /// <summary>
         /// Gets or sets the module cache of process modules.
@@ -59,7 +61,7 @@
         /// <returns>The heap addresses in the target process.</returns>
         public IEnumerable<NormalizedRegion> GetHeapAddresses()
         {
-            ManagedPeb peb = new ManagedPeb(this.ExternalProcess == null ? IntPtr.Zero : this.ExternalProcess.Handle);
+            ManagedPeb peb = new ManagedPeb(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle);
 
             throw new NotImplementedException();
         }
@@ -123,7 +125,7 @@
                 excludedFlags |= MemoryProtectionFlags.ExecuteWriteCopy;
             }
 
-            IEnumerable<MemoryBasicInformation64> memoryInfo = Memory.VirtualPages(this.ExternalProcess == null ? IntPtr.Zero : this.ExternalProcess.Handle, startAddress, endAddress, requiredFlags, excludedFlags, allowedTypes);
+            IEnumerable<MemoryBasicInformation64> memoryInfo = Memory.VirtualPages(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle, startAddress, endAddress, requiredFlags, excludedFlags, allowedTypes);
 
             IList<NormalizedRegion> regions = new List<NormalizedRegion>();
 
@@ -202,7 +204,7 @@
         /// <returns>The maximum usermode address possible in the target process.</returns>
         public UInt64 GetMaxUsermodeAddress()
         {
-            if (this.ExternalProcess.Is32Bit())
+            if (this.TargetProcess.Is32Bit())
             {
                 return Int32.MaxValue;
             }
@@ -223,12 +225,12 @@
             Int32 bytesNeeded = 0;
             List<NormalizedModule> modules;
 
-            if (this.ExternalProcess == null)
+            if (this.TargetProcess == null)
             {
                 return new List<NormalizedModule>();
             }
 
-            if (this.ModuleCache.Contains(this.ExternalProcess.Id) && this.ModuleCache.TryGetValue(this.ExternalProcess.Id, out modules))
+            if (this.ModuleCache.Contains(this.TargetProcess.Id) && this.ModuleCache.TryGetValue(this.TargetProcess.Id, out modules))
             {
                 return modules;
             }
@@ -238,7 +240,7 @@
             try
             {
                 // Determine number of modules
-                if (!NativeMethods.EnumProcessModulesEx(this.ExternalProcess.Handle, modulePointers, 0, out bytesNeeded, (UInt32)Enumerations.ModuleFilter.ListModulesAll))
+                if (!NativeMethods.EnumProcessModulesEx(this.TargetProcess.Handle, modulePointers, 0, out bytesNeeded, (UInt32)Enumerations.ModuleFilter.ListModulesAll))
                 {
                     // Failure, return our current empty list
                     return modules;
@@ -247,18 +249,18 @@
                 Int32 totalNumberofModules = bytesNeeded / IntPtr.Size;
                 modulePointers = new IntPtr[totalNumberofModules];
 
-                if (NativeMethods.EnumProcessModulesEx(this.ExternalProcess.Handle, modulePointers, bytesNeeded, out bytesNeeded, (UInt32)Enumerations.ModuleFilter.ListModulesAll))
+                if (NativeMethods.EnumProcessModulesEx(this.TargetProcess.Handle, modulePointers, bytesNeeded, out bytesNeeded, (UInt32)Enumerations.ModuleFilter.ListModulesAll))
                 {
                     for (Int32 index = 0; index < totalNumberofModules; index++)
                     {
                         StringBuilder moduleFilePath = new StringBuilder(1024);
-                        NativeMethods.GetModuleFileNameEx(this.ExternalProcess.Handle, modulePointers[index], moduleFilePath, (UInt32)moduleFilePath.Capacity);
+                        NativeMethods.GetModuleFileNameEx(this.TargetProcess.Handle, modulePointers[index], moduleFilePath, (UInt32)moduleFilePath.Capacity);
 
                         ModuleInformation moduleInformation = new ModuleInformation();
-                        NativeMethods.GetModuleInformation(this.ExternalProcess.Handle, modulePointers[index], out moduleInformation, (UInt32)(IntPtr.Size * modulePointers.Length));
+                        NativeMethods.GetModuleInformation(this.TargetProcess.Handle, modulePointers[index], out moduleInformation, (UInt32)(IntPtr.Size * modulePointers.Length));
 
                         // Ignore modules in 64-bit address space for WoW64 processes
-                        if (this.ExternalProcess.Is32Bit() && moduleInformation.ModuleBase.ToUInt64() > Int32.MaxValue)
+                        if (this.TargetProcess.Is32Bit() && moduleInformation.ModuleBase.ToUInt64() > Int32.MaxValue)
                         {
                             continue;
                         }
@@ -274,7 +276,7 @@
                 Logger.Log(LogLevel.Error, "Unable to fetch modules from selected process", ex);
             }
 
-            this.ModuleCache.Add(this.ExternalProcess.Id, modules);
+            this.ModuleCache.Add(this.TargetProcess.Id, modules);
 
             return modules;
         }

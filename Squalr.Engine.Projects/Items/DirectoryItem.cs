@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Engine.Projects.Items
 {
-    using Squalr.Engine.Logging;
-    using Squalr.Engine.Utils.DataStructures;
+    using Squalr.Engine.Common.DataStructures;
+    using Squalr.Engine.Common.Logging;
     using System;
     using System.Collections.Generic;
     using System.IO;

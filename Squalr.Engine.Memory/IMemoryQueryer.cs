@@ -6,7 +6,7 @@
     /// <summary>
     /// An interface for querying virtual memory.
     /// </summary>
-    public interface IMemoryQuery
+    public interface IMemoryQueryer
     {
         /// <summary>
         /// Gets regions of memory allocated in the remote process based on provided parameters.

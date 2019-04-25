@@ -1,7 +1,6 @@
 ﻿namespace Squalr.Engine.Debuggers.Windows.DebugEngine
 {
     using Microsoft.Diagnostics.Runtime.Interop;
-    using Squalr.Engine.OS;
     using System;
     using System.Linq;
     using System.Runtime.InteropServices;
@@ -157,7 +156,7 @@
             address = this.CorrectAddress(address);
 
             // Disassemble instruction
-            Byte[] bytes = Memory.Reader.Default.ReadBytes(address, 15, out _);
+            Byte[] bytes = Memory.MemoryReaderFactory.Default.ReadBytes(address, 15, out _);
             codeTraceInfo.Instruction = Engine.Architecture.Disassembler.Default.Disassemble(bytes, isProcess32Bit, address).FirstOrDefault();
 
             // Invoke callbacks

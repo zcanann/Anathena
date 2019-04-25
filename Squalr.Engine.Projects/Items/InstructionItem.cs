@@ -1,8 +1,8 @@
 ﻿namespace Squalr.Engine.Projects.Items
 {
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.Utils;
-    using Squalr.Engine.Utils.Extensions;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Common.Extensions;
     using System;
     using System.ComponentModel;
     using System.Runtime.Serialization;

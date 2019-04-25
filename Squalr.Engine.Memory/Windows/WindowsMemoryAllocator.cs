@@ -9,31 +9,18 @@
     internal class WindowsMemoryAllocator : IMemoryAllocator
     {
         /// <summary>
-        /// The chunk size for memory regions. Prevents large allocations.
+        /// Initializes a new instance of the <see cref="WindowsMemoryAllocator"/> class.
         /// </summary>
-        private const Int32 ChunkSize = 2000000000;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WindowsAdapter"/> class.
-        /// </summary>
-        public WindowsMemoryAllocator()
+        /// <param name="targetProcess">The target process.</param>
+        public WindowsMemoryAllocator(Process targetProcess)
         {
+            this.TargetProcess = targetProcess;
         }
 
         /// <summary>
-        /// Gets a reference to the target process. This is an optimization to minimize accesses to the Processes component of the Engine.
+        /// Gets or sets a reference to the target process.
         /// </summary>
-        public Process ExternalProcess { get; set; }
-
-        /// <summary>
-        /// Recieves a process update. This is an optimization over grabbing the process from the <see cref="IProcessInfo"/> component
-        /// of the <see cref="EngineCore"/> every time we need it, which would be cumbersome when doing hundreds of thousands of memory read/writes.
-        /// </summary>
-        /// <param name="process">The newly selected process.</param>
-        public void Update(Process process)
-        {
-            this.ExternalProcess = process;
-        }
+        public Process TargetProcess { get; set; }
 
         /// <summary>
         /// Allocates memory in the opened process.
@@ -42,7 +29,7 @@
         /// <returns>A pointer to the location of the allocated memory.</returns>
         public UInt64 AllocateMemory(Int32 size)
         {
-            return Memory.Allocate(this.ExternalProcess == null ? IntPtr.Zero : this.ExternalProcess.Handle, 0, size);
+            return Memory.Allocate(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle, 0, size);
         }
 
         /// <summary>
@@ -53,7 +40,7 @@
         /// <returns>A pointer to the location of the allocated memory.</returns>
         public UInt64 AllocateMemory(Int32 size, UInt64 allocAddress)
         {
-            return Memory.Allocate(this.ExternalProcess == null ? IntPtr.Zero : this.ExternalProcess.Handle, allocAddress, size);
+            return Memory.Allocate(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle, allocAddress, size);
         }
 
         /// <summary>
@@ -62,7 +49,7 @@
         /// <param name="address">The address to perform the region wide deallocation.</param>
         public void DeallocateMemory(UInt64 address)
         {
-            Memory.Free(this.ExternalProcess == null ? IntPtr.Zero : this.ExternalProcess.Handle, address);
+            Memory.Free(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle, address);
         }
     }
     //// End class

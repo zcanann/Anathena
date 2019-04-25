@@ -1,7 +1,7 @@
 ﻿namespace SqualrTests
 {
     using Microsoft.VisualStudio.TestTools.UnitTesting;
-    using Squalr.Engine.Utils.Extensions;
+    using Squalr.Engine.Common.Extensions;
     using System;
     using System.Collections.Generic;
 

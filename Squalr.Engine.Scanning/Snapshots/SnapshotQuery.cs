@@ -56,10 +56,10 @@
             MemoryTypeEnum allowedTypeFlags = MemoryTypeEnum.None | MemoryTypeEnum.Private | MemoryTypeEnum.Image;
 
             UInt64 startAddress = 0;
-            UInt64 endAddress = Query.Default.GetMaxUsermodeAddress();
+            UInt64 endAddress = MemoryQueryerFactory.Default.GetMaxUsermodeAddress();
 
             List<ReadGroup> memoryRegions = new List<ReadGroup>();
-            IEnumerable<NormalizedRegion> virtualPages = Query.Default.GetVirtualPages(
+            IEnumerable<NormalizedRegion> virtualPages = MemoryQueryerFactory.Default.GetVirtualPages(
                 requiredPageFlags,
                 excludedPageFlags,
                 allowedTypeFlags,
@@ -90,7 +90,7 @@
             if (ScanSettings.Default.IsUserMode)
             {
                 startAddress = 0;
-                endAddress = Query.Default.GetMaxUsermodeAddress();
+                endAddress = MemoryQueryerFactory.Default.GetMaxUsermodeAddress();
             }
             else
             {
@@ -99,7 +99,7 @@
             }
 
             List<ReadGroup> memoryRegions = new List<ReadGroup>();
-            IEnumerable<NormalizedRegion> virtualPages = Query.Default.GetVirtualPages(
+            IEnumerable<NormalizedRegion> virtualPages = MemoryQueryerFactory.Default.GetVirtualPages(
                 requiredPageFlags,
                 excludedPageFlags,
                 allowedTypeFlags,
@@ -121,7 +121,7 @@
         /// <returns>The created snapshot.</returns>
         private static Snapshot CreateSnapshotFromModules(DataType dataType)
         {
-            IList<ReadGroup> moduleGroups = Query.Default.GetModules().Select(region => new ReadGroup(region.BaseAddress, region.RegionSize, dataType, ScanSettings.Default.Alignment)).ToList();
+            IList<ReadGroup> moduleGroups = MemoryQueryerFactory.Default.GetModules().Select(region => new ReadGroup(region.BaseAddress, region.RegionSize, dataType, ScanSettings.Default.Alignment)).ToList();
             Snapshot moduleSnapshot = new Snapshot(null, moduleGroups);
 
             return moduleSnapshot;
@@ -135,17 +135,17 @@
         {
             // TODO: This currently grabs all usermode memory and excludes modules. A better implementation would involve actually grabbing heaps.
             Snapshot snapshot = SnapshotQuery.CreateSnapshotFromUsermodeMemory(dataType);
-            IEnumerable<NormalizedModule> modules = Query.Default.GetModules();
+            IEnumerable<NormalizedModule> modules = MemoryQueryerFactory.Default.GetModules();
 
             MemoryProtectionEnum requiredPageFlags = 0;
             MemoryProtectionEnum excludedPageFlags = 0;
             MemoryTypeEnum allowedTypeFlags = MemoryTypeEnum.None | MemoryTypeEnum.Private | MemoryTypeEnum.Image;
 
             UInt64 startAddress = 0;
-            UInt64 endAddress = Query.Default.GetMaxUsermodeAddress();
+            UInt64 endAddress = MemoryQueryerFactory.Default.GetMaxUsermodeAddress();
 
             List<ReadGroup> memoryRegions = new List<ReadGroup>();
-            IEnumerable<NormalizedRegion> virtualPages = Query.Default.GetVirtualPages(
+            IEnumerable<NormalizedRegion> virtualPages = MemoryQueryerFactory.Default.GetVirtualPages(
                 requiredPageFlags,
                 excludedPageFlags,
                 allowedTypeFlags,

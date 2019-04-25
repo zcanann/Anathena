@@ -1,9 +1,9 @@
 ﻿namespace Squalr.Engine.Projects.Items
 {
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Memory;
-    using Squalr.Engine.Utils;
     using System;
     using System.ComponentModel;
     using System.Runtime.Serialization;
@@ -232,7 +232,7 @@
                 Object previousValue = this.AddressValue;
 
                 // Otherwise we read as normal (bypass assigning setter and set value directly to avoid a write-back to memory)
-                this.addressValue = Reader.Default.Read(this.DataType, this.CalculatedAddress, out _);
+                this.addressValue = MemoryReaderFactory.Default.Read(this.DataType, this.CalculatedAddress, out _);
 
                 if (!(this.AddressValue?.Equals(previousValue) ?? false))
                 {
@@ -259,7 +259,7 @@
                 return;
             }
 
-            Writer.Default.Write(this.DataType, this.CalculatedAddress, newValue);
+            MemoryWriterFactory.Default.Write(this.DataType, this.CalculatedAddress, newValue);
         }
     }
     //// End class

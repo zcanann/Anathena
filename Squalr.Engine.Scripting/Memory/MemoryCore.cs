@@ -2,16 +2,14 @@
 {
     using Squalr.Engine.Architecture;
     using Squalr.Engine.Architecture.Assemblers;
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.Extensions;
     using Squalr.Engine.Memory;
-    using Squalr.Engine.OS;
     using System;
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading;
-    using Utils;
-    using Utils.Extensions;
 
     /// <summary>
     /// Provides access to memory manipulations in an external process for scripts.
@@ -72,7 +70,7 @@
             moduleName = moduleName?.RemoveSuffixes(true, ".exe", ".dll");
 
             UInt64 address = 0;
-            foreach (NormalizedModule module in Query.Default.GetModules())
+            foreach (NormalizedModule module in MemoryQueryerFactory.Default.GetModules())
             {
                 String targetModuleName = module?.Name?.RemoveSuffixes(true, ".exe", ".dll");
                 if (targetModuleName.Equals(moduleName, StringComparison.OrdinalIgnoreCase))
@@ -135,7 +133,7 @@
             // Read original bytes at code cave jump
             Boolean readSuccess;
 
-            Byte[] originalBytes = Reader.Default.ReadBytes(address, injectedCodeSize + MemoryCore.Largestx86InstructionSize, out readSuccess);
+            Byte[] originalBytes = MemoryReaderFactory.Default.ReadBytes(address, injectedCodeSize + MemoryCore.Largestx86InstructionSize, out readSuccess);
 
             if (!readSuccess || originalBytes == null || originalBytes.Length <= 0)
             {
@@ -176,7 +174,7 @@
         {
             this.PrintDebugTag();
 
-            UInt64 address = Allocator.Default.AllocateMemory(size);
+            UInt64 address = MemoryAllocatorFactory.Default.AllocateMemory(size);
             this.RemoteAllocations.Add(address);
 
             return address;
@@ -192,7 +190,7 @@
         {
             this.PrintDebugTag();
 
-            UInt64 address = Allocator.Default.AllocateMemory(size, allocAddress);
+            UInt64 address = MemoryAllocatorFactory.Default.AllocateMemory(size, allocAddress);
             this.RemoteAllocations.Add(address);
 
             return address;
@@ -210,7 +208,7 @@
             {
                 if (allocationAddress == address)
                 {
-                    Allocator.Default.DeallocateMemory(allocationAddress);
+                    MemoryAllocatorFactory.Default.DeallocateMemory(allocationAddress);
                     this.RemoteAllocations.Remove(allocationAddress);
                     break;
                 }
@@ -228,7 +226,7 @@
 
             foreach (UInt64 address in this.RemoteAllocations)
             {
-                Allocator.Default.DeallocateMemory(address);
+                MemoryAllocatorFactory.Default.DeallocateMemory(address);
             }
 
             this.RemoteAllocations.Clear();
@@ -338,7 +336,7 @@
             String noOps = (originalBytes.Length - assemblySize > 0 ? "db " : String.Empty) + String.Join(" ", Enumerable.Repeat("0x90,", originalBytes.Length - assemblySize)).TrimEnd(',');
 
             Byte[] injectionBytes = this.GetAssemblyBytes(assembly + "\n" + noOps, address);
-            Writer.Default.WriteBytes(address, injectionBytes);
+            MemoryWriterFactory.Default.WriteBytes(address, injectionBytes);
 
             CodeCave codeCave = new CodeCave(address, 0, originalBytes);
             this.CodeCaves.Add(codeCave);
@@ -390,9 +388,9 @@
                     continue;
                 }
 
-                Writer.Default.WriteBytes(codeCave.Address, codeCave.OriginalBytes);
+                MemoryWriterFactory.Default.WriteBytes(codeCave.Address, codeCave.OriginalBytes);
 
-                Allocator.Default.DeallocateMemory(codeCave.RemoteAllocationAddress);
+                MemoryAllocatorFactory.Default.DeallocateMemory(codeCave.RemoteAllocationAddress);
             }
         }
 
@@ -405,7 +403,7 @@
 
             foreach (CodeCave codeCave in this.CodeCaves)
             {
-                Writer.Default.WriteBytes(codeCave.Address, codeCave.OriginalBytes);
+                MemoryWriterFactory.Default.WriteBytes(codeCave.Address, codeCave.OriginalBytes);
 
                 // If remote allocation address is unset, then it was not allocated.
                 if (codeCave.RemoteAllocationAddress == 0)
@@ -413,7 +411,7 @@
                     continue;
                 }
 
-                Allocator.Default.DeallocateMemory(codeCave.RemoteAllocationAddress);
+                MemoryAllocatorFactory.Default.DeallocateMemory(codeCave.RemoteAllocationAddress);
             }
 
             this.CodeCaves.Clear();
@@ -559,7 +557,7 @@
         {
             this.PrintDebugTag();
 
-            UInt64 finalAddress = Reader.Default.EvaluatePointer(address, offsets);
+            UInt64 finalAddress = MemoryReaderFactory.Default.EvaluatePointer(address, offsets);
             return finalAddress;
         }
 
@@ -574,7 +572,7 @@
             this.PrintDebugTag(address.ToString("x"));
 
             Boolean readSuccess;
-            return Reader.Default.Read<T>(address, out readSuccess);
+            return MemoryReaderFactory.Default.Read<T>(address, out readSuccess);
         }
 
         /// <summary>
@@ -588,7 +586,7 @@
             this.PrintDebugTag(address.ToString("x"), count.ToString());
 
             Boolean readSuccess;
-            return Reader.Default.ReadBytes(address, count, out readSuccess);
+            return MemoryReaderFactory.Default.ReadBytes(address, count, out readSuccess);
         }
 
         /// <summary>
@@ -601,7 +599,7 @@
         {
             this.PrintDebugTag(address.ToString("x"), value.ToString());
 
-            Writer.Default.Write<T>(address, value);
+            MemoryWriterFactory.Default.Write<T>(address, value);
         }
 
         /// <summary>
@@ -613,7 +611,7 @@
         {
             this.PrintDebugTag(address.ToString("x"));
 
-            Writer.Default.WriteBytes(address, values);
+            MemoryWriterFactory.Default.WriteBytes(address, values);
         }
 
         /// <summary>

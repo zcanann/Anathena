@@ -1,10 +1,8 @@
 ﻿namespace Squalr.Engine.Projects.Items
 {
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.Extensions;
     using Squalr.Engine.Memory;
-    using Squalr.Engine.OS;
-    using Squalr.Engine.Utils;
-    using Squalr.Engine.Utils.Extensions;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;
@@ -212,7 +210,7 @@
         /// <returns>The base address of this object.</returns>
         protected override UInt64 ResolveAddress()
         {
-            UInt64 pointer = Query.Default.ResolveModule(this.ModuleName);
+            UInt64 pointer = MemoryQueryerFactory.Default.ResolveModule(this.ModuleName);
             Boolean successReading = true;
 
             pointer = pointer.Add(this.ModuleOffset);
@@ -226,11 +224,11 @@
             {
                 if (Processes.Default.IsOpenedProcess32Bit())
                 {
-                    pointer = Reader.Default.Read<Int32>(pointer, out successReading).ToUInt64();
+                    pointer = MemoryReaderFactory.Default.Read<Int32>(pointer, out successReading).ToUInt64();
                 }
                 else
                 {
-                    pointer = Reader.Default.Read<UInt64>(pointer, out successReading);
+                    pointer = MemoryReaderFactory.Default.Read<UInt64>(pointer, out successReading);
                 }
 
                 if (pointer == 0 || !successReading)

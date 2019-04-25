@@ -11,21 +11,18 @@
     internal class WindowsMemoryWriter : IMemoryWriter
     {
         /// <summary>
-        /// The chunk size for memory regions. Prevents large allocations.
+        /// Initializes a new instance of the <see cref="WindowsMemoryWriter"/> class.
         /// </summary>
-        private const Int32 ChunkSize = 2000000000;
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="WindowsAdapter"/> class.
-        /// </summary>
-        public WindowsMemoryWriter()
+        /// <param name="targetProcess">The target process.</param>
+        public WindowsMemoryWriter(Process targetProcess)
         {
+            this.TargetProcess = targetProcess;
         }
 
         /// <summary>
         /// Gets or sets a reference to the target process.
         /// </summary>
-        public Process ExternalProcess { get; set; }
+        public Process TargetProcess { get; set; }
 
         /// <summary>
         /// Writes a value to memory in the opened process.
@@ -98,7 +95,7 @@
         public void WriteBytes(UInt64 address, Byte[] byteArray)
         {
             // Write the byte array
-            Memory.WriteBytes(this.ExternalProcess == null ? IntPtr.Zero : this.ExternalProcess.Handle, address, byteArray);
+            Memory.WriteBytes(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle, address, byteArray);
         }
 
         /// <summary>

@@ -76,7 +76,7 @@
         public Boolean ReadAllMemory()
         {
             Boolean readSuccess;
-            Byte[] newCurrentValues = Reader.Default.ReadBytes(this.BaseAddress, this.RegionSize, out readSuccess);
+            Byte[] newCurrentValues = MemoryReaderFactory.Default.ReadBytes(this.BaseAddress, this.RegionSize, out readSuccess);
 
             if (readSuccess)
             {

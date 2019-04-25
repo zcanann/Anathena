@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Engine.Projects
 {
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common.Logging;
     using System;
     using System.IO;
 

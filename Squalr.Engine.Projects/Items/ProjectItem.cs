@@ -1,10 +1,10 @@
 ﻿namespace Squalr.Engine.Projects.Items
 {
     using SharpDX.DirectInput;
+    using Squalr.Engine.Common.Extensions;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Input.HotKeys;
-    using Squalr.Engine.Logging;
     using Squalr.Engine.Projects.Properties;
-    using Squalr.Engine.Utils.Extensions;
     using System;
     using System.Collections.Generic;
     using System.ComponentModel;

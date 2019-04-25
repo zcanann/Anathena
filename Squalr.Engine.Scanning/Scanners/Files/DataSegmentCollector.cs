@@ -37,7 +37,7 @@
                         stopwatch.Start();
 
                         // Construct a snapshot from static data segments in target process modules
-                        IEnumerable<NormalizedModule> modules = Query.Default.GetModules();
+                        IEnumerable<NormalizedModule> modules = MemoryQueryerFactory.Default.GetModules();
                         DirectoryInfo systemPathInfo = new DirectoryInfo(Environment.SystemDirectory);
                         ConcurrentBag<IList<SnapshotRegion>> dataRegions = new ConcurrentBag<IList<SnapshotRegion>>();
 

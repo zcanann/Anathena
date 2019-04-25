@@ -1,22 +1,16 @@
 ﻿namespace Squalr.Engine.Debuggers
 {
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Debuggers.Windows.DebugEngine;
-    using Squalr.Engine.Logging;
     using System;
+    using System.Diagnostics;
     using System.Threading;
 
     /// <summary>
     /// Factory for obtaining an object that enables debugging of a process.
     /// </summary>
-    internal class DebuggerFactory
+    public static class DebuggerFactory
     {
-        /// <summary>
-        /// Singleton instance of the <see cref="DebugEngine"/> class
-        /// </summary>
-        private static Lazy<DebugEngine> windowsDebuggerInstance = new Lazy<DebugEngine>(
-            () => { return new DebugEngine(); },
-            LazyThreadSafetyMode.ExecutionAndPublication);
-
         public enum DebuggerType
         {
             Default,
@@ -26,13 +20,15 @@
         /// <summary>
         /// Gets an object that enables debugging of a process.
         /// </summary>
+        /// <param name="targetProcess">The process to debug.</param>
+        /// <param name="debugger">The debugger implementation to use.</param>
         /// <returns>An object that enables debugging of a process.</returns>
-        public static IDebugger GetDebugger(DebuggerType debugger = DebuggerType.Default)
+        public static IDebugger Create(Process targetProcess, DebuggerType debugger = DebuggerType.Default)
         {
             switch (debugger)
             {
                 case DebuggerType.WinDbg:
-                    return DebuggerFactory.windowsDebuggerInstance.Value;
+                    return new DebugEngine(targetProcess);
                 case DebuggerType.Default:
                 default:
                     OperatingSystem os = Environment.OSVersion;
@@ -45,7 +41,7 @@
                         case PlatformID.Win32S:
                         case PlatformID.Win32Windows:
                         case PlatformID.WinCE:
-                            return windowsDebuggerInstance.Value;
+                            return new DebugEngine(targetProcess);
                         case PlatformID.Unix:
                             ex = new Exception("Unix operating system is not supported");
                             break;

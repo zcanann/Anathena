@@ -61,6 +61,10 @@
     <None Include="app.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Squalr.Engine.Utils\Squalr.Engine.Common.csproj">
+      <Project>{323ae452-b9cc-4f37-87b7-b75875318944}</Project>
+      <Name>Squalr.Engine.Common</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Squalr.Engine\Squalr.Engine.csproj">
       <Project>{0b78bebf-d43f-431c-8a5f-9734c6fda1b3}</Project>
       <Name>Squalr.Engine</Name>

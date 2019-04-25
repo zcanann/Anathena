@@ -41,4 +41,6 @@
             }
         }
     }
+    //// End class
 }
+//// End namespace

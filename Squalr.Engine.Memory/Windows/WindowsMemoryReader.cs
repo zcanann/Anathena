@@ -16,16 +16,18 @@
     internal class WindowsMemoryReader : IMemoryReader
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="WindowsAdapter"/> class.
+        /// Initializes a new instance of the <see cref="WindowsMemoryReader"/> class.
         /// </summary>
-        public WindowsMemoryReader()
+        /// <param name="targetProcess">The target process.</param>
+        public WindowsMemoryReader(Process targetProcess)
         {
+            this.TargetProcess = targetProcess;
         }
 
         /// <summary>
-        /// Gets a reference to the target process. This is an optimization to minimize accesses to the Processes component of the Engine.
+        /// Gets or sets a reference to the target process.
         /// </summary>
-        public Process ExternalProcess { get; set; }
+        public Process TargetProcess { get; set; }
 
         /// <summary>
         /// Reads the value of a specified type in the remote process.
@@ -106,7 +108,7 @@
         /// <returns>The array of bytes.</returns>
         public Byte[] ReadBytes(UInt64 address, Int32 count, out Boolean success)
         {
-            return Memory.ReadBytes(this.ExternalProcess == null ? IntPtr.Zero : this.ExternalProcess.Handle, address, count, out success);
+            return Memory.ReadBytes(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle, address, count, out success);
         }
 
         /// <summary>
@@ -138,7 +140,7 @@
                 // Add and trace offsets
                 foreach (Int32 offset in offsets.Take(offsets.Count() - 1))
                 {
-                    if (this.ExternalProcess.Is32Bit())
+                    if (this.TargetProcess.Is32Bit())
                     {
                         finalAddress = this.Read<UInt32>(finalAddress.Add(offset), out _);
                     }
