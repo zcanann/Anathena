@@ -1,9 +1,12 @@
 ﻿namespace Squalr.Engine.Memory.Windows
 {
     using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Common.Extensions;
+    using Squalr.Engine.Memory.Windows.Native;
     using System;
     using System.Diagnostics;
     using System.Text;
+    using static Squalr.Engine.Memory.Windows.Native.Enumerations;
 
     /// <summary>
     /// Class for memory editing a remote process.
@@ -13,16 +16,9 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsMemoryWriter"/> class.
         /// </summary>
-        /// <param name="targetProcess">The target process.</param>
-        public WindowsMemoryWriter(Process targetProcess)
+        public WindowsMemoryWriter()
         {
-            this.TargetProcess = targetProcess;
         }
-
-        /// <summary>
-        /// Gets or sets a reference to the target process.
-        /// </summary>
-        public Process TargetProcess { get; set; }
 
         /// <summary>
         /// Writes a value to memory in the opened process.
@@ -30,7 +26,7 @@
         /// <param name="elementType">The data type to write.</param>
         /// <param name="address">The address to write to.</param>
         /// <param name="value">The value to write.</param>
-        public void Write(DataType elementType, UInt64 address, Object value)
+        public void Write(Process process, DataType elementType, UInt64 address, Object value)
         {
             Byte[] bytes;
 
@@ -73,7 +69,7 @@
                     throw new ArgumentException("Invalid type provided");
             }
 
-            this.WriteBytes(address, bytes);
+            this.WriteBytes(process, address, bytes);
         }
 
         /// <summary>
@@ -82,9 +78,9 @@
         /// <typeparam name="T">The type of the value.</typeparam>
         /// <param name="address">The address where the value is written.</param>
         /// <param name="value">The value to write.</param>
-        public void Write<T>(UInt64 address, T value)
+        public void Write<T>(Process process, UInt64 address, T value)
         {
-            this.Write(typeof(T), address, (Object)value);
+            this.Write(process, typeof(T), address, (Object)value);
         }
 
         /// <summary>
@@ -92,10 +88,29 @@
         /// </summary>
         /// <param name="address">The address where the array is written.</param>
         /// <param name="byteArray">The array of bytes to write.</param>
-        public void WriteBytes(UInt64 address, Byte[] byteArray)
+        public void WriteBytes(Process process, UInt64 address, Byte[] byteArray)
         {
-            // Write the byte array
-            Memory.WriteBytes(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle, address, byteArray);
+            IntPtr processHandle = process == null ? IntPtr.Zero : process.Handle;
+
+            MemoryProtectionFlags oldProtection;
+            Int32 bytesWritten;
+            Boolean success = false;
+
+            try
+            {
+                NativeMethods.VirtualProtectEx(processHandle, address.ToIntPtr(), byteArray.Length, MemoryProtectionFlags.ExecuteReadWrite, out oldProtection);
+
+                // Write the data to the target process
+                if (NativeMethods.WriteProcessMemory(processHandle, address.ToIntPtr(), byteArray, byteArray.Length, out bytesWritten))
+                {
+                    success = bytesWritten == byteArray.Length;
+                }
+
+                NativeMethods.VirtualProtectEx(processHandle, address.ToIntPtr(), byteArray.Length, oldProtection, out oldProtection);
+            }
+            catch (Exception ex)
+            {
+            }
         }
 
         /// <summary>
@@ -104,10 +119,10 @@
         /// <param name="address">The address where the string is written.</param>
         /// <param name="text">The text to write.</param>
         /// <param name="encoding">The encoding used.</param>
-        public void WriteString(UInt64 address, String text, Encoding encoding)
+        public void WriteString(Process process, UInt64 address, String text, Encoding encoding)
         {
             // Write the text
-            this.WriteBytes(address, encoding.GetBytes(text + '\0'));
+            this.WriteBytes(process, address, encoding.GetBytes(text + '\0'));
         }
     }
     //// End class

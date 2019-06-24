@@ -1,21 +1,27 @@
-﻿namespace Squalr.Engine.Processes
+﻿namespace Squalr.Engine.Memory
 {
     using Squalr.Engine.Common.Logging;
-    using Squalr.Engine.Processes.OS;
-    using Squalr.Engine.Processes.OS.Windows;
+    using Squalr.Engine.Memory.Windows;
     using System;
     using System.Threading;
 
-    public class Query
+    /// <summary>
+    /// Instantiates the proper memory queryer based on the host OS.
+    /// </summary>
+    public static class MemoryQueryer
     {
         /// <summary>
-        /// Singleton instance of the <see cref="WindowsProcessInfo"/> class.
+        /// Singleton instance of the <see cref="WindowsMemoryQuery"/> class.
         /// </summary>
-        private static Lazy<IProcessQueryer> windowsProcessInfoInstance = new Lazy<IProcessQueryer>(
-            () => { return new WindowsProcessInfo(); },
+        private static readonly Lazy<WindowsMemoryQuery> windowsMemoryQueryInstance = new Lazy<WindowsMemoryQuery>(
+            () => { return new WindowsMemoryQuery(); },
             LazyThreadSafetyMode.ExecutionAndPublication);
 
-        public static IProcessQueryer Default
+        /// <summary>
+        /// Creates the memory queryer for the current operating system.
+        /// </summary>
+        /// <returns>An instance of a memory queryer.</returns>
+        public static IMemoryQueryer Instance
         {
             get
             {
@@ -29,7 +35,7 @@
                     case PlatformID.Win32S:
                     case PlatformID.Win32Windows:
                     case PlatformID.WinCE:
-                        return Query.windowsProcessInfoInstance.Value;
+                        return MemoryQueryer.windowsMemoryQueryInstance.Value;
                     case PlatformID.Unix:
                         ex = new Exception("Unix operating system is not supported");
                         break;

@@ -1,6 +1,5 @@
 ﻿namespace Squalr.Engine.Processes
 {
-    using Squalr.Engine.Processes.OS.Windows;
     using System;
     using System.Diagnostics;
     using System.Drawing;
@@ -17,7 +16,7 @@
         /// <returns>A value indicating whether or not the given process is a system process.</returns>
         public static Boolean IsSystemProcess(this Process process)
         {
-            return Query.Default.IsProcessSystemProcess(process);
+            return ProcessQuery.Instance.IsProcessSystemProcess(process);
         }
 
         /// <summary>
@@ -27,7 +26,7 @@
         /// <returns>A value indicating whether or not the given process has a window.</returns>
         public static Boolean HasWindow(this Process process)
         {
-            return Query.Default.IsProcessWindowed(process);
+            return ProcessQuery.Instance.IsProcessWindowed(process);
         }
 
         /// <summary>
@@ -37,7 +36,7 @@
         /// <returns>A value indicating whether or not the given process is 32-bit.</returns>
         public static Boolean Is32Bit(this Process process)
         {
-            return Query.Default.IsProcess32Bit(process);
+            return ProcessQuery.Instance.IsProcess32Bit(process);
         }
 
         /// <summary>
@@ -47,7 +46,7 @@
         /// <returns>A value indicating whether or not the given process is 64-bit.</returns>
         public static Boolean Is64Bit(this Process process)
         {
-            return Query.Default.IsProcess64Bit(process);
+            return ProcessQuery.Instance.IsProcess64Bit(process);
         }
 
         /// <summary>
@@ -57,7 +56,7 @@
         /// <returns>An Icon associated with the given process. Returns null if there is no icon.</returns>
         public static Icon GetIcon(this Process process)
         {
-            return Query.Default.GetIcon(process);
+            return ProcessQuery.Instance.GetIcon(process);
         }
     }
     //// End class

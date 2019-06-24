@@ -210,7 +210,7 @@
         /// <returns>The base address of this object.</returns>
         protected override UInt64 ResolveAddress()
         {
-            UInt64 pointer = MemoryQueryerFactory.Default.ResolveModule(this.ModuleName);
+            UInt64 pointer = MemoryQueryer.Instance.ResolveModule(this.ModuleName);
             Boolean successReading = true;
 
             pointer = pointer.Add(this.ModuleOffset);
@@ -222,13 +222,13 @@
 
             foreach (Int32 offset in this.PointerOffsets)
             {
-                if (Processes.Default.IsOpenedProcess32Bit())
+                if (Processes.Instance.IsOpenedProcess32Bit())
                 {
-                    pointer = MemoryReaderFactory.Default.Read<Int32>(pointer, out successReading).ToUInt64();
+                    pointer = MemoryReader.Instance.Read<Int32>(pointer, out successReading).ToUInt64();
                 }
                 else
                 {
-                    pointer = MemoryReaderFactory.Default.Read<UInt64>(pointer, out successReading);
+                    pointer = MemoryReader.Instance.Read<UInt64>(pointer, out successReading);
                 }
 
                 if (pointer == 0 || !successReading)

@@ -30,29 +30,29 @@
 
             if (Int32.TryParse(this.ProcessTerm, out Int32 result))
             {
-                process = Query.Default.GetProcesses().Where(x => x.Id == result).FirstOrDefault();
+                process = ProcessQuery.Instance.GetProcesses().Where(x => x.Id == result).FirstOrDefault();
             }
             else
             {
                 // Try exact match
-                process = Query.Default.GetProcesses().Where(x => x.ProcessName.Equals(this.ProcessTerm)).FirstOrDefault();
+                process = ProcessQuery.Instance.GetProcesses().Where(x => x.ProcessName.Equals(this.ProcessTerm)).FirstOrDefault();
 
                 // Try non-case sensitive match
                 if (process == null)
                 {
-                    process = Query.Default.GetProcesses().Where(x => x.ProcessName.Equals(this.ProcessTerm, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                    process = ProcessQuery.Instance.GetProcesses().Where(x => x.ProcessName.Equals(this.ProcessTerm, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
                 }
 
                 // Try contains (match case)
                 if (process == null)
                 {
-                    process = Query.Default.GetProcesses().Where(x => x.ProcessName.Contains(this.ProcessTerm)).FirstOrDefault();
+                    process = ProcessQuery.Instance.GetProcesses().Where(x => x.ProcessName.Contains(this.ProcessTerm)).FirstOrDefault();
                 }
 
                 // Try contains (no match case)
                 if (process == null)
                 {
-                    process = Query.Default.GetProcesses().Where(x => x.ProcessName.Contains(this.ProcessTerm, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
+                    process = ProcessQuery.Instance.GetProcesses().Where(x => x.ProcessName.Contains(this.ProcessTerm, StringComparison.OrdinalIgnoreCase)).FirstOrDefault();
                 }
             }
 

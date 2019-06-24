@@ -12,6 +12,7 @@
     using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
+    using System.Runtime.InteropServices;
     using System.Text;
     using static Native.Enumerations;
     using static Native.Structures;
@@ -29,17 +30,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsMemoryQuery"/> class.
         /// </summary>
-        /// <param name="targetProcess">The target process.</param>
-        public WindowsMemoryQuery(Process targetProcess)
+        public WindowsMemoryQuery()
         {
-            this.TargetProcess = targetProcess;
             this.ModuleCache = new TtlCache<Int32, List<NormalizedModule>>(TimeSpan.FromSeconds(10.0));
         }
-
-        /// <summary>
-        /// Gets or sets a reference to the target process.
-        /// </summary>
-        public Process TargetProcess { get; set; }
 
         /// <summary>
         /// Gets or sets the module cache of process modules.
@@ -50,7 +44,7 @@
         /// Gets the address of the stacks in the opened process.
         /// </summary>
         /// <returns>A pointer to the stacks of the opened process.</returns>
-        public IEnumerable<NormalizedRegion> GetStackAddresses()
+        public IEnumerable<NormalizedRegion> GetStackAddresses(Process process)
         {
             throw new NotImplementedException();
         }
@@ -59,9 +53,9 @@
         /// Gets the address(es) of the heap in the target process.
         /// </summary>
         /// <returns>The heap addresses in the target process.</returns>
-        public IEnumerable<NormalizedRegion> GetHeapAddresses()
+        public IEnumerable<NormalizedRegion> GetHeapAddresses(Process process)
         {
-            ManagedPeb peb = new ManagedPeb(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle);
+            ManagedPeb peb = new ManagedPeb(process == null ? IntPtr.Zero : process.Handle);
 
             throw new NotImplementedException();
         }
@@ -76,6 +70,7 @@
         /// <param name="endAddress">The end address of the query range.</param>
         /// <returns>A collection of pointers to virtual pages in the target process.</returns>
         public IEnumerable<NormalizedRegion> GetVirtualPages(
+            Process process,
             MemoryProtectionEnum requiredProtection,
             MemoryProtectionEnum excludedProtection,
             MemoryTypeEnum allowedTypes,
@@ -125,7 +120,7 @@
                 excludedFlags |= MemoryProtectionFlags.ExecuteWriteCopy;
             }
 
-            IEnumerable<MemoryBasicInformation64> memoryInfo = Memory.VirtualPages(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle, startAddress, endAddress, requiredFlags, excludedFlags, allowedTypes);
+            IEnumerable<MemoryBasicInformation64> memoryInfo = WindowsMemoryQuery.VirtualPages(process == null ? IntPtr.Zero : process.Handle, startAddress, endAddress, requiredFlags, excludedFlags, allowedTypes);
 
             IList<NormalizedRegion> regions = new List<NormalizedRegion>();
 
@@ -164,18 +159,18 @@
         /// Gets all virtual pages in the opened process.
         /// </summary>
         /// <returns>A collection of regions in the process.</returns>
-        public IEnumerable<NormalizedRegion> GetAllVirtualPages()
+        public IEnumerable<NormalizedRegion> GetAllVirtualPages(Process process)
         {
             MemoryTypeEnum flags = MemoryTypeEnum.None | MemoryTypeEnum.Private | MemoryTypeEnum.Image | MemoryTypeEnum.Mapped;
 
-            return this.GetVirtualPages(0, 0, flags, 0, this.GetMaximumAddress());
+            return this.GetVirtualPages(process, 0, 0, flags, 0, this.GetMaximumAddress(process));
         }
 
         /// <summary>
         /// Gets the maximum address possible in the target process.
         /// </summary>
         /// <returns>The maximum address possible in the target process.</returns>
-        public UInt64 GetMaximumAddress()
+        public UInt64 GetMaximumAddress(Process process)
         {
             if (IntPtr.Size == Conversions.SizeOf(DataType.Int32))
             {
@@ -193,7 +188,7 @@
         /// Gets the minimum usermode address possible in the target process.
         /// </summary>
         /// <returns>The minimum usermode address possible in the target process.</returns>
-        public UInt64 GetMinUsermodeAddress()
+        public UInt64 GetMinUsermodeAddress(Process process)
         {
             return UInt16.MaxValue;
         }
@@ -202,9 +197,9 @@
         /// Gets the maximum usermode address possible in the target process.
         /// </summary>
         /// <returns>The maximum usermode address possible in the target process.</returns>
-        public UInt64 GetMaxUsermodeAddress()
+        public UInt64 GetMaxUsermodeAddress(Process process)
         {
-            if (this.TargetProcess.Is32Bit())
+            if (process.Is32Bit())
             {
                 return Int32.MaxValue;
             }
@@ -218,29 +213,27 @@
         /// Gets all modules in the opened process.
         /// </summary>
         /// <returns>A collection of modules in the process.</returns>
-        public IEnumerable<NormalizedModule> GetModules()
+        public IEnumerable<NormalizedModule> GetModules(Process process)
         {
             // Query all modules in the target process
             IntPtr[] modulePointers = new IntPtr[0];
             Int32 bytesNeeded = 0;
-            List<NormalizedModule> modules;
+            List<NormalizedModule> modules = new List<NormalizedModule>();
 
-            if (this.TargetProcess == null)
-            {
-                return new List<NormalizedModule>();
-            }
-
-            if (this.ModuleCache.Contains(this.TargetProcess.Id) && this.ModuleCache.TryGetValue(this.TargetProcess.Id, out modules))
+            if (process == null)
             {
                 return modules;
             }
 
-            modules = new List<NormalizedModule>();
+            if (this.ModuleCache.Contains(process.Id) && this.ModuleCache.TryGetValue(process.Id, out modules))
+            {
+                return modules;
+            }
 
             try
             {
                 // Determine number of modules
-                if (!NativeMethods.EnumProcessModulesEx(this.TargetProcess.Handle, modulePointers, 0, out bytesNeeded, (UInt32)Enumerations.ModuleFilter.ListModulesAll))
+                if (!NativeMethods.EnumProcessModulesEx(process.Handle, modulePointers, 0, out bytesNeeded, (UInt32)Enumerations.ModuleFilter.ListModulesAll))
                 {
                     // Failure, return our current empty list
                     return modules;
@@ -249,18 +242,18 @@
                 Int32 totalNumberofModules = bytesNeeded / IntPtr.Size;
                 modulePointers = new IntPtr[totalNumberofModules];
 
-                if (NativeMethods.EnumProcessModulesEx(this.TargetProcess.Handle, modulePointers, bytesNeeded, out bytesNeeded, (UInt32)Enumerations.ModuleFilter.ListModulesAll))
+                if (NativeMethods.EnumProcessModulesEx(process.Handle, modulePointers, bytesNeeded, out bytesNeeded, (UInt32)Enumerations.ModuleFilter.ListModulesAll))
                 {
                     for (Int32 index = 0; index < totalNumberofModules; index++)
                     {
                         StringBuilder moduleFilePath = new StringBuilder(1024);
-                        NativeMethods.GetModuleFileNameEx(this.TargetProcess.Handle, modulePointers[index], moduleFilePath, (UInt32)moduleFilePath.Capacity);
+                        NativeMethods.GetModuleFileNameEx(process.Handle, modulePointers[index], moduleFilePath, (UInt32)moduleFilePath.Capacity);
 
                         ModuleInformation moduleInformation = new ModuleInformation();
-                        NativeMethods.GetModuleInformation(this.TargetProcess.Handle, modulePointers[index], out moduleInformation, (UInt32)(IntPtr.Size * modulePointers.Length));
+                        NativeMethods.GetModuleInformation(process.Handle, modulePointers[index], out moduleInformation, (UInt32)(IntPtr.Size * modulePointers.Length));
 
                         // Ignore modules in 64-bit address space for WoW64 processes
-                        if (this.TargetProcess.Is32Bit() && moduleInformation.ModuleBase.ToUInt64() > Int32.MaxValue)
+                        if (process.Is32Bit() && moduleInformation.ModuleBase.ToUInt64() > Int32.MaxValue)
                         {
                             continue;
                         }
@@ -276,7 +269,7 @@
                 Logger.Log(LogLevel.Error, "Unable to fetch modules from selected process", ex);
             }
 
-            this.ModuleCache.Add(this.TargetProcess.Id, modules);
+            this.ModuleCache.Add(process.Id, modules);
 
             return modules;
         }
@@ -287,9 +280,9 @@
         /// <param name="address">The original address.</param>
         /// <param name="moduleName">The module name containing this address, if there is one. Otherwise, empty string.</param>
         /// <returns>The module name and address offset. If not contained by a module, the original address is returned.</returns>
-        public UInt64 AddressToModule(UInt64 address, out String moduleName)
+        public UInt64 AddressToModule(Process process, UInt64 address, out String moduleName)
         {
-            NormalizedModule containingModule = this.GetModules()
+            NormalizedModule containingModule = this.GetModules(process)
                 .Select(module => module)
                 .Where(module => module.ContainsAddress(address))
                 .FirstOrDefault();
@@ -304,12 +297,12 @@
         /// </summary>
         /// <param name="identifier">The module identifier, or name.</param>
         /// <returns>The base address of the module.</returns>
-        public UInt64 ResolveModule(String identifier)
+        public UInt64 ResolveModule(Process process, String identifier)
         {
             UInt64 result = 0;
 
             identifier = identifier?.RemoveSuffixes(true, ".exe", ".dll");
-            IEnumerable<NormalizedModule> modules = this.GetModules()
+            IEnumerable<NormalizedModule> modules = this.GetModules(process)
                 ?.ToList()
                 ?.Select(module => module)
                 ?.Where(module => module.Name.RemoveSuffixes(true, ".exe", ".dll").Equals(identifier, StringComparison.OrdinalIgnoreCase));
@@ -320,6 +313,216 @@
             }
 
             return result;
+        }
+
+        /// <summary>
+        /// Retrieves information about a range of pages within the virtual address space of a specified process.
+        /// </summary>
+        /// <param name="processHandle">A handle to the process whose memory information is queried.</param>
+        /// <param name="startAddress">A pointer to the starting address of the region of pages to be queried.</param>
+        /// <param name="endAddress">A pointer to the ending address of the region of pages to be queried.</param>
+        /// <returns>
+        /// A collection of <see cref="MemoryBasicInformation64"/> structures containing info about all virtual pages in the target process.
+        /// </returns>
+        public static IEnumerable<MemoryBasicInformation64> QueryUnallocatedMemory(
+            IntPtr processHandle,
+            UInt64 startAddress,
+            UInt64 endAddress)
+        {
+            if (startAddress >= endAddress)
+            {
+                yield return new MemoryBasicInformation64();
+            }
+
+            Boolean wrappedAround = false;
+            Int32 queryResult;
+
+            // Enumerate the memory pages
+            do
+            {
+                // Allocate the structure to store information of memory
+                MemoryBasicInformation64 memoryInfo = new MemoryBasicInformation64();
+
+                if (!Environment.Is64BitProcess)
+                {
+                    // 32 Bit struct is not the same
+                    MemoryBasicInformation32 memoryInfo32 = new MemoryBasicInformation32();
+
+                    // Query the memory region (32 bit native method)
+                    queryResult = NativeMethods.VirtualQueryEx(processHandle, startAddress.ToIntPtr(), out memoryInfo32, Marshal.SizeOf(memoryInfo32));
+
+                    // Copy from the 32 bit struct to the 64 bit struct
+                    memoryInfo.AllocationBase = memoryInfo32.AllocationBase;
+                    memoryInfo.AllocationProtect = memoryInfo32.AllocationProtect;
+                    memoryInfo.BaseAddress = memoryInfo32.BaseAddress;
+                    memoryInfo.Protect = memoryInfo32.Protect;
+                    memoryInfo.RegionSize = memoryInfo32.RegionSize;
+                    memoryInfo.State = memoryInfo32.State;
+                    memoryInfo.Type = memoryInfo32.Type;
+                }
+                else
+                {
+                    // Query the memory region (64 bit native method)
+                    queryResult = NativeMethods.VirtualQueryEx(processHandle, startAddress.ToIntPtr(), out memoryInfo, Marshal.SizeOf(memoryInfo));
+                }
+
+                // Increment the starting address with the size of the page
+                UInt64 previousFrom = startAddress;
+                startAddress = startAddress.Add(memoryInfo.RegionSize);
+
+                if (previousFrom > startAddress)
+                {
+                    wrappedAround = true;
+                }
+
+                if ((memoryInfo.State & MemoryStateFlags.Free) != 0)
+                {
+                    // Return the unallocated memory page
+                    yield return memoryInfo;
+                }
+                else
+                {
+                    // Ignore actual memory
+                    continue;
+                }
+            }
+            while (startAddress < endAddress && queryResult != 0 && !wrappedAround);
+        }
+
+        /// <summary>
+        /// Retrieves information about a range of pages within the virtual address space of a specified process.
+        /// </summary>
+        /// <param name="processHandle">A handle to the process whose memory information is queried.</param>
+        /// <param name="startAddress">A pointer to the starting address of the region of pages to be queried.</param>
+        /// <param name="endAddress">A pointer to the ending address of the region of pages to be queried.</param>
+        /// <param name="requiredProtection">Protection flags required to be present.</param>
+        /// <param name="excludedProtection">Protection flags that must not be present.</param>
+        /// <param name="allowedTypes">Memory types that can be present.</param>
+        /// <returns>
+        /// A collection of <see cref="MemoryBasicInformation64"/> structures containing info about all virtual pages in the target process.
+        /// </returns>
+        private static IEnumerable<MemoryBasicInformation64> VirtualPages(
+            IntPtr processHandle,
+            UInt64 startAddress,
+            UInt64 endAddress,
+            MemoryProtectionFlags requiredProtection,
+            MemoryProtectionFlags excludedProtection,
+            MemoryTypeEnum allowedTypes)
+        {
+            if (startAddress >= endAddress)
+            {
+                yield return new MemoryBasicInformation64();
+            }
+
+            Boolean wrappedAround = false;
+            Int32 queryResult;
+
+            // Enumerate the memory pages
+            do
+            {
+                // Allocate the structure to store information of memory
+                MemoryBasicInformation64 memoryInfo = new MemoryBasicInformation64();
+
+                if (!Environment.Is64BitProcess)
+                {
+                    // 32 Bit struct is not the same
+                    MemoryBasicInformation32 memoryInfo32 = new MemoryBasicInformation32();
+
+                    // Query the memory region (32 bit native method)
+                    queryResult = NativeMethods.VirtualQueryEx(processHandle, startAddress.ToIntPtr(), out memoryInfo32, Marshal.SizeOf(memoryInfo32));
+
+                    // Copy from the 32 bit struct to the 64 bit struct
+                    memoryInfo.AllocationBase = memoryInfo32.AllocationBase;
+                    memoryInfo.AllocationProtect = memoryInfo32.AllocationProtect;
+                    memoryInfo.BaseAddress = memoryInfo32.BaseAddress;
+                    memoryInfo.Protect = memoryInfo32.Protect;
+                    memoryInfo.RegionSize = memoryInfo32.RegionSize;
+                    memoryInfo.State = memoryInfo32.State;
+                    memoryInfo.Type = memoryInfo32.Type;
+                }
+                else
+                {
+                    // Query the memory region (64 bit native method)
+                    queryResult = NativeMethods.VirtualQueryEx(processHandle, startAddress.ToIntPtr(), out memoryInfo, Marshal.SizeOf(memoryInfo));
+                }
+
+                // Increment the starting address with the size of the page
+                UInt64 previousFrom = startAddress;
+                startAddress = startAddress.Add(memoryInfo.RegionSize);
+
+                if (previousFrom > startAddress)
+                {
+                    wrappedAround = true;
+                }
+
+                // Ignore free memory. These are unallocated memory regions.
+                if ((memoryInfo.State & MemoryStateFlags.Free) != 0)
+                {
+                    continue;
+                }
+
+                // At least one readable memory flag is required
+                if ((memoryInfo.Protect & MemoryProtectionFlags.ReadOnly) == 0 && (memoryInfo.Protect & MemoryProtectionFlags.ExecuteRead) == 0 &&
+                    (memoryInfo.Protect & MemoryProtectionFlags.ExecuteReadWrite) == 0 && (memoryInfo.Protect & MemoryProtectionFlags.ReadWrite) == 0)
+                {
+                    continue;
+                }
+
+                // Do not bother with this shit, this memory is not worth scanning
+                if ((memoryInfo.Protect & MemoryProtectionFlags.ZeroAccess) != 0 || (memoryInfo.Protect & MemoryProtectionFlags.NoAccess) != 0 || (memoryInfo.Protect & MemoryProtectionFlags.Guard) != 0)
+                {
+                    continue;
+                }
+
+                // Enforce allowed types
+                switch (memoryInfo.Type)
+                {
+                    case MemoryTypeFlags.None:
+                        if ((allowedTypes & MemoryTypeEnum.None) == 0)
+                        {
+                            continue;
+                        }
+
+                        break;
+                    case MemoryTypeFlags.Private:
+                        if ((allowedTypes & MemoryTypeEnum.Private) == 0)
+                        {
+                            continue;
+                        }
+
+                        break;
+                    case MemoryTypeFlags.Image:
+                        if ((allowedTypes & MemoryTypeEnum.Image) == 0)
+                        {
+                            continue;
+                        }
+
+                        break;
+                    case MemoryTypeFlags.Mapped:
+                        if ((allowedTypes & MemoryTypeEnum.Mapped) == 0)
+                        {
+                            continue;
+                        }
+
+                        break;
+                }
+
+                // Ensure at least one required protection flag is set
+                if (requiredProtection != 0 && (memoryInfo.Protect & requiredProtection) == 0)
+                {
+                    continue;
+                }
+
+                // Ensure no ignored protection flags are set
+                if (excludedProtection != 0 && (memoryInfo.Protect & excludedProtection) != 0)
+                {
+                    continue;
+                }
+
+                // Return the memory page
+                yield return memoryInfo;
+            }
+            while (startAddress < endAddress && queryResult != 0 && !wrappedAround);
         }
     }
     //// End class

@@ -86,9 +86,10 @@
                             // Exit if canceled
                             cancellationToken.ThrowIfCancellationRequested();
 
-                            result = new Snapshot(ManualScanner.Name, regions.SelectMany(region => region));
+                            result = new Snapshot(snapshot.Process, ManualScanner.Name, regions.SelectMany(region => region));
                             stopwatch.Stop();
                             Logger.Log(LogLevel.Info, "Scan complete in: " + stopwatch.Elapsed);
+                            Logger.Log(LogLevel.Info, "Results: " + result.ElementCount + " (" + Conversions.ValueToMetricSize(result.ByteCount) + ")");
                         }
                         catch (OperationCanceledException ex)
                         {

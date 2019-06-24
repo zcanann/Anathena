@@ -3,6 +3,7 @@
     using Squalr.Engine.Common;
     using Squalr.Engine.Common.DataTypes;
     using Squalr.Engine.Common.Extensions;
+    using Squalr.Engine.Memory.Windows.Native;
     using Squalr.Engine.Processes;
     using System;
     using System.Collections.Generic;
@@ -18,16 +19,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="WindowsMemoryReader"/> class.
         /// </summary>
-        /// <param name="targetProcess">The target process.</param>
-        public WindowsMemoryReader(Process targetProcess)
+        /// <param name="process">The target process.</param>
+        public WindowsMemoryReader()
         {
-            this.TargetProcess = targetProcess;
         }
-
-        /// <summary>
-        /// Gets or sets a reference to the target process.
-        /// </summary>
-        public Process TargetProcess { get; set; }
 
         /// <summary>
         /// Reads the value of a specified type in the remote process.
@@ -36,41 +31,41 @@
         /// <param name="address">The address where the value is read.</param>
         /// <param name="success">Whether or not the read succeeded.</param>
         /// <returns>A value.</returns>
-        public Object Read(DataType dataType, UInt64 address, out Boolean success)
+        public Object Read(Process process, DataType dataType, UInt64 address, out Boolean success)
         {
             Object value;
 
             switch (dataType)
             {
                 case DataType type when type == DataType.Byte:
-                    value = this.Read<Byte>(address, out success);
+                    value = this.Read<Byte>(process, address, out success);
                     break;
                 case DataType type when type == DataType.SByte:
-                    value = this.Read<SByte>(address, out success);
+                    value = this.Read<SByte>(process, address, out success);
                     break;
                 case DataType type when type == DataType.Int16:
-                    value = this.Read<Int16>(address, out success);
+                    value = this.Read<Int16>(process, address, out success);
                     break;
                 case DataType type when type == DataType.Int32:
-                    value = this.Read<Int32>(address, out success);
+                    value = this.Read<Int32>(process, address, out success);
                     break;
                 case DataType type when type == DataType.Int64:
-                    value = this.Read<Int64>(address, out success);
+                    value = this.Read<Int64>(process, address, out success);
                     break;
                 case DataType type when type == DataType.UInt16:
-                    value = this.Read<UInt16>(address, out success);
+                    value = this.Read<UInt16>(process, address, out success);
                     break;
                 case DataType type when type == DataType.UInt32:
-                    value = this.Read<UInt32>(address, out success);
+                    value = this.Read<UInt32>(process, address, out success);
                     break;
                 case DataType type when type == DataType.UInt64:
-                    value = this.Read<UInt64>(address, out success);
+                    value = this.Read<UInt64>(process, address, out success);
                     break;
                 case DataType type when type == DataType.Single:
-                    value = this.Read<Single>(address, out success);
+                    value = this.Read<Single>(process, address, out success);
                     break;
                 case DataType type when type == DataType.Double:
-                    value = this.Read<Double>(address, out success);
+                    value = this.Read<Double>(process, address, out success);
                     break;
                 default:
                     value = "?";
@@ -93,9 +88,9 @@
         /// <param name="address">The address where the value is read.</param>
         /// <param name="success">Whether or not the read succeeded.</param>
         /// <returns>A value.</returns>
-        public T Read<T>(UInt64 address, out Boolean success)
+        public T Read<T>(Process process, UInt64 address, out Boolean success)
         {
-            Byte[] byteArray = this.ReadBytes(address, Conversions.SizeOf(typeof(T)), out success);
+            Byte[] byteArray = this.ReadBytes(process, address, Conversions.SizeOf(typeof(T)), out success);
             return Conversions.BytesToObject<T>(byteArray);
         }
 
@@ -106,9 +101,16 @@
         /// <param name="count">The number of cells.</param>
         /// <param name="success">Whether or not the read succeeded.</param>
         /// <returns>The array of bytes.</returns>
-        public Byte[] ReadBytes(UInt64 address, Int32 count, out Boolean success)
+        public Byte[] ReadBytes(Process process, UInt64 address, Int32 count, out Boolean success)
         {
-            return Memory.ReadBytes(this.TargetProcess == null ? IntPtr.Zero : this.TargetProcess.Handle, address, count, out success);
+            // Allocate the buffer
+            Byte[] buffer = new Byte[count];
+            Int32 bytesRead;
+
+            // Read the data from the target process
+            success = NativeMethods.ReadProcessMemory(process == null ? IntPtr.Zero : process.Handle, address.ToIntPtr(), buffer, count, out bytesRead) && count == bytesRead;
+
+            return buffer;
         }
 
         /// <summary>
@@ -119,10 +121,10 @@
         /// <param name="success">Whether or not the read succeeded</param>
         /// <param name="maxLength">[Optional] The number of maximum bytes to read. The string is automatically cropped at this end ('\0' char).</param>
         /// <returns>The string.</returns>
-        public String ReadString(UInt64 address, Encoding encoding, out Boolean success, Int32 maxLength = 512)
+        public String ReadString(Process process, UInt64 address, Encoding encoding, out Boolean success, Int32 maxLength = 512)
         {
             // Read the string
-            String data = encoding.GetString(this.ReadBytes(address, maxLength, out success));
+            String data = encoding.GetString(this.ReadBytes(process, address, maxLength, out success));
 
             // Search the end of the string
             Int32 end = data.IndexOf('\0');
@@ -131,7 +133,7 @@
             return data.Substring(0, end);
         }
 
-        public UInt64 EvaluatePointer(UInt64 address, IEnumerable<int> offsets)
+        public UInt64 EvaluatePointer(Process process, UInt64 address, IEnumerable<int> offsets)
         {
             UInt64 finalAddress = address;
 
@@ -140,13 +142,13 @@
                 // Add and trace offsets
                 foreach (Int32 offset in offsets.Take(offsets.Count() - 1))
                 {
-                    if (this.TargetProcess.Is32Bit())
+                    if (process.Is32Bit())
                     {
-                        finalAddress = this.Read<UInt32>(finalAddress.Add(offset), out _);
+                        finalAddress = this.Read<UInt32>(process, finalAddress.Add(offset), out _);
                     }
                     else
                     {
-                        finalAddress = this.Read<UInt64>(finalAddress, out _).Add(offset);
+                        finalAddress = this.Read<UInt64>(process, finalAddress, out _).Add(offset);
                     }
                 }
 

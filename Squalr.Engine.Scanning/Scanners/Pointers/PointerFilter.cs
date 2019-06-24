@@ -78,7 +78,7 @@
                         // Exit if canceled
                         parentTask.CancellationToken.ThrowIfCancellationRequested();
 
-                        snapshot = new Snapshot(PointerFilter.Name, regions.SelectMany(region => region));
+                        snapshot = new Snapshot(snapshot.Process, PointerFilter.Name, regions.SelectMany(region => region));
                     }
                     catch (OperationCanceledException ex)
                     {

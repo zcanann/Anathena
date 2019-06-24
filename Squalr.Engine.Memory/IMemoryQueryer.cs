@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     /// <summary>
     /// An interface for querying virtual memory.
@@ -18,6 +19,7 @@
         /// <param name="endAddress">The end address of the query range.</param>
         /// <returns>A collection of pointers to virtual pages in the target process.</returns>
         IEnumerable<NormalizedRegion> GetVirtualPages(
+            Process process,
             MemoryProtectionEnum requiredProtection,
             MemoryProtectionEnum excludedProtection,
             MemoryTypeEnum allowedTypes,
@@ -28,43 +30,43 @@
         /// Gets all virtual pages in the opened process.
         /// </summary>
         /// <returns>A collection of regions in the process.</returns>
-        IEnumerable<NormalizedRegion> GetAllVirtualPages();
+        IEnumerable<NormalizedRegion> GetAllVirtualPages(Process process);
 
         /// <summary>
         /// Gets the maximum address possible in the target process.
         /// </summary>
         /// <returns>The maximum address possible in the target process.</returns>
-        UInt64 GetMaximumAddress();
+        UInt64 GetMaximumAddress(Process process);
 
         /// <summary>
         /// Gets the maximum usermode address possible in the target process.
         /// </summary>
         /// <returns>The maximum usermode address possible in the target process.</returns>
-        UInt64 GetMinUsermodeAddress();
+        UInt64 GetMinUsermodeAddress(Process process);
 
         /// <summary>
         /// Gets the maximum usermode address possible in the target process.
         /// </summary>
         /// <returns>The maximum usermode address possible in the target process.</returns>
-        UInt64 GetMaxUsermodeAddress();
+        UInt64 GetMaxUsermodeAddress(Process process);
 
         /// <summary>
         /// Gets all modules in the opened process.
         /// </summary>
         /// <returns>A collection of modules in the process.</returns>
-        IEnumerable<NormalizedModule> GetModules();
+        IEnumerable<NormalizedModule> GetModules(Process process);
 
         /// <summary>
         /// Gets the address of the stacks in the opened process.
         /// </summary>
         /// <returns>A pointer to the stacks of the opened process.</returns>
-        IEnumerable<NormalizedRegion> GetStackAddresses();
+        IEnumerable<NormalizedRegion> GetStackAddresses(Process process);
 
         /// <summary>
         /// Gets the addresses of the heaps in the opened process.
         /// </summary>
         /// <returns>A collection of pointers to all heaps in the opened process.</returns>
-        IEnumerable<NormalizedRegion> GetHeapAddresses();
+        IEnumerable<NormalizedRegion> GetHeapAddresses(Process process);
 
         /// <summary>
         /// Converts an address to a module and an address offset.
@@ -72,14 +74,14 @@
         /// <param name="address">The original address.</param>
         /// <param name="moduleName">The module name containing this address, if there is one. Otherwise, empty string.</param>
         /// <returns>The module name and address offset. If not contained by a module, the original address is returned.</returns>
-        UInt64 AddressToModule(UInt64 address, out String moduleName);
+        UInt64 AddressToModule(Process process, UInt64 address, out String moduleName);
 
         /// <summary>
         /// Determines the base address of a module given a module name.
         /// </summary>
         /// <param name="identifier">The module identifier, or name.</param>
         /// <returns>The base address of the module.</returns>
-        UInt64 ResolveModule(String identifier);
+        UInt64 ResolveModule(Process process, String identifier);
     }
     //// End interface
 }

@@ -49,7 +49,7 @@
                                         cancellationToken.ThrowIfCancellationRequested();
 
                                         // Read the memory for this region
-                                        readGroup.ReadAllMemory();
+                                        readGroup.ReadAllMemory(snapshot.Process);
 
                                         // Update progress every N regions
                                         if (Interlocked.Increment(ref processedRegions) % 32 == 0)

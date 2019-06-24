@@ -5,6 +5,7 @@
     using Squalr.Engine.Common.Extensions;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using System.Threading.Tasks;
 
@@ -21,20 +22,11 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Snapshot" /> class.
         /// </summary>
-        /// <param name="snapshotName">The snapshot generation method name.</param>
-        public Snapshot(String snapshotName = null)
-        {
-            this.SnapshotName = snapshotName == null ? String.Empty : snapshotName;
-            this.ReadGroups = new List<ReadGroup>();
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Snapshot" /> class.
-        /// </summary>
         /// <param name="memoryRegions">The regions with which to initialize this snapshot.</param>
-        public Snapshot(String snapshotName, IList<ReadGroup> memoryRegions)
+        public Snapshot(Process process, String snapshotName, IList<ReadGroup> memoryRegions = null)
         {
-            this.SnapshotName = snapshotName == null ? String.Empty : snapshotName;
+            this.Process = process;
+            this.SnapshotName = snapshotName ?? String.Empty;
             this.ReadGroups = memoryRegions?.ToList();
         }
 
@@ -42,7 +34,7 @@
         /// Initializes a new instance of the <see cref="Snapshot" /> class.
         /// </summary>
         /// <param name="snapshotRegions">The regions with which to initialize this snapshot.</param>
-        public Snapshot(params SnapshotRegion[] snapshotRegions) : this(null, snapshotRegions)
+        public Snapshot(Process process, params SnapshotRegion[] snapshotRegions) : this(process, null, snapshotRegions)
         {
         }
 
@@ -50,7 +42,7 @@
         /// Initializes a new instance of the <see cref="Snapshot" /> class.
         /// </summary>
         /// <param name="snapshotRegions">The regions with which to initialize this snapshot.</param>
-        public Snapshot(IEnumerable<SnapshotRegion> snapshotRegions) : this(null, snapshotRegions)
+        public Snapshot(Process process, IEnumerable<SnapshotRegion> snapshotRegions) : this(process, null, snapshotRegions)
         {
         }
 
@@ -59,7 +51,7 @@
         /// </summary>
         /// <param name="snapshotRegions">The regions with which to initialize this snapshot.</param>
         /// <param name="snapshotName">The snapshot generation method name.</param>
-        public Snapshot(String snapshotName, IEnumerable<SnapshotRegion> snapshotRegions) : this(snapshotName)
+        public Snapshot(Process process, String snapshotName, IEnumerable<SnapshotRegion> snapshotRegions) : this(process, snapshotName)
         {
             this.AddSnapshotRegions(snapshotRegions);
         }
@@ -69,10 +61,15 @@
         /// </summary>
         /// <param name="snapshotRegions">The regions with which to initialize this snapshot.</param>
         /// <param name="snapshotName">The snapshot generation method name.</param>
-        public Snapshot(String snapshotName = null, params SnapshotRegion[] snapshotRegions) : this(snapshotName)
+        public Snapshot(Process process, String snapshotName = null, params SnapshotRegion[] snapshotRegions) : this(process, snapshotName)
         {
             this.AddSnapshotRegions(snapshotRegions);
         }
+
+        /// <summary>
+        /// Gets the process associated with this snapshot.
+        /// </summary>
+        public Process Process { get; private set; }
 
         /// <summary>
         /// Gets the name associated with the method by which this snapshot was generated.
@@ -206,7 +203,7 @@
         /// <returns>The shallow cloned snapshot.</returns>
         public Snapshot Clone(String newSnapshotName = null)
         {
-            return new Snapshot(newSnapshotName, this.ReadGroups);
+            return new Snapshot(this.Process, newSnapshotName, this.ReadGroups);
         }
 
         /// <summary>
@@ -221,7 +218,7 @@
             ParallelSettings.ParallelSettingsFastest,
             (readGroup) =>
             {
-                readGroup.ReadAllMemory();
+                readGroup.ReadAllMemory(this.Process);
             });
         }
 
@@ -287,18 +284,18 @@
 
         private void LoadMetaData()
         {
-            this.SnapshotRegions = this.ReadGroups?.SelectMany(readGroup => readGroup.SnapshotRegions).ToArray();
+            this.SnapshotRegions = this.ReadGroups?.SelectMany(readGroup => readGroup.SnapshotRegions)?.ToArray();
 
-            this.RegionCount = this.SnapshotRegions.Count();
+            this.RegionCount = this.SnapshotRegions?.Count() ?? 0;
             this.ByteCount = 0;
             this.ElementCount = 0;
 
-            foreach (SnapshotRegion region in this.SnapshotRegions)
+            this.SnapshotRegions?.ForEach(region =>
             {
                 region.BaseElementIndex = this.ElementCount;
                 this.ByteCount += region.RegionSize.ToUInt64();
                 this.ElementCount += region.ElementCount.ToUInt64();
-            }
+            });
         }
 
         /// <summary>

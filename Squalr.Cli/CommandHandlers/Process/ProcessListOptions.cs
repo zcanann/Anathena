@@ -12,7 +12,7 @@
     {
         public Int32 Handle()
         {
-            IEnumerable<Process> processes = Query.Default.GetProcesses();
+            IEnumerable<Process> processes = ProcessQuery.Instance.GetProcesses();
 
             if (this.IsWindowed)
             {
@@ -21,7 +21,7 @@
 
             if (!String.IsNullOrEmpty(this.SearchTerm))
             {
-                processes = Query.Default.GetProcesses().Where(x => x.ProcessName.Contains(this.SearchTerm, this.MatchCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase));
+                processes = ProcessQuery.Instance.GetProcesses().Where(x => x.ProcessName.Contains(this.SearchTerm, this.MatchCase ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase));
             }
 
             if (!this.IncludeSystemProcesses)

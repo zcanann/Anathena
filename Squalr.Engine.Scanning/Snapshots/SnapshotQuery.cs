@@ -6,6 +6,7 @@
     using Squalr.Engine.Scanning.Properties;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
 
     public static class SnapshotQuery
@@ -25,18 +26,18 @@
         /// </summary>
         /// <param name="snapshotCreationMode">The method of snapshot retrieval.</param>
         /// <returns>The collected snapshot.</returns>
-        public static Snapshot GetSnapshot(SnapshotRetrievalMode snapshotCreationMode, DataType dataType)
+        public static Snapshot GetSnapshot(Process process, SnapshotRetrievalMode snapshotCreationMode, DataType dataType)
         {
             switch (snapshotCreationMode)
             {
                 case SnapshotRetrievalMode.FromSettings:
-                    return SnapshotQuery.CreateSnapshotFromSettings(dataType);
+                    return SnapshotQuery.CreateSnapshotFromSettings(process, dataType);
                 case SnapshotRetrievalMode.FromUserModeMemory:
-                    return SnapshotQuery.CreateSnapshotFromUsermodeMemory(dataType);
+                    return SnapshotQuery.CreateSnapshotFromUsermodeMemory(process, dataType);
                 case SnapshotRetrievalMode.FromModules:
-                    return SnapshotQuery.CreateSnapshotFromModules(dataType);
+                    return SnapshotQuery.CreateSnapshotFromModules(process, dataType);
                 case SnapshotRetrievalMode.FromHeaps:
-                    return SnapshotQuery.CreateSnapshotFromHeaps(dataType);
+                    return SnapshotQuery.CreateSnapshotFromHeaps(process, dataType);
                 case SnapshotRetrievalMode.FromStack:
                     throw new NotImplementedException();
                 default:
@@ -49,17 +50,18 @@
         /// Creates a snapshot from all usermode memory. Will not read any memory.
         /// </summary>
         /// <returns>A snapshot created from usermode memory.</returns>
-        private static Snapshot CreateSnapshotFromUsermodeMemory(DataType dataType)
+        private static Snapshot CreateSnapshotFromUsermodeMemory(Process process, DataType dataType)
         {
             MemoryProtectionEnum requiredPageFlags = 0;
             MemoryProtectionEnum excludedPageFlags = 0;
             MemoryTypeEnum allowedTypeFlags = MemoryTypeEnum.None | MemoryTypeEnum.Private | MemoryTypeEnum.Image;
 
             UInt64 startAddress = 0;
-            UInt64 endAddress = MemoryQueryerFactory.Default.GetMaxUsermodeAddress();
+            UInt64 endAddress = MemoryQueryer.Instance.GetMaxUsermodeAddress(process);
 
             List<ReadGroup> memoryRegions = new List<ReadGroup>();
-            IEnumerable<NormalizedRegion> virtualPages = MemoryQueryerFactory.Default.GetVirtualPages(
+            IEnumerable<NormalizedRegion> virtualPages = MemoryQueryer.Instance.GetVirtualPages(
+                process,
                 requiredPageFlags,
                 excludedPageFlags,
                 allowedTypeFlags,
@@ -71,14 +73,14 @@
                 memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Default.Alignment));
             }
 
-            return new Snapshot(null, memoryRegions);
+            return new Snapshot(process, null, memoryRegions);
         }
 
         /// <summary>
         /// Creates a new snapshot of memory in the target process. Will not read any memory.
         /// </summary>
         /// <returns>The snapshot of memory taken in the target process.</returns>
-        private static Snapshot CreateSnapshotFromSettings(DataType dataType)
+        private static Snapshot CreateSnapshotFromSettings(Process process, DataType dataType)
         {
             MemoryProtectionEnum requiredPageFlags = SnapshotQuery.GetRequiredProtectionSettings();
             MemoryProtectionEnum excludedPageFlags = SnapshotQuery.GetExcludedProtectionSettings();
@@ -90,7 +92,7 @@
             if (ScanSettings.Default.IsUserMode)
             {
                 startAddress = 0;
-                endAddress = MemoryQueryerFactory.Default.GetMaxUsermodeAddress();
+                endAddress = MemoryQueryer.Instance.GetMaxUsermodeAddress(process);
             }
             else
             {
@@ -99,7 +101,8 @@
             }
 
             List<ReadGroup> memoryRegions = new List<ReadGroup>();
-            IEnumerable<NormalizedRegion> virtualPages = MemoryQueryerFactory.Default.GetVirtualPages(
+            IEnumerable<NormalizedRegion> virtualPages = MemoryQueryer.Instance.GetVirtualPages(
+                process,
                 requiredPageFlags,
                 excludedPageFlags,
                 allowedTypeFlags,
@@ -112,17 +115,17 @@
                 memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Default.Alignment));
             }
 
-            return new Snapshot(null, memoryRegions);
+            return new Snapshot(process, null, memoryRegions);
         }
 
         /// <summary>
         /// Creates a snapshot from modules in the selected process.
         /// </summary>
         /// <returns>The created snapshot.</returns>
-        private static Snapshot CreateSnapshotFromModules(DataType dataType)
+        private static Snapshot CreateSnapshotFromModules(Process process, DataType dataType)
         {
-            IList<ReadGroup> moduleGroups = MemoryQueryerFactory.Default.GetModules().Select(region => new ReadGroup(region.BaseAddress, region.RegionSize, dataType, ScanSettings.Default.Alignment)).ToList();
-            Snapshot moduleSnapshot = new Snapshot(null, moduleGroups);
+            IList<ReadGroup> moduleGroups = MemoryQueryer.Instance.GetModules(process).Select(region => new ReadGroup(region.BaseAddress, region.RegionSize, dataType, ScanSettings.Default.Alignment)).ToList();
+            Snapshot moduleSnapshot = new Snapshot(process, null, moduleGroups);
 
             return moduleSnapshot;
         }
@@ -131,21 +134,22 @@
         /// Creates a snapshot from modules in the selected process.
         /// </summary>
         /// <returns>The created snapshot.</returns>
-        private static Snapshot CreateSnapshotFromHeaps(DataType dataType)
+        private static Snapshot CreateSnapshotFromHeaps(Process process, DataType dataType)
         {
             // TODO: This currently grabs all usermode memory and excludes modules. A better implementation would involve actually grabbing heaps.
-            Snapshot snapshot = SnapshotQuery.CreateSnapshotFromUsermodeMemory(dataType);
-            IEnumerable<NormalizedModule> modules = MemoryQueryerFactory.Default.GetModules();
+            Snapshot snapshot = SnapshotQuery.CreateSnapshotFromUsermodeMemory(process, dataType);
+            IEnumerable<NormalizedModule> modules = MemoryQueryer.Instance.GetModules(process);
 
             MemoryProtectionEnum requiredPageFlags = 0;
             MemoryProtectionEnum excludedPageFlags = 0;
             MemoryTypeEnum allowedTypeFlags = MemoryTypeEnum.None | MemoryTypeEnum.Private | MemoryTypeEnum.Image;
 
             UInt64 startAddress = 0;
-            UInt64 endAddress = MemoryQueryerFactory.Default.GetMaxUsermodeAddress();
+            UInt64 endAddress = MemoryQueryer.Instance.GetMaxUsermodeAddress(process);
 
             List<ReadGroup> memoryRegions = new List<ReadGroup>();
-            IEnumerable<NormalizedRegion> virtualPages = MemoryQueryerFactory.Default.GetVirtualPages(
+            IEnumerable<NormalizedRegion> virtualPages = MemoryQueryer.Instance.GetVirtualPages(
+                process,
                 requiredPageFlags,
                 excludedPageFlags,
                 allowedTypeFlags,
@@ -162,7 +166,7 @@
                 memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Default.Alignment));
             }
 
-            return new Snapshot(null, memoryRegions);
+            return new Snapshot(process, null, memoryRegions);
         }
 
         /// <summary>

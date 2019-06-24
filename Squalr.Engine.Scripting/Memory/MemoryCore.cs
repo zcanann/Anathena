@@ -70,7 +70,7 @@
             moduleName = moduleName?.RemoveSuffixes(true, ".exe", ".dll");
 
             UInt64 address = 0;
-            foreach (NormalizedModule module in MemoryQueryerFactory.Default.GetModules())
+            foreach (NormalizedModule module in MemoryQueryer.Instance.GetModules())
             {
                 String targetModuleName = module?.Name?.RemoveSuffixes(true, ".exe", ".dll");
                 if (targetModuleName.Equals(moduleName, StringComparison.OrdinalIgnoreCase))
@@ -111,7 +111,7 @@
             this.PrintDebugTag();
 
             assembly = this.ResolveKeywords(assembly);
-            AssemblerResult result = Assembler.Default.Assemble(assembly, Processes.Default.IsOpenedProcess32Bit(), address);
+            AssemblerResult result = Assembler.Instance.Assemble(assembly, Processes.Instance.IsOpenedProcess32Bit(), address);
 
             Logger.Log(LogLevel.Info, result.Message, result.InnerMessage);
 
@@ -133,7 +133,7 @@
             // Read original bytes at code cave jump
             Boolean readSuccess;
 
-            Byte[] originalBytes = MemoryReaderFactory.Default.ReadBytes(address, injectedCodeSize + MemoryCore.Largestx86InstructionSize, out readSuccess);
+            Byte[] originalBytes = MemoryReader.Instance.ReadBytes(address, injectedCodeSize + MemoryCore.Largestx86InstructionSize, out readSuccess);
 
             if (!readSuccess || originalBytes == null || originalBytes.Length <= 0)
             {
@@ -141,7 +141,7 @@
             }
 
             // Grab instructions at code entry point
-            IEnumerable<Instruction> instructions = Disassembler.Default.Disassemble(originalBytes, Processes.Default.IsOpenedProcess32Bit(), address);
+            IEnumerable<Instruction> instructions = Disassembler.Instance.Disassemble(originalBytes, Processes.Instance.IsOpenedProcess32Bit(), address);
 
             // Determine size of instructions we need to overwrite
             Int32 replacedInstructionSize = 0;
@@ -174,7 +174,7 @@
         {
             this.PrintDebugTag();
 
-            UInt64 address = MemoryAllocatorFactory.Default.AllocateMemory(size);
+            UInt64 address = MemoryAllocator.Instance.AllocateMemory(size);
             this.RemoteAllocations.Add(address);
 
             return address;
@@ -190,7 +190,7 @@
         {
             this.PrintDebugTag();
 
-            UInt64 address = MemoryAllocatorFactory.Default.AllocateMemory(size, allocAddress);
+            UInt64 address = MemoryAllocator.Instance.AllocateMemory(size, allocAddress);
             this.RemoteAllocations.Add(address);
 
             return address;
@@ -208,7 +208,7 @@
             {
                 if (allocationAddress == address)
                 {
-                    MemoryAllocatorFactory.Default.DeallocateMemory(allocationAddress);
+                    MemoryAllocator.Instance.DeallocateMemory(allocationAddress);
                     this.RemoteAllocations.Remove(allocationAddress);
                     break;
                 }
@@ -226,7 +226,7 @@
 
             foreach (UInt64 address in this.RemoteAllocations)
             {
-                MemoryAllocatorFactory.Default.DeallocateMemory(address);
+                MemoryAllocator.Instance.DeallocateMemory(address);
             }
 
             this.RemoteAllocations.Clear();
@@ -285,7 +285,7 @@
                 // Allocate memory
                 UInt64 remoteAllocation;
 
-                if (Processes.Default.IsOpenedProcess32Bit())
+                if (Processes.Instance.IsOpenedProcess32Bit())
                 {
                     remoteAllocation = this.Allocate(assemblySize);
                 }
@@ -336,7 +336,7 @@
             String noOps = (originalBytes.Length - assemblySize > 0 ? "db " : String.Empty) + String.Join(" ", Enumerable.Repeat("0x90,", originalBytes.Length - assemblySize)).TrimEnd(',');
 
             Byte[] injectionBytes = this.GetAssemblyBytes(assembly + "\n" + noOps, address);
-            MemoryWriterFactory.Default.WriteBytes(address, injectionBytes);
+            MemoryWriter.Instance.WriteBytes(address, injectionBytes);
 
             CodeCave codeCave = new CodeCave(address, 0, originalBytes);
             this.CodeCaves.Add(codeCave);
@@ -388,9 +388,9 @@
                     continue;
                 }
 
-                MemoryWriterFactory.Default.WriteBytes(codeCave.Address, codeCave.OriginalBytes);
+                MemoryWriter.Instance.WriteBytes(codeCave.Address, codeCave.OriginalBytes);
 
-                MemoryAllocatorFactory.Default.DeallocateMemory(codeCave.RemoteAllocationAddress);
+                MemoryAllocator.Instance.DeallocateMemory(codeCave.RemoteAllocationAddress);
             }
         }
 
@@ -403,7 +403,7 @@
 
             foreach (CodeCave codeCave in this.CodeCaves)
             {
-                MemoryWriterFactory.Default.WriteBytes(codeCave.Address, codeCave.OriginalBytes);
+                MemoryWriter.Instance.WriteBytes(codeCave.Address, codeCave.OriginalBytes);
 
                 // If remote allocation address is unset, then it was not allocated.
                 if (codeCave.RemoteAllocationAddress == 0)
@@ -411,7 +411,7 @@
                     continue;
                 }
 
-                MemoryAllocatorFactory.Default.DeallocateMemory(codeCave.RemoteAllocationAddress);
+                MemoryAllocator.Instance.DeallocateMemory(codeCave.RemoteAllocationAddress);
             }
 
             this.CodeCaves.Clear();
@@ -557,7 +557,7 @@
         {
             this.PrintDebugTag();
 
-            UInt64 finalAddress = MemoryReaderFactory.Default.EvaluatePointer(address, offsets);
+            UInt64 finalAddress = MemoryReader.Instance.EvaluatePointer(address, offsets);
             return finalAddress;
         }
 
@@ -572,7 +572,7 @@
             this.PrintDebugTag(address.ToString("x"));
 
             Boolean readSuccess;
-            return MemoryReaderFactory.Default.Read<T>(address, out readSuccess);
+            return MemoryReader.Instance.Read<T>(address, out readSuccess);
         }
 
         /// <summary>
@@ -586,7 +586,7 @@
             this.PrintDebugTag(address.ToString("x"), count.ToString());
 
             Boolean readSuccess;
-            return MemoryReaderFactory.Default.ReadBytes(address, count, out readSuccess);
+            return MemoryReader.Instance.ReadBytes(address, count, out readSuccess);
         }
 
         /// <summary>
@@ -599,7 +599,7 @@
         {
             this.PrintDebugTag(address.ToString("x"), value.ToString());
 
-            MemoryWriterFactory.Default.Write<T>(address, value);
+            MemoryWriter.Instance.Write<T>(address, value);
         }
 
         /// <summary>
@@ -611,7 +611,7 @@
         {
             this.PrintDebugTag(address.ToString("x"));
 
-            MemoryWriterFactory.Default.WriteBytes(address, values);
+            MemoryWriter.Instance.WriteBytes(address, values);
         }
 
         /// <summary>

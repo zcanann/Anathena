@@ -31,7 +31,7 @@
         /// <param name="alignment">The pointer scan alignment.</param>
         /// <param name="taskIdentifier">The unique identifier to prevent duplicate tasks.</param>
         /// <returns>Atrackable task that returns the scan results.</returns>
-        public static TrackableTask<PointerBag> Scan(UInt64 newAddress, Int32 alignment, PointerBag oldPointerBag, String taskIdentifier = null)
+        public static TrackableTask<PointerBag> Scan(Process process, UInt64 newAddress, Int32 alignment, PointerBag oldPointerBag, String taskIdentifier = null)
         {
             try
             {
@@ -47,10 +47,10 @@
                         stopwatch.Start();
 
                         // Step 1) Create a snapshot of the new target address
-                        Snapshot targetAddress = new Snapshot(new SnapshotRegion[] { new SnapshotRegion(new ReadGroup(newAddress, oldPointerBag.PointerSize.ToSize(), oldPointerBag.PointerSize.ToDataType(), alignment), 0, oldPointerBag.PointerSize.ToSize()) });
+                        Snapshot targetAddress = new Snapshot(process, new SnapshotRegion[] { new SnapshotRegion(new ReadGroup(newAddress, oldPointerBag.PointerSize.ToSize(), oldPointerBag.PointerSize.ToDataType(), alignment), 0, oldPointerBag.PointerSize.ToSize()) });
 
                         // Step 2) Collect heap pointers
-                        Snapshot heapPointers = SnapshotQuery.GetSnapshot(SnapshotQuery.SnapshotRetrievalMode.FromHeaps, oldPointerBag.PointerSize.ToDataType());
+                        Snapshot heapPointers = SnapshotQuery.GetSnapshot(process, SnapshotQuery.SnapshotRetrievalMode.FromHeaps, oldPointerBag.PointerSize.ToDataType());
                         TrackableTask<Snapshot> heapValueCollector = ValueCollector.CollectValues(heapPointers);
                         heapPointers = heapValueCollector.Result;
 

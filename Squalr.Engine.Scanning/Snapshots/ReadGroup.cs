@@ -5,6 +5,7 @@
     using Squalr.Engine.Memory;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
 
     /// <summary>
     /// Defines a segment of process memory, which many snapshot regions may read from. This serves as a shared pool of memory, such as to
@@ -73,10 +74,10 @@
         /// Reads all memory for this memory region.
         /// </summary>
         /// <returns>The bytes read from memory.</returns>
-        public Boolean ReadAllMemory()
+        public Boolean ReadAllMemory(Process process)
         {
             Boolean readSuccess;
-            Byte[] newCurrentValues = MemoryReaderFactory.Default.ReadBytes(this.BaseAddress, this.RegionSize, out readSuccess);
+            Byte[] newCurrentValues = MemoryReader.Instance.ReadBytes(process, this.BaseAddress, this.RegionSize, out readSuccess);
 
             if (readSuccess)
             {

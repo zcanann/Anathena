@@ -1,6 +1,8 @@
 ﻿namespace Squalr.Engine.Debuggers.Windows.DebugEngine
 {
     using Microsoft.Diagnostics.Runtime.Interop;
+    using Squalr.Engine.Memory;
+    using Squalr.Engine.Processes;
     using System;
     using System.Linq;
     using System.Runtime.InteropServices;
@@ -118,7 +120,7 @@
             CodeTraceInfo codeTraceInfo = new CodeTraceInfo();
 
             String[] registers;
-            Boolean isProcess32Bit = Processes.Default.IsOpenedProcess32Bit();
+            Boolean isProcess32Bit = ProcessQuery.Instance.IsProcessWindowed();
 
             if (isProcess32Bit)
             {
@@ -156,7 +158,7 @@
             address = this.CorrectAddress(address);
 
             // Disassemble instruction
-            Byte[] bytes = Memory.MemoryReaderFactory.Default.ReadBytes(address, 15, out _);
+            Byte[] bytes = MemoryReader.Instance.ReadBytes(address, 15, out _);
             codeTraceInfo.Instruction = Engine.Architecture.Disassembler.Default.Disassemble(bytes, isProcess32Bit, address).FirstOrDefault();
 
             // Invoke callbacks

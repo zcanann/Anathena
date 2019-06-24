@@ -2,7 +2,6 @@
 {
     using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Scanning.Snapshots;
-    using Squalr.Engine.SpeedManipulator;
     using System.Diagnostics;
     using System.Threading.Tasks;
 
@@ -27,8 +26,6 @@
         /// Gets a reference to the target process.
         /// </summary>
         public Process OpenedProcess { get; private set; }
-
-        public ISpeedManipulator SpeedManipulator { get; private set; }
 
         public SnapshotManager SnapshotManager { get; private set; }
 

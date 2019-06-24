@@ -138,6 +138,14 @@
             return DataType.ScannableDataTypes;
         }
 
+        public Int32 Size
+        {
+            get
+            {
+                return Conversions.SizeOf(this);
+            }
+        }
+
         /// <summary>
         /// Gets or sets the string of the full namespace path representing this type.
         /// </summary>

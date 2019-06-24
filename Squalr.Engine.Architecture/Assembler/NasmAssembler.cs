@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Engine.Architecture.Assemblers
 {
-    using Squalr.Engine.Utils.Extensions;
+    using Squalr.Engine.Common.Extensions;
     using System;
     using System.Diagnostics;
     using System.IO;

@@ -4,6 +4,7 @@
     using Squalr.Engine.Scanning.Properties;
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Threading.Tasks;
 
     public class SnapshotManager
@@ -85,13 +86,13 @@
         /// Returns the memory regions associated with the current snapshot. If none exist, a query will be done. Will not read any memory.
         /// </summary>
         /// <returns>The current active snapshot of memory in the target process.</returns>
-        public Snapshot GetActiveSnapshotCreateIfNone(DataType dataType)
+        public Snapshot GetActiveSnapshotCreateIfNone(Process process, DataType dataType)
         {
             lock (this.AccessLock)
             {
                 if (this.Snapshots.Count == 0 || this.Snapshots.Peek() == null || this.Snapshots.Peek().ElementCount == 0)
                 {
-                    Snapshot snapshot = SnapshotQuery.GetSnapshot(SnapshotQuery.SnapshotRetrievalMode.FromSettings, dataType);
+                    Snapshot snapshot = SnapshotQuery.GetSnapshot(process, SnapshotQuery.SnapshotRetrievalMode.FromSettings, dataType);
                     snapshot.Alignment = ScanSettings.Default.Alignment;
                     return snapshot;
                 }

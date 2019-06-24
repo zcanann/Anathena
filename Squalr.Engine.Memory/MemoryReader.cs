@@ -1,23 +1,28 @@
-﻿namespace Squalr.Engine.Scanning
+﻿namespace Squalr.Engine.Memory
 {
     using Squalr.Engine.Common.Logging;
-    using Squalr.Engine.Scanning.Windows;
+    using Squalr.Engine.Memory.Windows;
     using System;
     using System.Threading;
 
-    public static class MetaData
+    /// <summary>
+    /// Instantiates the proper memory reader based on the host OS.
+    /// </summary>
+    public static class MemoryReader
     {
         /// <summary>
-        /// Singleton instance of the <see cref="IMetaData"/> class.
+        /// Singleton instance of the <see cref="WindowsMemoryReader"/> class.
         /// </summary>
-        private static Lazy<IMetaData> windowsMemoryReaderInstance = new Lazy<IMetaData>(
-            () => { return new WindowsMetaData(); },
+        private static readonly Lazy<WindowsMemoryReader> windowsMemoryReaderInstance = new Lazy<WindowsMemoryReader>(
+            () => { return new WindowsMemoryReader(); },
             LazyThreadSafetyMode.ExecutionAndPublication);
 
         /// <summary>
-        /// Gets the default meta data reader for the target process.
+        /// Creates the memory reader for the current operating system.
         /// </summary>
-        public static IMetaData Default
+        /// <param name="targetProcess">The process from which the memory reader reads memory.</param>
+        /// <returns>An instance of a memory reader.</returns>
+        public static IMemoryReader Instance
         {
             get
             {
@@ -31,7 +36,7 @@
                     case PlatformID.Win32S:
                     case PlatformID.Win32Windows:
                     case PlatformID.WinCE:
-                        return windowsMemoryReaderInstance.Value;
+                        return MemoryReader.windowsMemoryReaderInstance.Value;
                     case PlatformID.Unix:
                         ex = new Exception("Unix operating system is not supported");
                         break;
@@ -45,17 +50,6 @@
 
                 Logger.Log(LogLevel.Fatal, "Unsupported Operating System", ex);
                 throw ex;
-            }
-        }
-
-        /// <summary>
-        /// Gets the default meta data reader for the0. windows operating system.
-        /// </summary>
-        public static IMetaData Windows
-        {
-            get
-            {
-                return windowsMemoryReaderInstance.Value;
             }
         }
     }
