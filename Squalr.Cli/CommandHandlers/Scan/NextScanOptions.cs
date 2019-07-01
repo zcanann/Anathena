@@ -1,4 +1,4 @@
-﻿namespace Squalr.Cli
+﻿namespace Squalr.Cli.CommandHandlers.Scan
 {
     using CommandLine;
     using Squalr.Engine.Common;
@@ -71,6 +71,9 @@
 
                 SessionManager.Session.SnapshotManager.SaveSnapshot(scanTask.Result);
             });
+
+            Console.WriteLine();
+            Console.WriteLine();
 
             return 0;
         }

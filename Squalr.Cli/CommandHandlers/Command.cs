@@ -1,6 +1,5 @@
-﻿namespace Squalr.Cli
+﻿namespace Squalr.Cli.CommandHandlers
 {
-    using Squalr.Engine.Common;
     using System;
     using System.Linq;
 

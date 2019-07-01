@@ -1,4 +1,4 @@
-﻿namespace Squalr.Cli
+﻿namespace Squalr.Cli.CommandHandlers.Process
 {
     using CommandLine;
     using Squalr.Engine;

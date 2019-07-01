@@ -3,7 +3,7 @@
     using Squalr.Engine.Common.Logging;
     using System;
 
-    class Program
+    public class Program
     {
         static void Main(String[] args)
         {

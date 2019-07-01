@@ -1,5 +1,9 @@
 ﻿namespace Squalr.Cli
 {
+    using Squalr.Cli.CommandHandlers;
+    using Squalr.Cli.CommandHandlers.Process;
+    using Squalr.Cli.CommandHandlers.Results;
+    using Squalr.Cli.CommandHandlers.Scan;
     using Squalr.Engine;
     using System;
     using System.Collections.Generic;
@@ -14,6 +18,7 @@
             {
                 new ProcessCommandHandler(),
                 new ScanCommandHandler(),
+                new ResultsCommandHandler(),
             };
         }
 

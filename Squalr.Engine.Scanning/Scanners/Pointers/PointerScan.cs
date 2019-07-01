@@ -58,7 +58,7 @@
                             TrackableTask<Snapshot> heapValueCollector = ValueCollector.CollectValues(heapPointers);
                             heapPointers = heapValueCollector.Result;
 
-                            // Step 3) Build levels
+                            // Step 4) Build levels
                             IList<Level> levels = new List<Level>();
 
                             if (depth > 0)
