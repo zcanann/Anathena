@@ -253,9 +253,9 @@
                 case TypeCode.Boolean:
                     return typeof(Boolean);
                 case TypeCode.Byte:
-                    return DataType.Byte;
+                    return DataTypeBase.Byte;
                 case TypeCode.Char:
-                    return DataType.Char;
+                    return DataTypeBase.Char;
                 case TypeCode.DateTime:
                     return typeof(DateTime);
                 case TypeCode.DBNull:
@@ -263,27 +263,27 @@
                 case TypeCode.Decimal:
                     return typeof(Decimal);
                 case TypeCode.Double:
-                    return DataType.Double;
+                    return DataTypeBase.Double;
                 case TypeCode.Int16:
-                    return DataType.Int16;
+                    return DataTypeBase.Int16;
                 case TypeCode.Int32:
-                    return DataType.Int32;
+                    return DataTypeBase.Int32;
                 case TypeCode.Int64:
-                    return DataType.Int64;
+                    return DataTypeBase.Int64;
                 case TypeCode.Object:
                     return typeof(Object);
                 case TypeCode.SByte:
-                    return DataType.SByte;
+                    return DataTypeBase.SByte;
                 case TypeCode.Single:
-                    return DataType.Single;
+                    return DataTypeBase.Single;
                 case TypeCode.String:
-                    return DataType.String;
+                    return DataTypeBase.String;
                 case TypeCode.UInt16:
-                    return DataType.UInt16;
+                    return DataTypeBase.UInt16;
                 case TypeCode.UInt32:
-                    return DataType.UInt32;
+                    return DataTypeBase.UInt32;
                 case TypeCode.UInt64:
-                    return DataType.UInt64;
+                    return DataTypeBase.UInt64;
                 default:
                     break;
             }

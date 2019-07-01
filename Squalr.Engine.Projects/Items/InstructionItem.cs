@@ -52,7 +52,7 @@
         {
         }
 
-        public InstructionItem(UInt64 BaseAddress, String moduleName, String instruction, Byte[] instructionBytes) : base(DataType.ByteArray, "New Instruction")
+        public InstructionItem(UInt64 BaseAddress, String moduleName, String instruction, Byte[] instructionBytes) : base(DataTypeBase.ByteArray, "New Instruction")
         {
             this.ModuleOffset = BaseAddress;
             this.ModuleName = moduleName;
@@ -161,7 +161,7 @@
         /// <summary>
         /// Gets or sets a value indicating whether the value at this address should be displayed as hex.
         /// </summary>
-        public override DataType DataType
+        public override DataTypeBase DataType
         {
             get
             {

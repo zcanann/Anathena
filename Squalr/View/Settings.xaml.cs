@@ -1,6 +1,6 @@
 ﻿namespace Squalr.View
 {
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common.DataTypes;
     using Squalr.Properties;
     using Squalr.Source.Controls;
     using System;
@@ -21,45 +21,45 @@
 
             this.AlignmentHexDecBoxViewModel = this.AlignmentHexDecBox.DataContext as HexDecBoxViewModel;
             this.AlignmentHexDecBoxViewModel.PropertyChanged += this.AlignmentUpdated;
-            this.AlignmentHexDecBoxViewModel.DataType = DataType.Int32;
+            this.AlignmentHexDecBoxViewModel.DataType = DataTypeBase.Int32;
             this.AlignmentHexDecBoxViewModel.IsHex = true;
             this.AlignmentHexDecBoxViewModel.SetValue(this.SettingsViewModel.Alignment);
 
             this.ScanRangeStartHexDecBoxViewModel = this.ScanRangeStartHexDecBox.DataContext as HexDecBoxViewModel;
             this.ScanRangeStartHexDecBoxViewModel.PropertyChanged += this.StartRangeUpdated;
-            this.ScanRangeStartHexDecBoxViewModel.DataType = DataType.UInt64;
+            this.ScanRangeStartHexDecBoxViewModel.DataType = DataTypeBase.UInt64;
             this.ScanRangeStartHexDecBoxViewModel.IsHex = true;
             this.ScanRangeStartHexDecBoxViewModel.SetValue(this.SettingsViewModel.StartAddress);
 
             this.ScanRangeEndHexDecBoxViewModel = this.ScanRangeEndHexDecBox.DataContext as HexDecBoxViewModel;
-            this.ScanRangeEndHexDecBoxViewModel.DataType = DataType.UInt64;
+            this.ScanRangeEndHexDecBoxViewModel.DataType = DataTypeBase.UInt64;
             this.ScanRangeEndHexDecBoxViewModel.PropertyChanged += this.EndRangeUpdated;
             this.ScanRangeEndHexDecBoxViewModel.IsHex = true;
             this.ScanRangeEndHexDecBoxViewModel.SetValue(this.SettingsViewModel.EndAddress);
 
             this.FreezeIntervalHexDecBoxViewModel = this.FreezeIntervalHexDecBox.DataContext as HexDecBoxViewModel;
-            this.FreezeIntervalHexDecBoxViewModel.DataType = DataType.Int32;
+            this.FreezeIntervalHexDecBoxViewModel.DataType = DataTypeBase.Int32;
             this.FreezeIntervalHexDecBoxViewModel.PropertyChanged += this.FreezeIntervalUpdated;
             this.FreezeIntervalHexDecBoxViewModel.SetValue(this.SettingsViewModel.FreezeInterval);
 
             this.RescanIntervalHexDecBoxViewModel = this.RescanIntervalHexDecBox.DataContext as HexDecBoxViewModel;
-            this.RescanIntervalHexDecBoxViewModel.DataType = DataType.Int32;
+            this.RescanIntervalHexDecBoxViewModel.DataType = DataTypeBase.Int32;
             this.RescanIntervalHexDecBoxViewModel.PropertyChanged += this.RescanIntervalUpdated;
             this.RescanIntervalHexDecBoxViewModel.SetValue(this.SettingsViewModel.RescanInterval);
 
             this.TableReadIntervalHexDecBoxViewModel = this.TableReadIntervalHexDecBox.DataContext as HexDecBoxViewModel;
-            this.TableReadIntervalHexDecBoxViewModel.DataType = DataType.Int32;
+            this.TableReadIntervalHexDecBoxViewModel.DataType = DataTypeBase.Int32;
             this.TableReadIntervalHexDecBoxViewModel.PropertyChanged += this.TableReadIntervalUpdated;
             this.TableReadIntervalHexDecBoxViewModel.SetValue(this.SettingsViewModel.TableReadInterval);
 
             this.ResultReadIntervalHexDecBoxViewModel = this.ResultReadIntervalHexDecBox.DataContext as HexDecBoxViewModel;
             this.ResultReadIntervalHexDecBoxViewModel.PropertyChanged += this.ResultReadIntervalUpdated;
-            this.ResultReadIntervalHexDecBoxViewModel.DataType = DataType.Int32;
+            this.ResultReadIntervalHexDecBoxViewModel.DataType = DataTypeBase.Int32;
             this.ResultReadIntervalHexDecBoxViewModel.SetValue(this.SettingsViewModel.ResultReadInterval);
 
             this.InputCorrelatorTimeoutHexDecBoxViewModel = this.InputCorrelatorTimeoutHexDecBox.DataContext as HexDecBoxViewModel;
             this.InputCorrelatorTimeoutHexDecBoxViewModel.PropertyChanged += this.InputCorrelatorTimeoutUpdated;
-            this.InputCorrelatorTimeoutHexDecBoxViewModel.DataType = DataType.Int32;
+            this.InputCorrelatorTimeoutHexDecBoxViewModel.DataType = DataTypeBase.Int32;
             this.InputCorrelatorTimeoutHexDecBoxViewModel.SetValue(this.SettingsViewModel.InputCorrelatorTimeOutInterval);
         }
 

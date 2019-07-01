@@ -16,7 +16,7 @@
     /// <summary>
     /// View model for the Process Selector.
     /// </summary>
-    public class ProcessSelectorViewModel : ToolViewModel, IProcessObserver
+    public class ProcessSelectorViewModel : ToolViewModel
     {
         /// <summary>
         /// Singleton instance of the <see cref="ProcessSelectorViewModel" /> class.
@@ -28,17 +28,17 @@
         /// <summary>
         /// A dummy process that detaches from the target process when selected.
         /// </summary>
-        private NormalizedProcess detachProcess;
+        private Process detachProcess;
 
         /// <summary>
         /// The selected process.
         /// </summary>
-        private NormalizedProcess selectedProcess;
+        private Process selectedProcess;
 
         /// <summary>
         /// The list of running processes.
         /// </summary>
-        private IEnumerable<NormalizedProcess> processList;
+        private IEnumerable<Process> processList;
 
         /// <summary>
         /// Prevents a default instance of the <see cref="ProcessSelectorViewModel" /> class from being created.
@@ -47,15 +47,12 @@
         {
             this.IconSource = Images.SelectProcess;
             this.RefreshProcessListCommand = new RelayCommand(() => Task.Run(() => this.RefreshProcessList()), () => true);
-            this.SelectProcessCommand = new RelayCommand<NormalizedProcess>((process) => Task.Run(() => this.SelectProcess(process)), (process) => true);
-            this.detachProcess = new NormalizedProcess("-- Detach from Process --");
+            this.SelectProcessCommand = new RelayCommand<Process>((process) => Task.Run(() => this.SelectProcess(process)), (process) => true);
+            this.detachProcess = null;
 
             this.StartAutomaticProcessListRefresh();
 
             DockingViewModel.GetInstance().RegisterViewModel(this);
-
-            // Subscribe to process events
-            Processes.Default.Subscribe(this);
         }
 
         /// <summary>
@@ -71,7 +68,7 @@
         /// <summary>
         /// Gets or sets the list of processes running on the machine.
         /// </summary>
-        public IEnumerable<NormalizedProcess> ProcessList
+        public IEnumerable<Process> ProcessList
         {
             get
             {
@@ -90,22 +87,25 @@
         /// <summary>
         /// Gets the processes with a window running on the machine, as well as the selected process.
         /// </summary>
-        public IEnumerable<NormalizedProcess> WindowedProcessList
+        public IEnumerable<Process> WindowedProcessList
         {
             get
             {
+                return null;
+                /*
                 // Process list with the selected process at the top, and a detach option as the 2nd element
-                return this.ProcessList?.Where(process => process.HasWindow && (process?.ProcessId ?? 0) != (this.SelectedProcess?.ProcessId ?? 0)).Select(process => process)
+                return this.ProcessList?.Where(process => process.HasWindow && (process?.Id ?? 0) != (this.SelectedProcess?.Id ?? 0)).Select(process => process)
                     .PrependIfNotNull(this.SelectedProcess != null ? this.DetachProcess : null)
                     .PrependIfNotNull(this.SelectedProcess)
                     .Distinct();
+                    */
             }
         }
 
         /// <summary>
         /// Gets or sets the selected process.
         /// </summary>
-        public NormalizedProcess SelectedProcess
+        public Process SelectedProcess
         {
             get
             {
@@ -117,13 +117,13 @@
                 if (value == this.DetachProcess)
                 {
                     this.selectedProcess = null;
-                    Processes.Default.OpenedProcess = null;
+                    throw new NotImplementedException();
                     this.RaisePropertyChanged(nameof(this.WindowedProcessList));
                 }
                 else if (value != this.SelectedProcess)
                 {
                     this.selectedProcess = value;
-                    Processes.Default.OpenedProcess = value.Process;
+                    throw new NotImplementedException();
                     this.RaisePropertyChanged(nameof(this.SelectedProcess));
                     this.RaisePropertyChanged(nameof(this.WindowedProcessList));
                 }
@@ -133,7 +133,7 @@
         /// <summary>
         /// Gets or sets a dummy process that detaches from the target process when selected.
         /// </summary>
-        public NormalizedProcess DetachProcess
+        public Process DetachProcess
         {
             get
             {
@@ -154,8 +154,9 @@
         {
             get
             {
-                String processName = Processes.Default.OpenedProcess.ProcessName;
-                return String.IsNullOrEmpty(processName) ? "Please Select a Process" : processName;
+                throw new NotImplementedException();
+               // String processName = Processes.Default.OpenedProcess.ProcessName;
+                // return String.IsNullOrEmpty(processName) ? "Please Select a Process" : processName;
             }
         }
 
@@ -195,7 +196,7 @@
         /// Makes the target process selection.
         /// </summary>
         /// <param name="process">The process being selected.</param>
-        private void SelectProcess(NormalizedProcess process)
+        private void SelectProcess(Process process)
         {
             this.SelectedProcess = process;
             this.IsVisible = false;
@@ -218,7 +219,7 @@
         /// </summary>
         private void RefreshProcessList()
         {
-            this.ProcessList = Processes.Default.GetProcesses().Select(process => new NormalizedProcess(process));
+            // this.ProcessList = Processes.Default.GetProcesses().Select(process => new Process(process));
         }
     }
     //// End class

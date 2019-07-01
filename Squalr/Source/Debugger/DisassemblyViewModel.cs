@@ -2,11 +2,9 @@
 {
     using GalaSoft.MvvmLight.Command;
     using Squalr.Engine.Architecture;
+    using Squalr.Engine.Common.DataStructures;
     using Squalr.Engine.Memory;
-    using Squalr.Engine.OS;
     using Squalr.Engine.Projects.Items;
-    using Squalr.Engine.Utils.DataStructures;
-    using Squalr.Engine.Utils.Extensions;
     using Squalr.Source.Docking;
     using Squalr.Source.ProjectExplorer;
     using System;
@@ -21,7 +19,7 @@
     /// <summary>
     /// View model for the Disassembly.
     /// </summary>
-    internal class DisassemblyViewModel : ToolViewModel, IProcessObserver
+    internal class DisassemblyViewModel : ToolViewModel
     {
         /// <summary>
         /// Singleton instance of the <see cref="DisassemblyViewModel" /> class.
@@ -57,8 +55,6 @@
             this.AddInstructionsCommand = new RelayCommand<Object>((selectedItems) => Task.Run(() => this.AddInstructions(this.SelectedInstructions)), (selectedItems) => true);
 
             DockingViewModel.GetInstance().RegisterViewModel(this);
-
-            Task.Run(() => Processes.Default.Subscribe(this));
         }
 
         /// <summary>
@@ -140,7 +136,7 @@
         {
             if (process != null)
             {
-                this.BaseAddress = Query.Default.GetModules().FirstOrDefault()?.BaseAddress ?? 0UL;
+                this.BaseAddress = MemoryQueryer.Instance.GetModules(null).FirstOrDefault()?.BaseAddress ?? 0UL;
 
                 this.LoadInstructions();
             }
@@ -175,6 +171,7 @@
         private void LoadInstructions()
         {
             return;
+            /*
             Byte[] bytes = Reader.Default.ReadBytes(this.BaseAddress, 200, out _);
 
             if (bytes.IsNullOrEmpty())
@@ -197,6 +194,7 @@
             }
 
             this.Instructions = new FullyObservableCollection<InstructionItem>(instructions);
+            */
         }
     }
     //// End class

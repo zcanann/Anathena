@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>7.2</LangVersion>
     <Version>2.3.1</Version>
     <Description>Squalr engine component for scripting. This library exposes a set of APIs to allow for C# scripts to leverage the other Squalr engine components.</Description>
@@ -28,39 +28,6 @@
     <ProjectReference Include="..\Squalr.Engine.Projects\Squalr.Engine.Projects.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Scanning\Squalr.Engine.Scanning.csproj" />
     <ProjectReference Include="..\Squalr.Engine\Squalr.Engine.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Update="Templates\CodeInjectionTemplate.cs">
-      <DependentUpon>CodeInjectionTemplate.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Templates\GraphicsInjectionTemplate.cs">
-      <DependentUpon>GraphicsInjectionTemplate.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Update="Templates\ModScriptTemplate.cs">
-      <DependentUpon>ModScriptTemplate.tt</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Templates\CodeInjectionTemplate.tt">
-      <LastGenOutput>CodeInjectionTemplate.cs</LastGenOutput>
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-    </None>
-    <None Update="Templates\GraphicsInjectionTemplate.tt">
-      <LastGenOutput>GraphicsInjectionTemplate.cs</LastGenOutput>
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-    </None>
-    <None Update="Templates\ModScriptTemplate.tt">
-      <LastGenOutput>ModScriptTemplate.cs</LastGenOutput>
-      <Generator>TextTemplatingFilePreprocessor</Generator>
-    </None>
   </ItemGroup>
 
   <ItemGroup>

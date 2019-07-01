@@ -1,8 +1,8 @@
 ﻿namespace Squalr.Source.Utils.TypeConverters
 {
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataTypes;
     using Squalr.Engine.Projects.Items;
-    using Squalr.Engine.Utils;
     using System;
     using System.ComponentModel;
     using System.Globalization;
@@ -23,7 +23,7 @@
         public override Object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, Object value, Type destinationType)
         {
             String valueString = (value == null) ? String.Empty : value.ToString();
-            DataType dataType = (value == null) ? null : value.GetType();
+            DataTypeBase dataType = (value == null) ? null : value.GetType();
             Boolean isHex = false;
 
             if (typeof(AddressItem).IsAssignableFrom(context?.Instance?.GetType()))
@@ -48,7 +48,7 @@
         /// <returns>The converted value.</returns>
         public override Object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
         {
-            DataType dataType = null;
+            DataTypeBase dataType = null;
             Boolean isHex = false;
 
             if (typeof(AddressItem).IsAssignableFrom(context.Instance.GetType()))
@@ -57,7 +57,7 @@
                 isHex = (context.Instance as AddressItem).IsValueHex;
             }
 
-            if (dataType == (DataType)null || !value.GetType().IsAssignableFrom(typeof(String)))
+            if (dataType == (DataTypeBase)null || !value.GetType().IsAssignableFrom(typeof(String)))
             {
                 return base.ConvertFrom(context, culture, value);
             }

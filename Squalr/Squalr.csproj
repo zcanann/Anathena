@@ -144,17 +144,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Squalr.Engine.Architecture\Squalr.Engine.Architecture.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Debugger\Squalr.Engine.Debuggers.csproj" />
-    <ProjectReference Include="..\Squalr.Engine.Graphics\Squalr.Engine.Graphics.csproj" />
-    <ProjectReference Include="..\Squalr.Engine.Hook\Squalr.Engine.Hook.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Input\Squalr.Engine.Input.csproj" />
-    <ProjectReference Include="..\Squalr.Engine.Internal.HookServer\Squalr.Engine.HookServer.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Memory\Squalr.Engine.Memory.csproj" />
-    <ProjectReference Include="..\Squalr.Engine.Networking\Squalr.Engine.Networking.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Projects\Squalr.Engine.Projects.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Scanning\Squalr.Engine.Scanning.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Scripting\Squalr.Engine.Scripting.csproj" />
-    <ProjectReference Include="..\Squalr.Engine.SpeedManipulator\Squalr.Engine.SpeedManipulator.csproj" />
-    <ProjectReference Include="..\Squalr.Engine.Unrandomizer\Squalr.Engine.Unrandomizer.csproj" />
     <ProjectReference Include="..\Squalr.Engine\Squalr.Engine.csproj" />
     <ProjectReference Include="..\Squalr.Theme\Squalr.Theme.csproj" />
   </ItemGroup>

@@ -1,10 +1,10 @@
 ﻿namespace Squalr.Source.ProjectExplorer
 {
     using GalaSoft.MvvmLight.Command;
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataStructures;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Projects.Items;
-    using Squalr.Engine.Utils;
-    using Squalr.Engine.Utils.DataStructures;
     using Squalr.Properties;
     using Squalr.Source.Docking;
     using Squalr.Source.Editors.ScriptEditor;

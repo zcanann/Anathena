@@ -1,10 +1,9 @@
 ﻿namespace Squalr.Source.Debugger
 {
     using GalaSoft.MvvmLight.Command;
+    using Squalr.Engine.Common.DataStructures;
     using Squalr.Engine.Debuggers;
     using Squalr.Engine.Projects.Items;
-    using Squalr.Engine.Utils;
-    using Squalr.Engine.Utils.DataStructures;
     using Squalr.Source.Docking;
     using Squalr.Source.ProjectExplorer;
     using Squalr.Source.ProjectExplorer.ProjectItems;
@@ -190,9 +189,12 @@
 
                 AddressItem addressItem = projectItem as AddressItem;
 
-                BreakpointSize size = Debugger.Default.SizeToBreakpointSize((UInt32)Conversions.SizeOf(addressItem.DataType));
+                throw new NotImplementedException();
+                /*
+                BreakpointSize size = Debugger.Instance.SizeToBreakpointSize((UInt32)Conversions.SizeOf(addressItem.DataType));
                 this.DebuggerCancellationTokenSource = Debugger.Default.FindWhatWrites(addressItem.CalculatedAddress, size, this.CodeTraceEvent);
                 this.ShowExecute();
+                */
             }
         }
 
@@ -207,9 +209,12 @@
 
                 AddressItem addressItem = projectItem as AddressItem;
 
+                throw new NotImplementedException();
+                /*
                 BreakpointSize size = Debugger.Default.SizeToBreakpointSize((UInt32)Conversions.SizeOf(addressItem.DataType));
                 this.DebuggerCancellationTokenSource = Debugger.Default.FindWhatReads(addressItem.CalculatedAddress, size, this.CodeTraceEvent);
                 this.ShowExecute();
+                */
             }
         }
 
@@ -224,9 +229,12 @@
 
                 AddressItem addressItem = projectItem as AddressItem;
 
+                throw new NotImplementedException();
+                /*
                 BreakpointSize size = Debugger.Default.SizeToBreakpointSize((UInt32)Conversions.SizeOf(addressItem.DataType));
                 this.DebuggerCancellationTokenSource = Debugger.Default.FindWhatAccesses(addressItem.CalculatedAddress, size, this.CodeTraceEvent);
                 this.ShowExecute();
+                */
             }
         }
 

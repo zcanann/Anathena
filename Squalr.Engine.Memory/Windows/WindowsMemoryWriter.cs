@@ -26,43 +26,43 @@
         /// <param name="elementType">The data type to write.</param>
         /// <param name="address">The address to write to.</param>
         /// <param name="value">The value to write.</param>
-        public void Write(Process process, DataType elementType, UInt64 address, Object value)
+        public void Write(Process process, DataTypeBase elementType, UInt64 address, Object value)
         {
             Byte[] bytes;
 
             switch (elementType)
             {
-                case DataType type when type == DataType.Byte || type == typeof(Boolean):
+                case DataTypeBase type when type == DataTypeBase.Byte || type == typeof(Boolean):
                     bytes = new Byte[] { (Byte)value };
                     break;
-                case DataType type when type == DataType.SByte:
+                case DataTypeBase type when type == DataTypeBase.SByte:
                     bytes = new Byte[] { unchecked((Byte)(SByte)value) };
                     break;
-                case DataType type when type == DataType.Char:
+                case DataTypeBase type when type == DataTypeBase.Char:
                     bytes = Encoding.UTF8.GetBytes(new Char[] { (Char)value });
                     break;
-                case DataType type when type == DataType.Int16:
+                case DataTypeBase type when type == DataTypeBase.Int16:
                     bytes = BitConverter.GetBytes((Int16)value);
                     break;
-                case DataType type when type == DataType.Int32:
+                case DataTypeBase type when type == DataTypeBase.Int32:
                     bytes = BitConverter.GetBytes((Int32)value);
                     break;
-                case DataType type when type == DataType.Int64:
+                case DataTypeBase type when type == DataTypeBase.Int64:
                     bytes = BitConverter.GetBytes((Int64)value);
                     break;
-                case DataType type when type == DataType.UInt16:
+                case DataTypeBase type when type == DataTypeBase.UInt16:
                     bytes = BitConverter.GetBytes((UInt16)value);
                     break;
-                case DataType type when type == DataType.UInt32:
+                case DataTypeBase type when type == DataTypeBase.UInt32:
                     bytes = BitConverter.GetBytes((UInt32)value);
                     break;
-                case DataType type when type == DataType.UInt64:
+                case DataTypeBase type when type == DataTypeBase.UInt64:
                     bytes = BitConverter.GetBytes((UInt64)value);
                     break;
-                case DataType type when type == DataType.Single:
+                case DataTypeBase type when type == DataTypeBase.Single:
                     bytes = BitConverter.GetBytes((Single)value);
                     break;
-                case DataType type when type == DataType.Double:
+                case DataTypeBase type when type == DataTypeBase.Double:
                     bytes = BitConverter.GetBytes((Double)value);
                     break;
                 default:

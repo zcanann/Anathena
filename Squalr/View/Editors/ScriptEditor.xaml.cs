@@ -1,16 +1,13 @@
 ﻿namespace Squalr.View.Editors
 {
     using Source.Editors.ScriptEditor;
-    using Squalr.Engine.Logging;
-    using Squalr.Engine.Utils.Extensions;
+    using Squalr.Engine.Common.Logging;
     using System;
-    using System.Collections.Generic;
     using System.IO;
     using System.Linq;
     using System.Reflection;
     using System.Windows;
     using System.Windows.Input;
-    using System.Windows.Media;
     using System.Xml;
 
     /// <summary>
@@ -79,7 +76,7 @@
             String highlightingResource = Assembly.GetExecutingAssembly().GetManifestResourceNames()
                 .FirstOrDefault(resourceName => resourceName.EndsWith(ScriptEditor.ScriptSyntaxHighlightingResource));
 
-            if (highlightingResource.IsNullOrEmpty())
+            if (String.IsNullOrEmpty(highlightingResource))
             {
                 Logger.Log(LogLevel.Error, "Unable to load code highlighting rules. Scripts will be affected");
                 return;

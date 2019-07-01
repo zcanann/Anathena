@@ -66,25 +66,25 @@
             {
                 switch (this.Region.ReadGroup.ElementDataType)
                 {
-                    case DataType type when type == DataType.Byte:
+                    case DataTypeBase type when type == DataTypeBase.Byte:
                         return *pointerBase;
-                    case DataType type when type == DataType.SByte:
+                    case DataTypeBase type when type == DataTypeBase.SByte:
                         return *(SByte*)pointerBase;
-                    case DataType type when type == DataType.Int16:
+                    case DataTypeBase type when type == DataTypeBase.Int16:
                         return *(Int16*)pointerBase;
-                    case DataType type when type == DataType.Int32:
+                    case DataTypeBase type when type == DataTypeBase.Int32:
                         return *(Int32*)pointerBase;
-                    case DataType type when type == DataType.Int64:
+                    case DataTypeBase type when type == DataTypeBase.Int64:
                         return *(Int64*)pointerBase;
-                    case DataType type when type == DataType.UInt16:
+                    case DataTypeBase type when type == DataTypeBase.UInt16:
                         return *(UInt16*)pointerBase;
-                    case DataType type when type == DataType.UInt32:
+                    case DataTypeBase type when type == DataTypeBase.UInt32:
                         return *(UInt32*)pointerBase;
-                    case DataType type when type == DataType.UInt64:
+                    case DataTypeBase type when type == DataTypeBase.UInt64:
                         return *(UInt64*)pointerBase;
-                    case DataType type when type == DataType.Single:
+                    case DataTypeBase type when type == DataTypeBase.Single:
                         return *(Single*)pointerBase;
-                    case DataType type when type == DataType.Double:
+                    case DataTypeBase type when type == DataTypeBase.Double:
                         return *(Double*)pointerBase;
                     default:
                         throw new ArgumentException();
@@ -98,25 +98,25 @@
             {
                 switch (this.Region.ReadGroup.ElementDataType)
                 {
-                    case DataType type when type == DataType.Byte:
+                    case DataTypeBase type when type == DataTypeBase.Byte:
                         return *pointerBase;
-                    case DataType type when type == DataType.SByte:
+                    case DataTypeBase type when type == DataTypeBase.SByte:
                         return *(SByte*)pointerBase;
-                    case DataType type when type == DataType.Int16:
+                    case DataTypeBase type when type == DataTypeBase.Int16:
                         return *(Int16*)pointerBase;
-                    case DataType type when type == DataType.Int32:
+                    case DataTypeBase type when type == DataTypeBase.Int32:
                         return *(Int32*)pointerBase;
-                    case DataType type when type == DataType.Int64:
+                    case DataTypeBase type when type == DataTypeBase.Int64:
                         return *(Int64*)pointerBase;
-                    case DataType type when type == DataType.UInt16:
+                    case DataTypeBase type when type == DataTypeBase.UInt16:
                         return *(UInt16*)pointerBase;
-                    case DataType type when type == DataType.UInt32:
+                    case DataTypeBase type when type == DataTypeBase.UInt32:
                         return *(UInt32*)pointerBase;
-                    case DataType type when type == DataType.UInt64:
+                    case DataTypeBase type when type == DataTypeBase.UInt64:
                         return *(UInt64*)pointerBase;
-                    case DataType type when type == DataType.Single:
+                    case DataTypeBase type when type == DataTypeBase.Single:
                         return *(Single*)pointerBase;
-                    case DataType type when type == DataType.Double:
+                    case DataTypeBase type when type == DataTypeBase.Double:
                         return *(Double*)pointerBase;
                     default:
                         throw new ArgumentException();

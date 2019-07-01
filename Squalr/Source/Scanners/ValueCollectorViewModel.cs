@@ -3,7 +3,8 @@
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
     using Squalr.Engine;
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataTypes;
     using Squalr.Engine.Scanning.Scanners;
     using Squalr.Engine.Scanning.Snapshots;
     using Squalr.Source.Results;
@@ -52,14 +53,15 @@
         /// </summary>
         private void CollectValues()
         {
-            DataType dataType = ScanResultsViewModel.GetInstance().ActiveType;
+            DataTypeBase dataType = ScanResultsViewModel.GetInstance().ActiveType;
 
-            TrackableTask<Snapshot> valueCollectTask = ValueCollector.CollectValues(
+            throw new NotImplementedException();
+            TrackableTask<Snapshot> valueCollectTask = null;/* ValueCollector.CollectValues(
                 SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromActiveSnapshotOrPrefilter, dataType),
-                TrackableTask.UniversalIdentifier);
+                TrackableTask.UniversalIdentifier);*/
 
             TaskTrackerViewModel.GetInstance().TrackTask(valueCollectTask);
-            SnapshotManager.SaveSnapshot(valueCollectTask.Result);
+            //// SnapshotManager.SaveSnapshot(valueCollectTask.Result);
         }
     }
     //// End class

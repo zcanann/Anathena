@@ -1,15 +1,10 @@
 ﻿namespace Squalr.Source.Updater
 {
-    using Squalr.Engine;
-    using Squalr.Engine.Logging;
-    using Squalr.Source.Tasks;
+    using Squalr.Engine.Common.Logging;
     using System;
     using System.IO;
-    using System.Linq;
     using System.Reflection;
-    using System.Threading;
     using System.Threading.Tasks;
-    using static Squalr.Engine.TrackableTask;
 
     /// <summary>
     /// Class for automatically downloading and applying application updates.

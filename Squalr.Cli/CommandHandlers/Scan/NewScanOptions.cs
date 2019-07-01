@@ -9,7 +9,7 @@
     {
         public Int32 Handle()
         {
-            DataType datatype = new DataType();
+            DataTypeBase datatype = new DataTypeBase();
 
             if (String.IsNullOrWhiteSpace(this.DataTypeString))
             {
@@ -19,57 +19,57 @@
             switch(this.DataTypeString.ToLower())
             {
                 case "aob":
-                    datatype.Type = DataType.ByteArray;
+                    datatype.Type = DataTypeBase.ByteArray;
                     break;
                 case "bool":
-                    datatype.Type = DataType.Boolean;
+                    datatype.Type = DataTypeBase.Boolean;
                     break;
                 case "sbyte":
-                    datatype.Type = DataType.SByte;
+                    datatype.Type = DataTypeBase.SByte;
                     break;
                 case "short":
                 case "int16":
-                    datatype.Type = DataType.Int16;
+                    datatype.Type = DataTypeBase.Int16;
                     break;
                 case "int":
                 case "int32":
-                    datatype.Type = DataType.Int32;
+                    datatype.Type = DataTypeBase.Int32;
                     break;
                 case "long":
                 case "int64":
-                    datatype.Type = DataType.Int64;
+                    datatype.Type = DataTypeBase.Int64;
                     break;
                 case "byte":
-                    datatype.Type = DataType.Byte;
+                    datatype.Type = DataTypeBase.Byte;
                     break;
                 case "ushort":
                 case "uint16":
-                    datatype.Type = DataType.Byte;
+                    datatype.Type = DataTypeBase.Byte;
                     break;
                 case "uint":
                 case "uint32":
-                    datatype.Type = DataType.UInt32;
+                    datatype.Type = DataTypeBase.UInt32;
                     break;
                 case "ulong":
                 case "uint64":
-                    datatype.Type = DataType.UInt64;
+                    datatype.Type = DataTypeBase.UInt64;
                     break;
                 case "float":
                 case "single":
-                    datatype.Type = DataType.Single;
+                    datatype.Type = DataTypeBase.Single;
                     break;
                 case "double":
-                    datatype.Type = DataType.Double;
+                    datatype.Type = DataTypeBase.Double;
                     break;
                 case "string":
-                    datatype.Type = DataType.String;
+                    datatype.Type = DataTypeBase.String;
                     break;
                 case "char":
-                    datatype.Type = DataType.Char;
+                    datatype.Type = DataTypeBase.Char;
                     break;
                 default:
                     Console.WriteLine("Unknown data type '" + this.DataTypeString + "', defaulting to int");
-                    datatype.Type = DataType.Int32;
+                    datatype.Type = DataTypeBase.Int32;
                     break;
             }
 

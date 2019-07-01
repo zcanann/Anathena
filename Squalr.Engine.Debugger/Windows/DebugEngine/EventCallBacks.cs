@@ -120,7 +120,8 @@
             CodeTraceInfo codeTraceInfo = new CodeTraceInfo();
 
             String[] registers;
-            Boolean isProcess32Bit = ProcessQuery.Instance.IsProcessWindowed();
+            throw new NotImplementedException();
+            Boolean isProcess32Bit = false;// ProcessQuery.Instance.IsProcessWindowed();
 
             if (isProcess32Bit)
             {
@@ -158,7 +159,8 @@
             address = this.CorrectAddress(address);
 
             // Disassemble instruction
-            Byte[] bytes = MemoryReader.Instance.ReadBytes(address, 15, out _);
+            Byte[] bytes = null; // MemoryReader.Instance.ReadBytes(address, 15, out _);
+            throw new NotImplementedException();
             codeTraceInfo.Instruction = Engine.Architecture.Disassembler.Default.Disassemble(bytes, isProcess32Bit, address).FirstOrDefault();
 
             // Invoke callbacks

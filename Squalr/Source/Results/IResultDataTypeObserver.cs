@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.Results
 {
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common.DataTypes;
 
     /// <summary>
     /// Interface for a class which listens for changes in the active data type.
@@ -11,7 +11,7 @@
         /// Recieves an update of the active type in the results.
         /// </summary>
         /// <param name="activeType">The active data type.</param>
-        void Update(DataType activeType);
+        void Update(DataTypeBase activeType);
     }
     //// End interface
 }

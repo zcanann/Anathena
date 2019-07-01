@@ -2,8 +2,8 @@
 {
     using GalaSoft.MvvmLight;
     using GalaSoft.MvvmLight.Command;
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.Utils;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataTypes;
     using System;
     using System.Windows.Input;
 
@@ -20,7 +20,7 @@
         /// <summary>
         /// The data type being represented.
         /// </summary>
-        private DataType elementType;
+        private DataTypeBase elementType;
 
         /// <summary>
         /// A value indicating whether the value is displayed as hex.
@@ -32,7 +32,7 @@
         /// </summary>
         public HexDecBoxViewModel()
         {
-            this.DataType = DataType.Int32;
+            this.DataType = DataTypeBase.Int32;
 
             this.ConvertDecCommand = new RelayCommand(() => this.ConvertDec());
             this.ConvertHexCommand = new RelayCommand(() => this.ConvertHex());
@@ -138,7 +138,7 @@
         /// <summary>
         /// Gets or sets the data type being represented.
         /// </summary>
-        public DataType DataType
+        public DataTypeBase DataType
         {
             get
             {

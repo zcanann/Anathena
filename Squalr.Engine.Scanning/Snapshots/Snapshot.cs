@@ -96,7 +96,7 @@
         /// <summary>
         /// Sets the label data type for all read groups.
         /// </summary>
-        public DataType LabelDataType
+        public DataTypeBase LabelDataType
         {
             set
             {
@@ -118,7 +118,7 @@
         /// <summary>
         /// Sets the data type for all of the read groups.
         /// </summary>
-        public DataType ElementDataType
+        public DataTypeBase ElementDataType
         {
             set
             {

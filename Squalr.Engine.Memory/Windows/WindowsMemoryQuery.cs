@@ -172,11 +172,11 @@
         /// <returns>The maximum address possible in the target process.</returns>
         public UInt64 GetMaximumAddress(Process process)
         {
-            if (IntPtr.Size == Conversions.SizeOf(DataType.Int32))
+            if (IntPtr.Size == Conversions.SizeOf(DataTypeBase.Int32))
             {
                 return unchecked(UInt32.MaxValue);
             }
-            else if (IntPtr.Size == Conversions.SizeOf(DataType.Int64))
+            else if (IntPtr.Size == Conversions.SizeOf(DataTypeBase.Int64))
             {
                 return unchecked(UInt64.MaxValue);
             }

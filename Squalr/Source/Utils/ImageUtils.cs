@@ -1,8 +1,7 @@
 ﻿namespace Squalr.Source.Utils
 {
-    using Squalr.Engine.Logging;
-    using Squalr.Engine.Utils.DataStructures;
-    using Squalr.Engine.Utils.Extensions;
+    using Squalr.Engine.Common.DataStructures;
+    using Squalr.Engine.Common.Logging;
     using System;
     using System.Drawing;
     using System.Drawing.Imaging;

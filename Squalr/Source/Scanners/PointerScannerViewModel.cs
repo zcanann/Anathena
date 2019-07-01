@@ -2,6 +2,7 @@
 {
     using GalaSoft.MvvmLight.Command;
     using Squalr.Engine;
+    using Squalr.Engine.Common;
     using Squalr.Engine.Scanning.Scanners.Pointers;
     using Squalr.Engine.Scanning.Scanners.Pointers.Structures;
     using Squalr.Source.Docking;
@@ -212,7 +213,8 @@
         {
             try
             {
-                TrackableTask<PointerBag> pointerScanTask = PointerScan.Scan(this.TargetAddress, (UInt32)this.PointerRadius, this.PointerDepth, 4, PointerScannerViewModel.PointerScanTaskIdentifier);
+                throw new NotImplementedException();
+                TrackableTask<PointerBag> pointerScanTask = null;// PointerScan.Scan(this.TargetAddress, (UInt32)this.PointerRadius, this.PointerDepth, 4, PointerScannerViewModel.PointerScanTaskIdentifier);
                 TaskTrackerViewModel.GetInstance().TrackTask(pointerScanTask);
                 PointerScanResultsViewModel.GetInstance().DiscoveredPointers = pointerScanTask.Result;
             }
@@ -244,7 +246,8 @@
         {
             try
             {
-                TrackableTask<PointerBag> pointerRetargetScanTask = PointerRetargetScan.Scan(this.RetargetAddress, 4, PointerScanResultsViewModel.GetInstance().DiscoveredPointers, PointerScannerViewModel.PointerScanTaskIdentifier);
+                throw new NotImplementedException();
+                TrackableTask<PointerBag> pointerRetargetScanTask = null; // PointerRetargetScan.Scan(this.RetargetAddress, 4, PointerScanResultsViewModel.GetInstance().DiscoveredPointers, PointerScannerViewModel.PointerScanTaskIdentifier);
                 TaskTrackerViewModel.GetInstance().TrackTask(pointerRetargetScanTask);
                 PointerScanResultsViewModel.GetInstance().DiscoveredPointers = pointerRetargetScanTask.Result;
             }

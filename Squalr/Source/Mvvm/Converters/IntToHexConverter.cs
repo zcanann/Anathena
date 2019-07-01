@@ -1,7 +1,6 @@
 ﻿namespace Squalr.Source.Mvvm.Converters
 {
-    using Squalr.Engine.Utils;
-    using Squalr.Source.Utils;
+    using Squalr.Engine.Common;
     using System;
     using System.Globalization;
     using System.Windows.Data;

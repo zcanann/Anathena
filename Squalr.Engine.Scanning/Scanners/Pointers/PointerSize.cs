@@ -18,14 +18,14 @@
             }
         }
 
-        public static DataType ToDataType(this PointerSize pointerSize)
+        public static DataTypeBase ToDataType(this PointerSize pointerSize)
         {
             switch (pointerSize)
             {
                 case PointerSize.Byte4:
-                    return DataType.UInt32;
+                    return DataTypeBase.UInt32;
                 case PointerSize.Byte8:
-                    return DataType.UInt64;
+                    return DataTypeBase.UInt64;
                 default:
                     throw new ArgumentException("Unknown pointer size");
             }

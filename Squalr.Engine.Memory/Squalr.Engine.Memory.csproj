@@ -1,7 +1,7 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netstandard2.0</TargetFramework>
+    <TargetFramework>netstandard2.1</TargetFramework>
     <LangVersion>7.2</LangVersion>
     <Version>2.3.1</Version>
     <Description>Squalr engine component for memory APIs. This includes, reading, writing, and querying memory for 32 and 64 bit processes.</Description>

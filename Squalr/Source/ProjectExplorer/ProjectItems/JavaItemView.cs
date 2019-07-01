@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Source.ProjectExplorer.ProjectItems
 {
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common.DataTypes;
     using Squalr.Engine.Projects.Items;
     using Squalr.Source.Controls;
     using Squalr.Source.Utils.TypeConverters;
@@ -42,7 +42,7 @@
         [RefreshProperties(RefreshProperties.All)]
         [TypeConverter(typeof(DataTypeConverter))]
         [SortedCategory(SortedCategory.CategoryType.Advanced), DisplayName("Data Type"), Description("Data type of the calculated address")]
-        public DataType DataType
+        public DataTypeBase DataType
         {
             get
             {

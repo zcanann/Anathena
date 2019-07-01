@@ -1,7 +1,6 @@
 ﻿namespace Squalr.Source.Editors.ScriptEditor
 {
     using GalaSoft.MvvmLight.Command;
-    using global::Engine.Scripting.Templates;
     using Squalr.Source.Docking;
     using System;
     using System.Threading;
@@ -60,9 +59,13 @@
         /// <returns>The code injection script template.</returns>
         public String GetCodeInjectionTemplate()
         {
+            /*
             CodeInjectionTemplate codeInjectionTemplate = new CodeInjectionTemplate();
 
             return codeInjectionTemplate.TransformText();
+            */
+
+            return String.Empty;
         }
 
         /// <summary>
@@ -71,9 +74,13 @@
         /// <returns>The graphics injection script template.</returns>
         public String GetGraphicsInjectionTemplate()
         {
+            /*
             GraphicsInjectionTemplate graphicsInjectionTemplate = new GraphicsInjectionTemplate();
 
             return graphicsInjectionTemplate.TransformText();
+            */
+
+            return String.Empty;
         }
 
         /// <summary>

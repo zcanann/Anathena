@@ -15,7 +15,7 @@
         /// <param name="elementType">The data type to write.</param>
         /// <param name="address">The address to write to.</param>
         /// <param name="value">The value to write.</param>
-        void Write(Process process, DataType elementType, UInt64 address, Object value);
+        void Write(Process process, DataTypeBase elementType, UInt64 address, Object value);
 
         /// <summary>
         /// Writes a value to memory in the opened process.

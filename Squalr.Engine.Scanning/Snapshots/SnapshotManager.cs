@@ -86,7 +86,7 @@
         /// Returns the memory regions associated with the current snapshot. If none exist, a query will be done. Will not read any memory.
         /// </summary>
         /// <returns>The current active snapshot of memory in the target process.</returns>
-        public Snapshot GetActiveSnapshotCreateIfNone(Process process, DataType dataType)
+        public Snapshot GetActiveSnapshotCreateIfNone(Process process, DataTypeBase dataType)
         {
             lock (this.AccessLock)
             {

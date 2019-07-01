@@ -1,8 +1,8 @@
 ﻿namespace Squalr.Source.Mvvm.Converters
 {
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common.DataStructures;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Projects.Items;
-    using Squalr.Engine.Utils.DataStructures;
     using Squalr.Source.ProjectExplorer.ProjectItems;
     using System;
     using System.Collections.Generic;

@@ -18,7 +18,7 @@
         /// </summary>
         /// <param name="baseAddress">The base address of this memory region.</param>
         /// <param name="regionSize">The size of this memory region.</param>
-        public ReadGroup(UInt64 baseAddress, Int32 regionSize, DataType dataType, Int32 alignment) : base(baseAddress, regionSize)
+        public ReadGroup(UInt64 baseAddress, Int32 regionSize, DataTypeBase dataType, Int32 alignment) : base(baseAddress, regionSize)
         {
             this.Alignment = alignment;
             this.ElementDataType = dataType;
@@ -31,7 +31,7 @@
         /// </summary>
         /// <param name="baseAddress">The base address of this memory region.</param>
         /// <param name="regionSize">The size of this memory region.</param>
-        public ReadGroup(UInt64 baseAddress, Byte[] initialBytes, DataType dataType, Int32 alignment) : base(baseAddress, initialBytes.Length)
+        public ReadGroup(UInt64 baseAddress, Byte[] initialBytes, DataTypeBase dataType, Int32 alignment) : base(baseAddress, initialBytes.Length)
         {
             this.Alignment = alignment;
             this.ElementDataType = dataType;
@@ -53,7 +53,7 @@
         /// <summary>
         /// Gets or sets the data type of the elements of this region.
         /// </summary>
-        public DataType ElementDataType { get; set; }
+        public DataTypeBase ElementDataType { get; set; }
 
         /// <summary>
         /// Gets the element labels.
@@ -63,7 +63,7 @@
         /// <summary>
         /// Gets or sets the data type of the labels of this region.
         /// </summary>
-        public DataType LabelDataType { get; set; }
+        public DataTypeBase LabelDataType { get; set; }
 
         /// <summary>
         /// Gets or sets the collection of snapshot regions within this read group.

@@ -1,11 +1,11 @@
 ﻿namespace Squalr.Source.Scanning
 {
     using GalaSoft.MvvmLight.Command;
+    using Squalr.Engine.Common.DataStructures;
     using Squalr.Engine.Input.HotKeys;
-    using Squalr.Engine.Scanning.Scanners;
-    using Squalr.Engine.Utils.DataStructures;
     using Squalr.Source.Docking;
     using Squalr.Source.Editors.HotkeyEditor;
+    using Squalr.View;
     using System;
     using System.Threading;
     using System.Threading.Tasks;
@@ -32,7 +32,7 @@
             this.RemoveHotkeyCommand = new RelayCommand<Hotkey>((hotkey) => this.RemoveHotkey(hotkey), (hotkey) => true);
             this.StartScanCommand = new RelayCommand(() => Task.Run(() => this.StartScan()), () => true);
             this.StopScanCommand = new RelayCommand(() => Task.Run(() => this.StopScan()), () => true);
-            this.InputCorrelator = new InputCorrelator(this.ScanCountUpdated);
+            this.InputCorrelator = null; // new InputCorrelator(this.ScanCountUpdated);
 
             DockingViewModel.GetInstance().RegisterViewModel(this);
         }
@@ -49,7 +49,8 @@
         {
             get
             {
-                return this.InputCorrelator.HotKeys;
+                throw new NotImplementedException();
+               //// return this.InputCorrelator.HotKeys;
             }
         }
 
@@ -57,7 +58,8 @@
         {
             get
             {
-                return this.InputCorrelator.ScanCount;
+                throw new NotImplementedException();
+                //// return this.InputCorrelator.ScanCount;
             }
         }
 
@@ -79,14 +81,16 @@
 
             if (newHotkey != null)
             {
-                this.InputCorrelator.HotKeys.Add(newHotkey);
+                throw new NotImplementedException();
+                ////this.InputCorrelator.HotKeys.Add(newHotkey);
                 this.RaisePropertyChanged(nameof(this.Hotkeys));
             }
         }
 
         private void RemoveHotkey(Hotkey hotkey)
         {
-            this.InputCorrelator.HotKeys.Remove(hotkey);
+            throw new NotImplementedException();
+            //// this.InputCorrelator.HotKeys.Remove(hotkey);
             this.RaisePropertyChanged(nameof(this.Hotkeys));
         }
 

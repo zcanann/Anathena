@@ -1,9 +1,9 @@
 ﻿namespace Squalr.Source.Scanning
 {
     using GalaSoft.MvvmLight.Command;
-    using Squalr.Engine;
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Scanning.Scanners;
     using Squalr.Engine.Scanning.Scanners.Constraints;
     using Squalr.Engine.Scanning.Snapshots;
@@ -193,7 +193,7 @@
         /// Updates the active type.
         /// </summary>
         /// <param name="activeType">The new active type.</param>
-        public void Update(DataType activeType)
+        public void Update(DataTypeBase activeType)
         {
             // Create a temporary manager to update our current constraint
             ConstraintNode scanConstraintCollection = new ConstraintNode();
@@ -218,10 +218,13 @@
                 return;
             }
 
-            DataType dataType = ScanResultsViewModel.GetInstance().ActiveType;
+            DataTypeBase dataType = ScanResultsViewModel.GetInstance().ActiveType;
+
+            throw new NotImplementedException();
 
             try
             {
+                /*
                 // Collect values
                 TrackableTask<Snapshot> valueCollectorTask = ValueCollector.CollectValues(
                     SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromActiveSnapshotOrPrefilter, dataType),
@@ -241,6 +244,7 @@
                     TaskTrackerViewModel.GetInstance().TrackTask(scanTask);
                     SnapshotManager.SaveSnapshot(scanTask.Result);
                 });
+                */
             }
             catch (TaskConflictException)
             {

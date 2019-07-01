@@ -26,9 +26,9 @@
         private SnapshotManagerViewModel() : base("Snapshot Manager")
         {
             // Note: Not async to avoid updates slower than the perception threshold
-            this.ClearSnapshotsCommand = new RelayCommand(() => SnapshotManager.ClearSnapshots(), () => true);
-            this.UndoSnapshotCommand = new RelayCommand(() => SnapshotManager.UndoSnapshot(), () => true);
-            this.RedoSnapshotCommand = new RelayCommand(() => SnapshotManager.RedoSnapshot(), () => true);
+            this.ClearSnapshotsCommand = new RelayCommand(() => throw new NotImplementedException() /*SnapshotManager.ClearSnapshots()*/, () => true);
+            this.UndoSnapshotCommand = new RelayCommand(() => throw new NotImplementedException() /*SnapshotManager.UndoSnapshot()*/, () => true);
+            this.RedoSnapshotCommand = new RelayCommand(() => throw new NotImplementedException() /*SnapshotManager.RedoSnapshot()*/, () => true);
 
             DockingViewModel.GetInstance().RegisterViewModel(this);
         }
@@ -55,7 +55,8 @@
         {
             get
             {
-                return SnapshotManager.Snapshots;
+                throw new NotImplementedException();
+                //return SnapshotManager.Snapshots;
             }
         }
 
@@ -66,7 +67,8 @@
         {
             get
             {
-                return SnapshotManager.DeletedSnapshots;
+                throw new NotImplementedException();
+                //// return SnapshotManager.DeletedSnapshots;
             }
         }
 

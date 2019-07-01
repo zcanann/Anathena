@@ -24,7 +24,7 @@
         /// </summary>
         [Browsable(false)]
         [DataMember]
-        protected DataType dataType;
+        protected DataTypeBase dataType;
 
         /// <summary>
         /// The value at this address.
@@ -48,7 +48,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="AddressItem" /> class.
         /// </summary>
-        public AddressItem() : this(DataType.Int32, "New Address")
+        public AddressItem() : this(DataTypeBase.Int32, "New Address")
         {
         }
 
@@ -63,7 +63,7 @@
         /// <param name="isValueHex">A value indicating whether the value at this address should be displayed as hex.</param>
         /// <param name="value">The value at this address. If none provided, it will be figured out later. Used here to allow immediate view updates upon creation.</param>
         public AddressItem(
-            DataType dataType,
+            DataTypeBase dataType,
             String description = "New Address",
             Boolean isValueHex = false,
             Object value = null)
@@ -86,7 +86,7 @@
         /// <summary>
         /// Gets or sets the data type of the value at this address.
         /// </summary>
-        public virtual DataType DataType
+        public virtual DataTypeBase DataType
         {
             get
             {

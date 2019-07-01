@@ -33,7 +33,7 @@
         /// </summary>
         /// <param name="valueConstraint">The constraint type.</param>
         /// <param name="addressValue">The value associated with this constraint.</param>
-        public ScanConstraint(ConstraintType valueConstraint, Object addressValue = null, DataType elementType = null)
+        public ScanConstraint(ConstraintType valueConstraint, Object addressValue = null, DataTypeBase elementType = null)
         {
             this.Constraint = valueConstraint;
             this.ConstraintValue = addressValue;

@@ -31,40 +31,40 @@
         /// <param name="address">The address where the value is read.</param>
         /// <param name="success">Whether or not the read succeeded.</param>
         /// <returns>A value.</returns>
-        public Object Read(Process process, DataType dataType, UInt64 address, out Boolean success)
+        public Object Read(Process process, DataTypeBase dataType, UInt64 address, out Boolean success)
         {
             Object value;
 
             switch (dataType)
             {
-                case DataType type when type == DataType.Byte:
+                case DataTypeBase type when type == DataTypeBase.Byte:
                     value = this.Read<Byte>(process, address, out success);
                     break;
-                case DataType type when type == DataType.SByte:
+                case DataTypeBase type when type == DataTypeBase.SByte:
                     value = this.Read<SByte>(process, address, out success);
                     break;
-                case DataType type when type == DataType.Int16:
+                case DataTypeBase type when type == DataTypeBase.Int16:
                     value = this.Read<Int16>(process, address, out success);
                     break;
-                case DataType type when type == DataType.Int32:
+                case DataTypeBase type when type == DataTypeBase.Int32:
                     value = this.Read<Int32>(process, address, out success);
                     break;
-                case DataType type when type == DataType.Int64:
+                case DataTypeBase type when type == DataTypeBase.Int64:
                     value = this.Read<Int64>(process, address, out success);
                     break;
-                case DataType type when type == DataType.UInt16:
+                case DataTypeBase type when type == DataTypeBase.UInt16:
                     value = this.Read<UInt16>(process, address, out success);
                     break;
-                case DataType type when type == DataType.UInt32:
+                case DataTypeBase type when type == DataTypeBase.UInt32:
                     value = this.Read<UInt32>(process, address, out success);
                     break;
-                case DataType type when type == DataType.UInt64:
+                case DataTypeBase type when type == DataTypeBase.UInt64:
                     value = this.Read<UInt64>(process, address, out success);
                     break;
-                case DataType type when type == DataType.Single:
+                case DataTypeBase type when type == DataTypeBase.Single:
                     value = this.Read<Single>(process, address, out success);
                     break;
-                case DataType type when type == DataType.Double:
+                case DataTypeBase type when type == DataTypeBase.Double:
                     value = this.Read<Double>(process, address, out success);
                     break;
                 default:

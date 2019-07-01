@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Source.Utils.TypeConverters
 {
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.Utils;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataTypes;
     using System;
     using System.ComponentModel;
     using System.Globalization;
@@ -19,7 +19,7 @@
         /// <returns>The standard collection of values.</returns>
         public override StandardValuesCollection GetStandardValues(ITypeDescriptorContext context)
         {
-            return new StandardValuesCollection(DataType.GetScannableDataTypes()
+            return new StandardValuesCollection(DataTypeBase.GetScannableDataTypes()
                 .Select(dataType => Conversions.DataTypeToName(dataType))
                 .ToList());
         }
@@ -43,9 +43,9 @@
         /// <returns>The converted value.</returns>
         public override Object ConvertFrom(ITypeDescriptorContext context, CultureInfo culture, Object value)
         {
-            foreach (DataType type in DataType.GetScannableDataTypes())
+            foreach (DataTypeBase type in DataTypeBase.GetScannableDataTypes())
             {
-                if (type == (DataType)null || !(value is String))
+                if (type == (DataTypeBase)null || !(value is String))
                 {
                     break;
                 }

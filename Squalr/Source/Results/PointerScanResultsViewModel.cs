@@ -1,11 +1,11 @@
 ﻿namespace Squalr.Source.Results
 {
     using GalaSoft.MvvmLight.Command;
-    using Squalr.Engine.DataTypes;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataStructures;
+    using Squalr.Engine.Common.DataTypes;
     using Squalr.Engine.Projects.Items;
     using Squalr.Engine.Scanning.Scanners.Pointers.Structures;
-    using Squalr.Engine.Utils;
-    using Squalr.Engine.Utils.DataStructures;
     using Squalr.Source.Docking;
     using Squalr.Source.ProjectExplorer;
     using System;
@@ -78,11 +78,11 @@
             this.ExtractPointerCommand = new RelayCommand<Int32>((levelIndex) => this.ExtractPointer(levelIndex), (levelIndex) => true);
             this.SelectScanResultsCommand = new RelayCommand<Object>((selectedItems) => this.SelectedScanResults = (selectedItems as IList)?.Cast<PointerItem>(), (selectedItems) => true);
 
-            this.ChangeTypeCommand = new RelayCommand<DataType>((type) => Task.Run(() => this.ChangeType(type)), (type) => true);
+            this.ChangeTypeCommand = new RelayCommand<DataTypeBase>((type) => Task.Run(() => this.ChangeType(type)), (type) => true);
             this.NewPointerScanCommand = new RelayCommand(() => Task.Run(() => this.DiscoveredPointers = null), () => true);
 
             this.ScanResultsObservers = new List<IResultDataTypeObserver>();
-            this.ActiveType = DataType.Int32;
+            this.ActiveType = DataTypeBase.Int32;
             this.pointers = new FullyObservableCollection<PointerItem>();
 
             DockingViewModel.GetInstance().RegisterViewModel(this);
@@ -163,7 +163,7 @@
         /// <summary>
         /// Gets or sets the active scan results data type.
         /// </summary>
-        public DataType ActiveType
+        public DataTypeBase ActiveType
         {
             get
             {
@@ -278,7 +278,7 @@
         /// Changes the active scan pointer results type.
         /// </summary>
         /// <param name="newType">The new pointer scan results type.</param>
-        private void ChangeType(DataType newType)
+        private void ChangeType(DataTypeBase newType)
         {
             this.ActiveType = newType;
         }

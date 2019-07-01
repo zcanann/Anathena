@@ -1,8 +1,7 @@
 ﻿namespace Squalr.Source.Docking
 {
     using GalaSoft.MvvmLight;
-    using Squalr.Engine.Logging;
-    using Squalr.Engine.Utils.Extensions;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Theme;
     using Squalr.Theme.Layout.Serialization;
     using System;
@@ -105,7 +104,7 @@
             String layoutResource = Assembly.GetEntryAssembly().GetManifestResourceNames()
                 .FirstOrDefault(resourceName => resourceName.EndsWith(resource));
 
-            if (layoutResource.IsNullOrEmpty())
+            if (String.IsNullOrEmpty(layoutResource))
             {
                 Logger.Log(LogLevel.Warn, "Unable to load layout resource.");
                 return;

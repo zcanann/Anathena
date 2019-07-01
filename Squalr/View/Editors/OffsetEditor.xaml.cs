@@ -1,6 +1,6 @@
 ﻿namespace Squalr.View.Editors
 {
-    using Squalr.Engine.Utils.DataStructures;
+    using Squalr.Engine.Common.DataStructures;
     using Squalr.Source.Controls;
     using Squalr.Source.Editors.OffsetEditor;
     using Squalr.Source.Mvvm;

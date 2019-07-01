@@ -13,7 +13,7 @@
     {
         public Int32 Handle()
         {
-            DataType dataType = DataType.Int32; // TODO: Fetch from settings
+            DataTypeBase dataType = DataTypeBase.Int32; // TODO: Fetch from settings
             ScanConstraint.ConstraintType constraintType = ScanConstraint.ConstraintType.Equal;
 
             if (String.IsNullOrWhiteSpace(this.Constraint))

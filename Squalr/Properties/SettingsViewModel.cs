@@ -1,6 +1,6 @@
 ﻿namespace Squalr.Properties
 {
-    using Squalr.Engine.Logging;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Projects.Properties;
     using Squalr.Engine.Scanning.Properties;
     using Squalr.Source.Docking;

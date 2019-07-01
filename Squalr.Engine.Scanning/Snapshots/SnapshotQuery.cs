@@ -26,7 +26,7 @@
         /// </summary>
         /// <param name="snapshotCreationMode">The method of snapshot retrieval.</param>
         /// <returns>The collected snapshot.</returns>
-        public static Snapshot GetSnapshot(Process process, SnapshotRetrievalMode snapshotCreationMode, DataType dataType)
+        public static Snapshot GetSnapshot(Process process, SnapshotRetrievalMode snapshotCreationMode, DataTypeBase dataType)
         {
             switch (snapshotCreationMode)
             {
@@ -50,7 +50,7 @@
         /// Creates a snapshot from all usermode memory. Will not read any memory.
         /// </summary>
         /// <returns>A snapshot created from usermode memory.</returns>
-        private static Snapshot CreateSnapshotFromUsermodeMemory(Process process, DataType dataType)
+        private static Snapshot CreateSnapshotFromUsermodeMemory(Process process, DataTypeBase dataType)
         {
             MemoryProtectionEnum requiredPageFlags = 0;
             MemoryProtectionEnum excludedPageFlags = 0;
@@ -80,7 +80,7 @@
         /// Creates a new snapshot of memory in the target process. Will not read any memory.
         /// </summary>
         /// <returns>The snapshot of memory taken in the target process.</returns>
-        private static Snapshot CreateSnapshotFromSettings(Process process, DataType dataType)
+        private static Snapshot CreateSnapshotFromSettings(Process process, DataTypeBase dataType)
         {
             MemoryProtectionEnum requiredPageFlags = SnapshotQuery.GetRequiredProtectionSettings();
             MemoryProtectionEnum excludedPageFlags = SnapshotQuery.GetExcludedProtectionSettings();
@@ -122,7 +122,7 @@
         /// Creates a snapshot from modules in the selected process.
         /// </summary>
         /// <returns>The created snapshot.</returns>
-        private static Snapshot CreateSnapshotFromModules(Process process, DataType dataType)
+        private static Snapshot CreateSnapshotFromModules(Process process, DataTypeBase dataType)
         {
             IList<ReadGroup> moduleGroups = MemoryQueryer.Instance.GetModules(process).Select(region => new ReadGroup(region.BaseAddress, region.RegionSize, dataType, ScanSettings.Default.Alignment)).ToList();
             Snapshot moduleSnapshot = new Snapshot(process, null, moduleGroups);
@@ -134,7 +134,7 @@
         /// Creates a snapshot from modules in the selected process.
         /// </summary>
         /// <returns>The created snapshot.</returns>
-        private static Snapshot CreateSnapshotFromHeaps(Process process, DataType dataType)
+        private static Snapshot CreateSnapshotFromHeaps(Process process, DataTypeBase dataType)
         {
             // TODO: This currently grabs all usermode memory and excludes modules. A better implementation would involve actually grabbing heaps.
             Snapshot snapshot = SnapshotQuery.CreateSnapshotFromUsermodeMemory(process, dataType);

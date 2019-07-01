@@ -1,13 +1,12 @@
 ﻿namespace Squalr.Source.Results
 {
     using GalaSoft.MvvmLight.Command;
-    using Squalr.Engine.DataTypes;
-    using Squalr.Engine.Memory;
+    using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataStructures;
+    using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Common.Extensions;
     using Squalr.Engine.Projects.Items;
     using Squalr.Engine.Scanning.Snapshots;
-    using Squalr.Engine.Utils;
-    using Squalr.Engine.Utils.DataStructures;
-    using Squalr.Engine.Utils.Extensions;
     using Squalr.Source.Docking;
     using Squalr.Source.Editors.ValueEditor;
     using Squalr.Source.ProjectExplorer;
@@ -75,7 +74,7 @@
             this.ObserverLock = new Object();
 
             this.EditValueCommand = new RelayCommand<ScanResult>((scanResult) => this.EditValue(scanResult), (scanResult) => true);
-            this.ChangeTypeCommand = new RelayCommand<DataType>((type) => this.ChangeType(type), (type) => true);
+            this.ChangeTypeCommand = new RelayCommand<DataTypeBase>((type) => this.ChangeType(type), (type) => true);
             this.SelectScanResultsCommand = new RelayCommand<Object>((selectedItems) => this.SelectedScanResults = (selectedItems as IList)?.Cast<ScanResult>(), (selectedItems) => true);
             this.FirstPageCommand = new RelayCommand(() => Task.Run(() => this.FirstPage()), () => true);
             this.LastPageCommand = new RelayCommand(() => Task.Run(() => this.LastPage()), () => true);
@@ -85,10 +84,9 @@
             this.AddScanResultsCommand = new RelayCommand<Object>((selectedItems) => this.AddScanResults(this.SelectedScanResults), (selectedItems) => true);
 
             this.ScanResultsObservers = new List<IResultDataTypeObserver>();
-            this.ActiveType = DataType.Int32;
+            this.ActiveType = DataTypeBase.Int32;
             this.addresses = new FullyObservableCollection<ScanResult>();
 
-            SnapshotManager.Subscribe(this);
             DockingViewModel.GetInstance().RegisterViewModel(this);
             this.Update();
         }
@@ -158,7 +156,7 @@
         /// <summary>
         /// Gets or sets the active scan results data type.
         /// </summary>
-        public DataType ActiveType
+        public DataTypeBase ActiveType
         {
             get
             {
@@ -416,7 +414,8 @@
         /// </summary>
         private void LoadScanResults()
         {
-            Snapshot snapshot = SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromActiveSnapshot, this.ActiveType);
+            throw new NotImplementedException();
+            Snapshot snapshot = null; // SnapshotManager.GetSnapshot(Snapshot.SnapshotRetrievalMode.FromActiveSnapshot, this.ActiveType);
             IList<ScanResult> newAddresses = new List<ScanResult>();
 
             if (snapshot != null)
@@ -433,7 +432,8 @@
                     Object previousValue = element.HasPreviousValue() ? element.LoadPreviousValue() : null;
 
                     String moduleName = String.Empty;
-                    UInt64 address = Query.Default.AddressToModule(element.BaseAddress, out moduleName);
+                    throw new NotImplementedException();
+                    UInt64 address = 0; // Query.Default.AddressToModule(element.BaseAddress, out moduleName);
 
                     PointerItem pointerItem = new PointerItem(baseAddress: address, dataType: this.ActiveType, moduleName: moduleName, value: currentValue);
                     newAddresses.Add(new ScanResult(new PointerItemView(pointerItem), previousValue, label));
@@ -452,7 +452,7 @@
         /// Changes the active scan results type.
         /// </summary>
         /// <param name="newType">The new scan results type.</param>
-        private void ChangeType(DataType newType)
+        private void ChangeType(DataTypeBase newType)
         {
             this.ActiveType = newType;
         }

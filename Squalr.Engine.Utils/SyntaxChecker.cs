@@ -50,34 +50,34 @@
         /// <param name="dataType">The type of the given value.</param>
         /// <param name="value">The value to be parsed.</param>
         /// <returns>A boolean indicating if the value is parseable.</returns>
-        public static Boolean CanParseValue(DataType dataType, String value)
+        public static Boolean CanParseValue(DataTypeBase dataType, String value)
         {
-            if (dataType == (DataType)null)
+            if (dataType == (DataTypeBase)null)
             {
                 return false;
             }
 
             switch (dataType)
             {
-                case DataType type when type == DataType.Byte:
+                case DataTypeBase type when type == DataTypeBase.Byte:
                     return SyntaxChecker.IsByte(value);
-                case DataType type when type == DataType.SByte:
+                case DataTypeBase type when type == DataTypeBase.SByte:
                     return SyntaxChecker.IsSByte(value);
-                case DataType type when type == DataType.Int16:
+                case DataTypeBase type when type == DataTypeBase.Int16:
                     return SyntaxChecker.IsInt16(value);
-                case DataType type when type == DataType.Int32:
+                case DataTypeBase type when type == DataTypeBase.Int32:
                     return SyntaxChecker.IsInt32(value);
-                case DataType type when type == DataType.Int64:
+                case DataTypeBase type when type == DataTypeBase.Int64:
                     return SyntaxChecker.IsInt64(value);
-                case DataType type when type == DataType.UInt16:
+                case DataTypeBase type when type == DataTypeBase.UInt16:
                     return SyntaxChecker.IsUInt16(value);
-                case DataType type when type == DataType.UInt32:
+                case DataTypeBase type when type == DataTypeBase.UInt32:
                     return SyntaxChecker.IsUInt32(value);
-                case DataType type when type == DataType.UInt64:
+                case DataTypeBase type when type == DataTypeBase.UInt64:
                     return SyntaxChecker.IsUInt64(value);
-                case DataType type when type == DataType.Single:
+                case DataTypeBase type when type == DataTypeBase.Single:
                     return SyntaxChecker.IsSingle(value);
-                case DataType type when type == DataType.Double:
+                case DataTypeBase type when type == DataTypeBase.Double:
                     return SyntaxChecker.IsDouble(value);
                 default:
                     return false;
@@ -90,7 +90,7 @@
         /// <param name="dataType">The type of the given value.</param>
         /// <param name="value">The value to be parsed.</param>
         /// <returns>A boolean indicating if the value is parseable as hex.</returns>
-        public static Boolean CanParseHex(DataType dataType, String value)
+        public static Boolean CanParseHex(DataTypeBase dataType, String value)
         {
             if (value == null)
             {
@@ -112,7 +112,7 @@
             // Remove negative sign from signed integer types, as TryParse methods do not handle negative hex values
             switch (dataType)
             {
-                case DataType type when type == DataType.Byte || type == DataType.Int16 || type == DataType.Int32 || type == DataType.Int64:
+                case DataTypeBase type when type == DataTypeBase.Byte || type == DataTypeBase.Int16 || type == DataTypeBase.Int32 || type == DataTypeBase.Int64:
                     if (value.StartsWith("-"))
                     {
                         value = value.Substring(1);
@@ -125,25 +125,25 @@
 
             switch (dataType)
             {
-                case DataType type when type == DataType.Byte:
+                case DataTypeBase type when type == DataTypeBase.Byte:
                     return IsByte(value, true);
-                case DataType type when type == DataType.SByte:
+                case DataTypeBase type when type == DataTypeBase.SByte:
                     return IsSByte(value, true);
-                case DataType type when type == DataType.Int16:
+                case DataTypeBase type when type == DataTypeBase.Int16:
                     return IsInt16(value, true);
-                case DataType type when type == DataType.Int32:
+                case DataTypeBase type when type == DataTypeBase.Int32:
                     return IsInt32(value, true);
-                case DataType type when type == DataType.Int64:
+                case DataTypeBase type when type == DataTypeBase.Int64:
                     return IsInt64(value, true);
-                case DataType type when type == DataType.UInt16:
+                case DataTypeBase type when type == DataTypeBase.UInt16:
                     return IsUInt16(value, true);
-                case DataType type when type == DataType.UInt32:
+                case DataTypeBase type when type == DataTypeBase.UInt32:
                     return IsUInt32(value, true);
-                case DataType type when type == DataType.UInt64:
+                case DataTypeBase type when type == DataTypeBase.UInt64:
                     return IsUInt64(value, true);
-                case DataType type when type == DataType.Single:
+                case DataTypeBase type when type == DataTypeBase.Single:
                     return IsSingle(value, true);
-                case DataType type when type == DataType.Double:
+                case DataTypeBase type when type == DataTypeBase.Double:
                     return IsDouble(value, true);
                 default:
                     return false;
@@ -322,7 +322,7 @@
 
             if (isHex && IsUInt32(value, isHex))
             {
-                return Single.TryParse(Conversions.ParseHexStringAsPrimitiveString(DataType.Single, value), out temp);
+                return Single.TryParse(Conversions.ParseHexStringAsPrimitiveString(DataTypeBase.Single, value), out temp);
             }
             else
             {
@@ -342,7 +342,7 @@
 
             if (isHex && IsUInt64(value, isHex))
             {
-                return Double.TryParse(Conversions.ParseHexStringAsPrimitiveString(DataType.Double, value), out temp);
+                return Double.TryParse(Conversions.ParseHexStringAsPrimitiveString(DataTypeBase.Double, value), out temp);
             }
             else
             {

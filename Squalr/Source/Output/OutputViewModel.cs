@@ -1,8 +1,8 @@
 ﻿namespace Squalr.Source.Output
 {
     using GalaSoft.MvvmLight.Command;
-    using Squalr.Engine.Logging;
-    using Squalr.Engine.Utils.Extensions;
+    using Squalr.Engine.Common.Extensions;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Source.Docking;
     using System;
     using System.IO;

@@ -58,7 +58,7 @@
         [ReadOnly(true)]
         //// [TypeConverter(typeof(DataTypeConverter))]
         [Category("Properties"), DisplayName("Value Type"), Description("Data type of the address")]
-        public DataType ElementType { get; set; }
+        public DataTypeBase ElementType { get; set; }
 
         /// <summary>
         /// Gets or sets the children of this .Net object.

@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Source.Engine.AddressResolver.DotNet
 {
+    using Squalr.Engine.Common.DataStructures;
     using Squalr.Engine.Memory.Clr;
-    using Squalr.Engine.Utils.DataStructures;
     using Squalr.Source.Controls;
     using Squalr.Source.PropertyViewer;
     using System.Linq;

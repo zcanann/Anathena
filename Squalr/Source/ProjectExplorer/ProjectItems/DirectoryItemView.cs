@@ -1,7 +1,7 @@
 ﻿namespace Squalr.Source.ProjectExplorer.ProjectItems
 {
+    using Squalr.Engine.Common.DataStructures;
     using Squalr.Engine.Projects.Items;
-    using Squalr.Engine.Utils.DataStructures;
     using Squalr.Source.Controls;
     using System;
     using System.ComponentModel;

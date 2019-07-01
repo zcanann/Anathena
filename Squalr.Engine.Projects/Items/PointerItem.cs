@@ -1,6 +1,7 @@
 ﻿namespace Squalr.Engine.Projects.Items
 {
     using Squalr.Engine.Common;
+    using Squalr.Engine.Common.DataTypes;
     using Squalr.Engine.Common.Extensions;
     using Squalr.Engine.Memory;
     using System;
@@ -41,7 +42,7 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="AddressItem" /> class.
         /// </summary>
-        public PointerItem() : this(0, DataType.Int32, "New Address")
+        public PointerItem() : this(0, DataTypeBase.Int32, "New Address")
         {
         }
 
@@ -158,7 +159,7 @@
                     }
                     else
                     {
-                        return this.ModuleName + "-" + Conversions.ParsePrimitiveAsHexString(DataType.UInt64, this.ModuleOffset, signHex: true).TrimStart('-');
+                        return this.ModuleName + "-" + Conversions.ParsePrimitiveAsHexString(DataTypeBase.UInt64, this.ModuleOffset, signHex: true).TrimStart('-');
                     }
                 }
                 else if (this.IsPointer)
@@ -210,7 +211,7 @@
         /// <returns>The base address of this object.</returns>
         protected override UInt64 ResolveAddress()
         {
-            UInt64 pointer = MemoryQueryer.Instance.ResolveModule(this.ModuleName);
+            UInt64 pointer = MemoryQueryer.Instance.ResolveModule(null, this.ModuleName);
             Boolean successReading = true;
 
             pointer = pointer.Add(this.ModuleOffset);
@@ -222,6 +223,8 @@
 
             foreach (Int32 offset in this.PointerOffsets)
             {
+                throw new NotImplementedException();
+                /*
                 if (Processes.Instance.IsOpenedProcess32Bit())
                 {
                     pointer = MemoryReader.Instance.Read<Int32>(pointer, out successReading).ToUInt64();
@@ -229,7 +232,7 @@
                 else
                 {
                     pointer = MemoryReader.Instance.Read<UInt64>(pointer, out successReading);
-                }
+                }*/
 
                 if (pointer == 0 || !successReading)
                 {
