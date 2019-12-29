@@ -9,7 +9,7 @@
 
     public class ProjectManager
     {
-        private ProjectManager()
+        public ProjectManager()
         {
 
         }

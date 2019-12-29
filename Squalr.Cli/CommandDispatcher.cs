@@ -2,6 +2,7 @@
 {
     using Squalr.Cli.CommandHandlers;
     using Squalr.Cli.CommandHandlers.Process;
+    using Squalr.Cli.CommandHandlers.Project;
     using Squalr.Cli.CommandHandlers.Results;
     using Squalr.Cli.CommandHandlers.Scan;
     using Squalr.Engine;
@@ -17,6 +18,7 @@
             this.CommandHandlers = new List<ICommandHandler>()
             {
                 new ProcessCommandHandler(),
+                new ProjectCommandHandler(),
                 new ScanCommandHandler(),
                 new ResultsCommandHandler(),
             };

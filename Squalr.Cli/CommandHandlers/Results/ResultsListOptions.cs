@@ -18,12 +18,12 @@
 
             Console.WriteLine("--------------------------");
             Console.WriteLine("Results for page " + this.Page + " / " + pageCount);
-            Console.WriteLine("Address" + "\t\t" + "Value");
+            Console.WriteLine("# " + "\t\t" + "Address" + "\t\t" + "Value");
             Console.WriteLine("--------------------------");
 
             for (UInt64 index = pageStart; index < pageEnd; index++)
             {
-                Console.WriteLine(results[index].BaseAddress + "\t\t" + results[index].LoadCurrentValue());
+                Console.WriteLine(index + "\t\t" + results[index].BaseAddress + "\t\t" + results[index].LoadCurrentValue());
             }
 
             Console.WriteLine();

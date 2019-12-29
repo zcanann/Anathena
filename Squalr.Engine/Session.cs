@@ -1,6 +1,7 @@
 ﻿namespace Squalr.Engine
 {
     using Squalr.Engine.Common.Logging;
+    using Squalr.Engine.Projects;
     using Squalr.Engine.Scanning.Snapshots;
     using System.Diagnostics;
     using System.Threading.Tasks;
@@ -18,6 +19,7 @@
 
             this.OpenedProcess = processToOpen;
             this.SnapshotManager = new SnapshotManager();
+            this.ProjectManager = new ProjectManager();
 
             this.ListenForProcessDeath();
         }
@@ -28,6 +30,8 @@
         public Process OpenedProcess { get; private set; }
 
         public SnapshotManager SnapshotManager { get; private set; }
+
+        public ProjectManager ProjectManager { get; private set; }
 
         public void Destroy()
         {

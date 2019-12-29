@@ -57,6 +57,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Squalr.Engine.Memory\Squalr.Engine.Memory.csproj" />
+    <ProjectReference Include="..\Squalr.Engine.Projects\Squalr.Engine.Projects.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Scanning\Squalr.Engine.Scanning.csproj" />
     <ProjectReference Include="..\Squalr.Engine.Utils\Squalr.Engine.Common.csproj" />
   </ItemGroup>
