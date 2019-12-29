@@ -3,17 +3,12 @@
     using CommandLine;
     using Squalr.Engine;
     using System;
+    using System.Collections.Generic;
 
     public class ProjectCommandHandler : ICommandHandler
     {
         public void TryHandle(ref Session session, Command command)
         {
-            if (!command.Name.Equals("proj", StringComparison.OrdinalIgnoreCase) &&
-                !command.Name.Equals("project", StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
             Parser.Default.ParseArguments<ProjectAddOptions, ProjectRemoveOptions, ProjectListOptions>(command.Args)
                 .MapResult(
                     (ProjectAddOptions options) => options.Handle(),
@@ -23,6 +18,15 @@
                 );
 
             command.Handled = true;
+        }
+
+        public IEnumerable<String> GetCommandAndAliases()
+        {
+            return new List<String>()
+            {
+                "proj",
+                "project"
+            };
         }
     }
     //// End class

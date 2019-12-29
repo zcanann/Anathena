@@ -7,7 +7,10 @@
     {
         static void Main(String[] args)
         {
-            Console.SetOut(new PrefixedWriter());
+            PrefixedWriter prefixedWriter = new PrefixedWriter();
+            Console.SetOut(prefixedWriter);
+            Console.SetIn(new PrefixedReader(prefixedWriter));
+
             CommandDispatcher commandDispatcher = new CommandDispatcher();
             LogListener logListener = new LogListener();
 

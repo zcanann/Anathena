@@ -8,6 +8,7 @@
     using Squalr.Engine;
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public class CommandDispatcher
     {
@@ -43,6 +44,8 @@
         {
             Command constructedCommand = new Command(command);
 
+            this.TryHandleHelp(constructedCommand);
+
             foreach (ICommandHandler handler in this.CommandHandlers)
             {
                 if (constructedCommand.Handled)
@@ -50,13 +53,45 @@
                     break;
                 }
 
-                handler.TryHandle(ref this.session, constructedCommand);
+                if (handler.GetCommandAndAliases().Any(alias => constructedCommand.Name.Equals(alias, StringComparison.OrdinalIgnoreCase)))
+                {
+                    handler.TryHandle(ref this.session, constructedCommand);
+                }
             }
 
-            if (!constructedCommand.Handled && !String.IsNullOrWhiteSpace(constructedCommand.Name))
+            if (!constructedCommand.Handled)
             {
-                Console.WriteLine("Unrecognized command '" + constructedCommand.Name + "'");
+                if (String.IsNullOrWhiteSpace(constructedCommand.Name))
+                {
+                    Console.WriteLine();
+                }
+                else
+                {
+                    Console.WriteLine("Unrecognized command '" + constructedCommand.Name + "'");
+                }
             }
+        }
+
+        private void TryHandleHelp(Command command)
+        {
+            if (!command.Name.Equals("help", StringComparison.OrdinalIgnoreCase))
+            {
+                return;
+            }
+
+            foreach (ICommandHandler handler in this.CommandHandlers)
+            {
+                Console.WriteLine("Commands for TODO:");
+
+                foreach (String alias in handler.GetCommandAndAliases())
+                {
+                    Console.Write(alias + " | ");
+                }
+
+                Console.WriteLine();
+            }
+
+            command.Handled = true;
         }
     }
     //// End class

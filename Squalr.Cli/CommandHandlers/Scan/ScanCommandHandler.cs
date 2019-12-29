@@ -3,18 +3,13 @@
     using CommandLine;
     using Squalr.Engine;
     using System;
+    using System.Collections.Generic;
+    using System.Linq;
 
     public class ScanCommandHandler : ICommandHandler
     {
         public void TryHandle(ref Session session, Command command)
         {
-            if (!command.Name.Equals("scan", StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
-            command.Handled = true;
-
             if (SessionManager.Session == null)
             {
                 Console.WriteLine("[Error] No active session to scan.");
@@ -28,6 +23,16 @@
                     (NextScanOptions options) => options.Handle(),
                     errs => 1
                 );
+
+            command.Handled = true;
+        }
+
+        public IEnumerable<String> GetCommandAndAliases()
+        {
+            return new List<String>()
+            {
+                "scan"
+            };
         }
     }
     //// End class

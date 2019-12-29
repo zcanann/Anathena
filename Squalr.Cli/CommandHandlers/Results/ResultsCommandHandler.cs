@@ -3,18 +3,12 @@
     using CommandLine;
     using Squalr.Engine;
     using System;
+    using System.Collections.Generic;
 
     public class ResultsCommandHandler : ICommandHandler
     {
         public void TryHandle(ref Session session, Command command)
         {
-            if (!command.Name.Equals("res", StringComparison.OrdinalIgnoreCase) &&
-                !command.Name.Equals("result", StringComparison.OrdinalIgnoreCase) &&
-                !command.Name.Equals("results", StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
             Parser.Default.ParseArguments<ResultsListOptions>(command.Args)
                 .MapResult(
                     (ResultsListOptions options) => options.Handle(),
@@ -22,6 +16,16 @@
                 );
 
             command.Handled = true;
+        }
+
+        public IEnumerable<String> GetCommandAndAliases()
+        {
+            return new List<String>()
+            {
+                "res",
+                "result",
+                "results"
+            };
         }
     }
     //// End class

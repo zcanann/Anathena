@@ -12,6 +12,12 @@
         public Int32 Handle()
         {
             Snapshot results = SessionManager.Session.SnapshotManager.GetActiveSnapshot();
+
+            if (results == null)
+            {
+                Console.WriteLine("[Error] No active scan results.");
+            }
+
             UInt64 pageStart = this.Page * ResultsListOptions.PageSize;
             UInt64 pageEnd = Math.Min(pageStart + ResultsListOptions.PageSize, results.ElementCount);
             UInt64 pageCount = results.ElementCount / ResultsListOptions.PageSize;

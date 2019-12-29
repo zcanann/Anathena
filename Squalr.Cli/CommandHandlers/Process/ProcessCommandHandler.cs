@@ -3,18 +3,12 @@
     using CommandLine;
     using Squalr.Engine;
     using System;
+    using System.Collections.Generic;
 
     public class ProcessCommandHandler : ICommandHandler
     {
         public void TryHandle(ref Session session, Command command)
         {
-            if (!command.Name.Equals("proc", StringComparison.OrdinalIgnoreCase) &&
-                !command.Name.Equals("process", StringComparison.OrdinalIgnoreCase) &&
-                !command.Name.Equals("processes", StringComparison.OrdinalIgnoreCase))
-            {
-                return;
-            }
-
             Parser.Default.ParseArguments<ProcessOpenOptions, ProcessCloseOptions, ProcessListOptions>(command.Args)
                 .MapResult(
                     (ProcessOpenOptions options) => options.Handle(),
@@ -24,6 +18,16 @@
                 );
 
             command.Handled = true;
+        }
+
+        public IEnumerable<String> GetCommandAndAliases()
+        {
+            return new List<String>()
+            {
+                "proc",
+                "process",
+                "processes"
+            };
         }
     }
     //// End class
