@@ -83,6 +83,11 @@
                 SessionManager.Session.SnapshotManager.GetActiveSnapshotCreateIfNone(SessionManager.Session.OpenedProcess, dataType),
                 TrackableTask.UniversalIdentifier);
 
+            valueCollectorTask.OnCompletedEvent += ((completedValueCollectionTask) =>
+            {
+                Console.WriteLine();
+            });
+
             return 0;
         }
 

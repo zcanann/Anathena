@@ -70,10 +70,9 @@
                     TrackableTask.UniversalIdentifier);
 
                 SessionManager.Session.SnapshotManager.SaveSnapshot(scanTask.Result);
-            });
 
-            Console.WriteLine();
-            Console.WriteLine();
+                Console.WriteLine();
+            });
 
             return 0;
         }

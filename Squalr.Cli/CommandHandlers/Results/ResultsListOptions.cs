@@ -1,6 +1,7 @@
 ﻿namespace Squalr.Cli.CommandHandlers.Results
 {
     using CommandLine;
+    using Squalr.Engine.Common;
     using Squalr.Engine.Scanning.Snapshots;
     using System;
 
@@ -16,20 +17,22 @@
             if (results == null)
             {
                 Console.WriteLine("[Error] No active scan results.");
+
+                return -1;
             }
 
             UInt64 pageStart = this.Page * ResultsListOptions.PageSize;
             UInt64 pageEnd = Math.Min(pageStart + ResultsListOptions.PageSize, results.ElementCount);
             UInt64 pageCount = results.ElementCount / ResultsListOptions.PageSize;
 
-            Console.WriteLine("--------------------------");
+            Console.WriteLine("----------------------------------------------");
             Console.WriteLine("Results for page " + this.Page + " / " + pageCount);
-            Console.WriteLine("# " + "\t\t" + "Address" + "\t\t" + "Value");
-            Console.WriteLine("--------------------------");
+            Console.WriteLine("# " + "\t|\t" + "Address" + "\t|\t" + "Value");
+            Console.WriteLine("----------------------------------------------");
 
             for (UInt64 index = pageStart; index < pageEnd; index++)
             {
-                Console.WriteLine(index + "\t\t" + results[index].BaseAddress + "\t\t" + results[index].LoadCurrentValue());
+                Console.WriteLine(index + "\t|\t" + Conversions.ToHex<UInt64>(results[index].BaseAddress) + "\t|\t" + results[index].LoadCurrentValue());
             }
 
             Console.WriteLine();
