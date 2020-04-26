@@ -61,11 +61,7 @@
 
             if (!constructedCommand.Handled)
             {
-                if (String.IsNullOrWhiteSpace(constructedCommand.Name))
-                {
-                    Console.WriteLine();
-                }
-                else
+                if (!String.IsNullOrWhiteSpace(constructedCommand.Name))
                 {
                     Console.WriteLine("Unrecognized command '" + constructedCommand.Name + "'");
                 }
@@ -81,7 +77,7 @@
 
             foreach (ICommandHandler handler in this.CommandHandlers)
             {
-                Console.WriteLine("Commands for TODO:");
+                Console.WriteLine("Commands for " + handler.GetCommandName() + ":");
 
                 foreach (String alias in handler.GetCommandAndAliases())
                 {

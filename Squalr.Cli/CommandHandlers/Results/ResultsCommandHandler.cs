@@ -7,6 +7,11 @@
 
     public class ResultsCommandHandler : ICommandHandler
     {
+        public String GetCommandName()
+        {
+            return "Results";
+        }
+
         public void TryHandle(ref Session session, Command command)
         {
             Parser.Default.ParseArguments<ResultsListOptions>(command.Args)

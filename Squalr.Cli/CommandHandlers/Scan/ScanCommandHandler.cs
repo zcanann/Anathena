@@ -8,6 +8,11 @@
 
     public class ScanCommandHandler : ICommandHandler
     {
+        public String GetCommandName()
+        {
+            return "Scans";
+        }
+
         public void TryHandle(ref Session session, Command command)
         {
             if (SessionManager.Session == null)

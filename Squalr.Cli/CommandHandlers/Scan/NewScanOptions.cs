@@ -1,7 +1,10 @@
 ﻿namespace Squalr.Cli.CommandHandlers.Scan
 {
     using CommandLine;
+    using Squalr.Engine.Common;
     using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Scanning.Scanners;
+    using Squalr.Engine.Scanning.Snapshots;
     using System;
 
     [Verb("new", HelpText = "Starts a new scan")]
@@ -9,7 +12,7 @@
     {
         public Int32 Handle()
         {
-            DataTypeBase datatype = new DataTypeBase();
+            DataTypeBase dataType = new DataTypeBase();
 
             if (String.IsNullOrWhiteSpace(this.DataTypeString))
             {
@@ -19,59 +22,66 @@
             switch(this.DataTypeString.ToLower())
             {
                 case "aob":
-                    datatype.Type = DataTypeBase.ByteArray;
+                    dataType.Type = DataTypeBase.ByteArray;
                     break;
                 case "bool":
-                    datatype.Type = DataTypeBase.Boolean;
+                    dataType.Type = DataTypeBase.Boolean;
                     break;
                 case "sbyte":
-                    datatype.Type = DataTypeBase.SByte;
+                    dataType.Type = DataTypeBase.SByte;
                     break;
                 case "short":
                 case "int16":
-                    datatype.Type = DataTypeBase.Int16;
+                    dataType.Type = DataTypeBase.Int16;
                     break;
                 case "int":
                 case "int32":
-                    datatype.Type = DataTypeBase.Int32;
+                    dataType.Type = DataTypeBase.Int32;
                     break;
                 case "long":
                 case "int64":
-                    datatype.Type = DataTypeBase.Int64;
+                    dataType.Type = DataTypeBase.Int64;
                     break;
                 case "byte":
-                    datatype.Type = DataTypeBase.Byte;
+                    dataType.Type = DataTypeBase.Byte;
                     break;
                 case "ushort":
                 case "uint16":
-                    datatype.Type = DataTypeBase.Byte;
+                    dataType.Type = DataTypeBase.Byte;
                     break;
                 case "uint":
                 case "uint32":
-                    datatype.Type = DataTypeBase.UInt32;
+                    dataType.Type = DataTypeBase.UInt32;
                     break;
                 case "ulong":
                 case "uint64":
-                    datatype.Type = DataTypeBase.UInt64;
+                    dataType.Type = DataTypeBase.UInt64;
                     break;
                 case "float":
                 case "single":
-                    datatype.Type = DataTypeBase.Single;
+                    dataType.Type = DataTypeBase.Single;
                     break;
                 case "double":
-                    datatype.Type = DataTypeBase.Double;
+                    dataType.Type = DataTypeBase.Double;
                     break;
                 case "string":
-                    datatype.Type = DataTypeBase.String;
+                    dataType.Type = DataTypeBase.String;
                     break;
                 case "char":
-                    datatype.Type = DataTypeBase.Char;
+                    dataType.Type = DataTypeBase.Char;
                     break;
                 default:
                     Console.WriteLine("Unknown data type '" + this.DataTypeString + "', defaulting to int");
-                    datatype.Type = DataTypeBase.Int32;
+                    dataType.Type = DataTypeBase.Int32;
                     break;
             }
+
+            SessionManager.Session.SnapshotManager.ClearSnapshots();
+
+            // Collect values
+            TrackableTask<Snapshot> valueCollectorTask = ValueCollector.CollectValues(
+                SessionManager.Session.SnapshotManager.GetActiveSnapshotCreateIfNone(SessionManager.Session.OpenedProcess, dataType),
+                TrackableTask.UniversalIdentifier);
 
             return 0;
         }

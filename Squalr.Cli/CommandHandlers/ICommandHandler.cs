@@ -6,6 +6,8 @@
 
     public interface ICommandHandler
     {
+        String GetCommandName();
+
         void TryHandle(ref Session session, Command command);
 
         IEnumerable<String> GetCommandAndAliases();

@@ -7,6 +7,11 @@
 
     public class ProjectCommandHandler : ICommandHandler
     {
+        public String GetCommandName()
+        {
+            return "Projects";
+        }
+
         public void TryHandle(ref Session session, Command command)
         {
             Parser.Default.ParseArguments<ProjectAddOptions, ProjectRemoveOptions, ProjectListOptions>(command.Args)

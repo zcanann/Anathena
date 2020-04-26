@@ -35,14 +35,17 @@
 
         public override void WriteLine(String message)
         {
-            originalOut.WriteLine(String.Format("{0} {1}", this.GetPrefix(), message));
+            originalOut.WriteLine(String.Format("{0}{1}", this.GetPrefix(), message));
 
             this.HasPrefixedCurrentLine = false;
+
+            // This will force a prefix to appear on the newline
+            this.Write("");
         }
 
         public override void Write(String message)
         {
-            originalOut.Write(String.Format("{0} {1}", this.GetPrefix(), message));
+            originalOut.Write(String.Format("{0}{1}", this.GetPrefix(), message));
 
             this.HasPrefixedCurrentLine = true;
         }

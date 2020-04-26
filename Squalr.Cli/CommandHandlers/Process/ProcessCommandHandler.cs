@@ -7,6 +7,11 @@
 
     public class ProcessCommandHandler : ICommandHandler
     {
+        public String GetCommandName()
+        {
+            return "Processes";
+        }
+
         public void TryHandle(ref Session session, Command command)
         {
             Parser.Default.ParseArguments<ProcessOpenOptions, ProcessCloseOptions, ProcessListOptions>(command.Args)
