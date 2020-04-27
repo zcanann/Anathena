@@ -8,304 +8,234 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Squalr.Engine.Scanning.Properties
-{
+namespace Squalr.Engine.Scanning.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.1.0.0")]
-    public sealed partial class ScanSettings : global::System.Configuration.ApplicationSettingsBase
-    {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.5.0.0")]
+    internal sealed partial class ScanSettings : global::System.Configuration.ApplicationSettingsBase {
+        
         private static ScanSettings defaultInstance = ((ScanSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ScanSettings())));
-
-        public static ScanSettings Default
-        {
-            get
-            {
+        
+        public static ScanSettings Default {
+            get {
                 return defaultInstance;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public int FreezeInterval
-        {
-            get
-            {
-                return ((int)(this["FreezeInterval"]));
-            }
-            set
-            {
-                this["FreezeInterval"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("400")]
-        public int RescanInterval
-        {
-            get
-            {
-                return ((int)(this["RescanInterval"]));
-            }
-            set
-            {
-                this["RescanInterval"] = value;
-            }
-        }
-
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public int ResultReadInterval
-        {
-            get
-            {
+        public int ResultReadInterval {
+            get {
                 return ((int)(this["ResultReadInterval"]));
             }
-            set
-            {
+            set {
                 this["ResultReadInterval"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("100")]
-        public int TableReadInterval
-        {
-            get
-            {
+        public int TableReadInterval {
+            get {
                 return ((int)(this["TableReadInterval"]));
             }
-            set
-            {
+            set {
                 this["TableReadInterval"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryTypeNone
-        {
-            get
-            {
+        public bool MemoryTypeNone {
+            get {
                 return ((bool)(this["MemoryTypeNone"]));
             }
-            set
-            {
+            set {
                 this["MemoryTypeNone"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryTypePrivate
-        {
-            get
-            {
+        public bool MemoryTypePrivate {
+            get {
                 return ((bool)(this["MemoryTypePrivate"]));
             }
-            set
-            {
+            set {
                 this["MemoryTypePrivate"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool MemoryTypeImage
-        {
-            get
-            {
+        public bool MemoryTypeImage {
+            get {
                 return ((bool)(this["MemoryTypeImage"]));
             }
-            set
-            {
+            set {
                 this["MemoryTypeImage"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool MemoryTypeMapped
-        {
-            get
-            {
+        public bool MemoryTypeMapped {
+            get {
                 return ((bool)(this["MemoryTypeMapped"]));
             }
-            set
-            {
+            set {
                 this["MemoryTypeMapped"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("500")]
-        public int InputCorrelatorTimeOutInterval
-        {
-            get
-            {
+        public int InputCorrelatorTimeOutInterval {
+            get {
                 return ((int)(this["InputCorrelatorTimeOutInterval"]));
             }
-            set
-            {
+            set {
                 this["InputCorrelatorTimeOutInterval"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("4")]
-        public int Alignment
-        {
-            get
-            {
+        public int Alignment {
+            get {
                 return ((int)(this["Alignment"]));
             }
-            set
-            {
+            set {
                 this["Alignment"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool RequiredWrite
-        {
-            get
-            {
+        public bool RequiredWrite {
+            get {
                 return ((bool)(this["RequiredWrite"]));
             }
-            set
-            {
+            set {
                 this["RequiredWrite"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool RequiredExecute
-        {
-            get
-            {
+        public bool RequiredExecute {
+            get {
                 return ((bool)(this["RequiredExecute"]));
             }
-            set
-            {
+            set {
                 this["RequiredExecute"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool RequiredCopyOnWrite
-        {
-            get
-            {
+        public bool RequiredCopyOnWrite {
+            get {
                 return ((bool)(this["RequiredCopyOnWrite"]));
             }
-            set
-            {
+            set {
                 this["RequiredCopyOnWrite"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ExcludedWrite
-        {
-            get
-            {
+        public bool ExcludedWrite {
+            get {
                 return ((bool)(this["ExcludedWrite"]));
             }
-            set
-            {
+            set {
                 this["ExcludedWrite"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool ExcludedExecute
-        {
-            get
-            {
+        public bool ExcludedExecute {
+            get {
                 return ((bool)(this["ExcludedExecute"]));
             }
-            set
-            {
+            set {
                 this["ExcludedExecute"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool ExcludedCopyOnWrite
-        {
-            get
-            {
+        public bool ExcludedCopyOnWrite {
+            get {
                 return ((bool)(this["ExcludedCopyOnWrite"]));
             }
-            set
-            {
+            set {
                 this["ExcludedCopyOnWrite"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public ulong StartAddress
-        {
-            get
-            {
+        public ulong StartAddress {
+            get {
                 return ((ulong)(this["StartAddress"]));
             }
-            set
-            {
+            set {
                 this["StartAddress"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("9223372036854775807")]
-        public ulong EndAddress
-        {
-            get
-            {
+        public ulong EndAddress {
+            get {
                 return ((ulong)(this["EndAddress"]));
             }
-            set
-            {
+            set {
                 this["EndAddress"] = value;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("True")]
-        public bool IsUserMode
-        {
-            get
-            {
+        public bool IsUserMode {
+            get {
                 return ((bool)(this["IsUserMode"]));
             }
-            set
-            {
+            set {
                 this["IsUserMode"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Squalr.Engine.Common.DataTypes.DataTypeBase.Int32")]
+        public global::Squalr.Engine.Common.DataTypes.DataTypeBase DataType {
+            get {
+                return ((global::Squalr.Engine.Common.DataTypes.DataTypeBase)(this["DataType"]));
+            }
+            set {
+                this["DataType"] = value;
             }
         }
     }

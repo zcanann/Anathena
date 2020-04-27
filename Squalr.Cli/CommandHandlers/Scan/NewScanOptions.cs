@@ -3,6 +3,7 @@
     using CommandLine;
     using Squalr.Engine.Common;
     using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Scanning;
     using Squalr.Engine.Scanning.Scanners;
     using Squalr.Engine.Scanning.Snapshots;
     using System;
@@ -12,8 +13,6 @@
     {
         public Int32 Handle()
         {
-            DataTypeBase dataType = new DataTypeBase();
-
             if (String.IsNullOrWhiteSpace(this.DataTypeString))
             {
                 this.DataTypeString = "int";
@@ -22,65 +21,79 @@
             switch(this.DataTypeString.ToLower())
             {
                 case "aob":
-                    dataType.Type = DataTypeBase.ByteArray;
+                    ScanSettings.DataType = DataTypeBase.ByteArray;
                     break;
                 case "bool":
-                    dataType.Type = DataTypeBase.Boolean;
+                    ScanSettings.DataType = DataTypeBase.Boolean;
                     break;
                 case "sbyte":
-                    dataType.Type = DataTypeBase.SByte;
+                    ScanSettings.DataType = DataTypeBase.SByte;
                     break;
+                case "i16":
                 case "short":
                 case "int16":
-                    dataType.Type = DataTypeBase.Int16;
+                    ScanSettings.DataType = DataTypeBase.Int16;
                     break;
+                case "i":
                 case "int":
                 case "int32":
-                    dataType.Type = DataTypeBase.Int32;
+                    ScanSettings.DataType = DataTypeBase.Int32;
                     break;
+                case "l":
+                case "i64":
                 case "long":
                 case "int64":
-                    dataType.Type = DataTypeBase.Int64;
+                    ScanSettings.DataType = DataTypeBase.Int64;
                     break;
+                case "b":
                 case "byte":
-                    dataType.Type = DataTypeBase.Byte;
+                    ScanSettings.DataType = DataTypeBase.Byte;
                     break;
+                case "ui16":
                 case "ushort":
                 case "uint16":
-                    dataType.Type = DataTypeBase.Byte;
+                    ScanSettings.DataType = DataTypeBase.Byte;
                     break;
+                case "ui32":
                 case "uint":
                 case "uint32":
-                    dataType.Type = DataTypeBase.UInt32;
+                    ScanSettings.DataType = DataTypeBase.UInt32;
                     break;
+                case "ui64":
+                case "ul":
                 case "ulong":
                 case "uint64":
-                    dataType.Type = DataTypeBase.UInt64;
+                    ScanSettings.DataType = DataTypeBase.UInt64;
                     break;
+                case "f":
                 case "float":
                 case "single":
-                    dataType.Type = DataTypeBase.Single;
+                    ScanSettings.DataType = DataTypeBase.Single;
                     break;
+                case "d":
                 case "double":
-                    dataType.Type = DataTypeBase.Double;
+                    ScanSettings.DataType = DataTypeBase.Double;
                     break;
+                case "str":
                 case "string":
-                    dataType.Type = DataTypeBase.String;
+                    ScanSettings.DataType = DataTypeBase.String;
                     break;
                 case "char":
-                    dataType.Type = DataTypeBase.Char;
+                    ScanSettings.DataType = DataTypeBase.Char;
                     break;
                 default:
                     Console.WriteLine("Unknown data type '" + this.DataTypeString + "', defaulting to int");
-                    dataType.Type = DataTypeBase.Int32;
+                    ScanSettings.DataType = DataTypeBase.Int32;
                     break;
             }
 
             SessionManager.Session.SnapshotManager.ClearSnapshots();
 
+            Console.WriteLine("Data type for new scan set to: " + ScanSettings.DataType.ToString());
+
             // Collect values
             TrackableTask<Snapshot> valueCollectorTask = ValueCollector.CollectValues(
-                SessionManager.Session.SnapshotManager.GetActiveSnapshotCreateIfNone(SessionManager.Session.OpenedProcess, dataType),
+                SessionManager.Session.SnapshotManager.GetActiveSnapshotCreateIfNone(SessionManager.Session.OpenedProcess, ScanSettings.DataType),
                 TrackableTask.UniversalIdentifier);
 
             valueCollectorTask.OnCompletedEvent += ((completedValueCollectionTask) =>

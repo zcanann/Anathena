@@ -39,7 +39,7 @@
                 case DataTypeBase type when type == DataTypeBase.UInt64:
                     return UInt64.Parse(value);
                 case DataTypeBase type when type == DataTypeBase.Single:
-                    return Single.Parse(value);
+                    return Single.Parse(value.EndsWith("f") ? value.Remove(value.LastIndexOf("f")) : value);
                 case DataTypeBase type when type == DataTypeBase.Double:
                     return Double.Parse(value);
                 case DataTypeBase type when type == DataTypeBase.IntPtr:

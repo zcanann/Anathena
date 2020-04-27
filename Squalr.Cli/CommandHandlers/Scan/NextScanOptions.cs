@@ -3,6 +3,7 @@
     using CommandLine;
     using Squalr.Engine.Common;
     using Squalr.Engine.Common.DataTypes;
+    using Squalr.Engine.Scanning;
     using Squalr.Engine.Scanning.Scanners;
     using Squalr.Engine.Scanning.Scanners.Constraints;
     using Squalr.Engine.Scanning.Snapshots;
@@ -13,7 +14,7 @@
     {
         public Int32 Handle()
         {
-            DataTypeBase dataType = DataTypeBase.Int32; // TODO: Fetch from settings
+            DataTypeBase dataType = ScanSettings.DataType;
             ScanConstraint.ConstraintType constraintType = ScanConstraint.ConstraintType.Equal;
 
             if (String.IsNullOrWhiteSpace(this.Constraint))

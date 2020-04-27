@@ -53,5 +53,8 @@
     <Setting Name="IsUserMode" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">True</Value>
     </Setting>
+    <Setting Name="DataType" Type="Squalr.Engine.Common.DataTypes.DataTypeBase" Scope="User">
+      <Value Profile="(Default)">Squalr.Engine.Common.DataTypes.DataTypeBase.Int32</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

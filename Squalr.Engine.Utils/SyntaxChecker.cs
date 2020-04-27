@@ -162,11 +162,11 @@
 
             if (isHex)
             {
-                return Byte.TryParse(value, NumberStyles.HexNumber, null, out temp);
+                return Byte.TryParse(value, NumberStyles.HexNumber, null, out _);
             }
             else
             {
-                return Byte.TryParse(value, out temp);
+                return Byte.TryParse(value, out _);
             }
         }
 
@@ -182,11 +182,11 @@
 
             if (isHex)
             {
-                return SByte.TryParse(value, NumberStyles.HexNumber, null, out temp);
+                return SByte.TryParse(value, NumberStyles.HexNumber, null, out _);
             }
             else
             {
-                return SByte.TryParse(value, out temp);
+                return SByte.TryParse(value, out _);
             }
         }
 
@@ -202,11 +202,11 @@
 
             if (isHex)
             {
-                return Int16.TryParse(value, NumberStyles.HexNumber, null, out temp);
+                return Int16.TryParse(value, NumberStyles.HexNumber, null, out _);
             }
             else
             {
-                return Int16.TryParse(value, out temp);
+                return Int16.TryParse(value, out _);
             }
         }
 
@@ -222,11 +222,11 @@
 
             if (isHex)
             {
-                return UInt16.TryParse(value, NumberStyles.HexNumber, null, out temp);
+                return UInt16.TryParse(value, NumberStyles.HexNumber, null, out _);
             }
             else
             {
-                return UInt16.TryParse(value, out temp);
+                return UInt16.TryParse(value, out _);
             }
         }
 
@@ -242,11 +242,11 @@
 
             if (isHex)
             {
-                return Int32.TryParse(value, NumberStyles.HexNumber, null, out temp);
+                return Int32.TryParse(value, NumberStyles.HexNumber, null, out _);
             }
             else
             {
-                return Int32.TryParse(value, out temp);
+                return Int32.TryParse(value, out _);
             }
         }
 
@@ -262,11 +262,11 @@
 
             if (isHex)
             {
-                return UInt32.TryParse(value, NumberStyles.HexNumber, null, out temp);
+                return UInt32.TryParse(value, NumberStyles.HexNumber, null, out _);
             }
             else
             {
-                return UInt32.TryParse(value, out temp);
+                return UInt32.TryParse(value, out _);
             }
         }
 
@@ -282,11 +282,11 @@
 
             if (isHex)
             {
-                return Int64.TryParse(value, NumberStyles.HexNumber, null, out temp);
+                return Int64.TryParse(value, NumberStyles.HexNumber, null, out _);
             }
             else
             {
-                return Int64.TryParse(value, out temp);
+                return Int64.TryParse(value, out _);
             }
         }
 
@@ -302,11 +302,11 @@
 
             if (isHex)
             {
-                return UInt64.TryParse(value, NumberStyles.HexNumber, null, out temp);
+                return UInt64.TryParse(value, NumberStyles.HexNumber, null, out _);
             }
             else
             {
-                return UInt64.TryParse(value, out temp);
+                return UInt64.TryParse(value, out _);
             }
         }
 
@@ -322,11 +322,11 @@
 
             if (isHex && IsUInt32(value, isHex))
             {
-                return Single.TryParse(Conversions.ParseHexStringAsPrimitiveString(DataTypeBase.Single, value), out temp);
+                return Single.TryParse(Conversions.ParseHexStringAsPrimitiveString(DataTypeBase.Single, value), out _);
             }
             else
             {
-                return Single.TryParse(value, out temp);
+                return Single.TryParse(value.EndsWith("f") ? value.Remove(value.LastIndexOf("f")) : value, out _);
             }
         }
 
@@ -342,11 +342,11 @@
 
             if (isHex && IsUInt64(value, isHex))
             {
-                return Double.TryParse(Conversions.ParseHexStringAsPrimitiveString(DataTypeBase.Double, value), out temp);
+                return Double.TryParse(Conversions.ParseHexStringAsPrimitiveString(DataTypeBase.Double, value), out _);
             }
             else
             {
-                return Double.TryParse(value, out temp);
+                return Double.TryParse(value, out _);
             }
         }
     }

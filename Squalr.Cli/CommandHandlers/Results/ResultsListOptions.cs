@@ -32,7 +32,20 @@
 
             for (UInt64 index = pageStart; index < pageEnd; index++)
             {
-                Console.WriteLine(index + "\t|\t" + Conversions.ToHex<UInt64>(results[index].BaseAddress) + "\t|\t" + results[index].LoadCurrentValue());
+                Object currentValue = results[index].LoadCurrentValue();
+                String str;
+
+                switch (currentValue)
+                {
+                    case Single fVal:
+                        str = fVal.ToString(".0###########f");
+                        break;
+                    default:
+                        str = currentValue.ToString();
+                        break;
+                }
+
+                Console.WriteLine(index + "\t|\t" + Conversions.ToHex<UInt64>(results[index].BaseAddress) + "\t|\t" + str);
             }
 
             Console.WriteLine();
