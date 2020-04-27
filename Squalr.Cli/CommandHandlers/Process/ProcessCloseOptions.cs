@@ -12,7 +12,7 @@
             {
                 Console.WriteLine("[Warn] - Not attached to any process.");
 
-                return 1;
+                return -1;
             }
 
             SessionManager.Session.Destroy();

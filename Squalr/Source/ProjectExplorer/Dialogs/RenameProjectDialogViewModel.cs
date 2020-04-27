@@ -120,7 +120,7 @@
                 {
                     String projectPath = Path.Combine(SettingsViewModel.GetInstance().ProjectRoot, projectName);
                     String newProjectPath = Path.Combine(SettingsViewModel.GetInstance().ProjectRoot, this.NewProjectName);
-                    ProjectManager.RenameProject(projectPath, newProjectPath);
+                    ProjectQueryer.RenameProject(projectPath, newProjectPath);
 
                     return true;
                 }

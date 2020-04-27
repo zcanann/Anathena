@@ -515,7 +515,7 @@
                     for (Int32 appendedNumber = 0; appendedNumber < Int32.MaxValue; appendedNumber++)
                     {
                         String suffix = (appendedNumber == 0 ? String.Empty : " " + appendedNumber.ToString());
-                        String resolvedName = Path.Combine(ProjectSettings.Default.ProjectRoot, newName + suffix);
+                        String resolvedName = Path.Combine(ProjectSettings.ProjectRoot, newName + suffix);
 
                         if (neighboringFiles.Contains(resolvedName))
                         {
@@ -537,7 +537,7 @@
 
         private String GetFilePathForName(String fileName)
         {
-            return Path.Combine((this.Parent?.FullPath ?? ProjectSettings.Default.ProjectRoot), this.Name + this.GetExtension());
+            return Path.Combine((this.Parent?.FullPath ?? ProjectSettings.ProjectRoot), this.Name + this.GetExtension());
         }
     }
     //// End class

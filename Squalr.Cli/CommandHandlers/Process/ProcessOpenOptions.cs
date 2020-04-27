@@ -16,14 +16,14 @@
             {
                 Console.WriteLine("[Warn] - A session is already open, no action taken.");
 
-                return 1;
+                return -1;
             }
 
             if (String.IsNullOrWhiteSpace(this.ProcessTerm))
             {
                 Console.WriteLine("[Error] - Please specify a process id.");
 
-                return 1;
+                return -1;
             }
 
             Process process = null;
@@ -60,7 +60,7 @@
             {
                 Console.WriteLine("[Error] - Unable to find specified process.");
 
-                return 1;
+                return -1;
             }
 
             SessionManager.Session = new Session(process);

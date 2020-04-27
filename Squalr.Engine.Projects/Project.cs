@@ -29,7 +29,15 @@
 
         public void Rename(String newProjectName)
         {
-
+            try
+            {
+                // Directory.Move(oldProjectPath, newProjectPath);
+                // this.WatchFileSystem(newProjectPath);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Error, "Unable to rename project", ex);
+            }
         }
 
         private void WatchFileSystem(String projectRootPath)

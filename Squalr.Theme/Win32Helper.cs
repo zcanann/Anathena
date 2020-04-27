@@ -15,9 +15,6 @@
   **********************************************************************/
 
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Runtime.InteropServices;
 using System.Windows;
 
@@ -26,32 +23,35 @@ namespace Squalr.Theme
     internal static class Win32Helper
     {
         [DllImport("user32.dll", EntryPoint = "CreateWindowEx", CharSet = CharSet.Unicode)]
-        internal static extern IntPtr CreateWindowEx(int dwExStyle,
-                                                      string lpszClassName,
-                                                      string lpszWindowName,
-                                                      int style,
-                                                      int x, int y,
-                                                      int width, int height,
-                                                      IntPtr hwndParent,
-                                                      IntPtr hMenu,
-                                                      IntPtr hInst,
-                                                      [MarshalAs(UnmanagedType.AsAny)] object pvParam);
-        internal const int
-              WS_CHILD = 0x40000000,
-              WS_VISIBLE = 0x10000000,
-              WS_VSCROLL = 0x00200000,
-              WS_BORDER = 0x00800000,
-              WS_CLIPSIBLINGS = 0x04000000,
-              WS_CLIPCHILDREN = 0x02000000,
-              WS_TABSTOP = 0x00010000,
-              WS_GROUP = 0x00020000;
+        internal static extern IntPtr CreateWindowEx(
+            Int32 dwExStyle,
+            String lpszClassName,
+            String lpszWindowName,
+            Int32 style,
+            Int32 x,
+            Int32 y,
+            Int32 width,
+            Int32 height,
+            IntPtr hwndParent,
+            IntPtr hMenu,
+            IntPtr hInst,
+            IntPtr lpParam
+        );
 
+        internal const Int32 WS_CHILD = 0x40000000;
+        internal const Int32 WS_VISIBLE = 0x10000000;
+        internal const Int32 WS_VSCROLL = 0x00200000;
+        internal const Int32 WS_BORDER = 0x00800000;
+        internal const Int32 WS_CLIPSIBLINGS = 0x04000000;
+        internal const Int32 WS_CLIPCHILDREN = 0x02000000;
+        internal const Int32 WS_TABSTOP = 0x00010000;
+        internal const Int32 WS_GROUP = 0x00020000;
 
         /// <summary>
         /// SetWindowPos Flags
         /// </summary>
         [Flags()]
-        internal enum SetWindowPosFlags : uint
+        internal enum SetWindowPosFlags : UInt32
         {
             /// <summary>If the calling thread and the thread that owns the window are attached to different input queues,
             /// the system posts the request to the thread that owns the window. This prevents the calling thread from
@@ -124,75 +124,74 @@ namespace Squalr.Theme
         {
             public IntPtr hwnd;
             public IntPtr hwndInsertAfter;
-            public int x;
-            public int y;
-            public int cx;
-            public int cy;
-            public int flags;
+            public Int32 x;
+            public Int32 y;
+            public Int32 cx;
+            public Int32 cy;
+            public Int32 flags;
         }; 
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, int X, int Y, int cx, int cy, SetWindowPosFlags uFlags);
+        internal static extern bool SetWindowPos(IntPtr hWnd, IntPtr hWndInsertAfter, Int32 X, Int32 Y, Int32 cx, Int32 cy, SetWindowPosFlags uFlags);
 
         [DllImport("user32.dll", CharSet = CharSet.Auto, ExactSpelling = true)]
-        internal static extern bool IsChild(IntPtr hWndParent, IntPtr hwnd);
+        internal static extern Boolean IsChild(IntPtr hWndParent, IntPtr hwnd);
 
         [DllImport("user32.dll")]
         internal static extern IntPtr SetFocus(IntPtr hWnd);
 
-        internal const int WM_WINDOWPOSCHANGED = 0x0047;
-        internal const int WM_WINDOWPOSCHANGING = 0x0046;
-        internal const int WM_NCMOUSEMOVE = 0xa0;
-        internal const int WM_NCLBUTTONDOWN = 0xA1;
-        internal const int WM_NCLBUTTONUP = 0xA2;
-        internal const int WM_NCLBUTTONDBLCLK = 0xA3;
-        internal const int WM_NCRBUTTONDOWN = 0xA4;
-        internal const int WM_NCRBUTTONUP = 0xA5;
-        internal const int WM_CAPTURECHANGED = 0x0215;
-        internal const int WM_EXITSIZEMOVE = 0x0232;
-        internal const int WM_ENTERSIZEMOVE = 0x0231;
-        internal const int WM_MOVE = 0x0003;
-        internal const int WM_MOVING = 0x0216;
-        internal const int WM_KILLFOCUS = 0x0008;
-        internal const int WM_SETFOCUS = 0x0007;
-        internal const int WM_ACTIVATE = 0x0006;
-        internal const int WM_NCHITTEST = 0x0084;
-        internal const int WM_INITMENUPOPUP = 0x0117;
-        internal const int WM_KEYDOWN = 0x0100;
-        internal const int WM_KEYUP = 0x0101;
+        internal const Int32 WM_WINDOWPOSCHANGED = 0x0047;
+        internal const Int32 WM_WINDOWPOSCHANGING = 0x0046;
+        internal const Int32 WM_NCMOUSEMOVE = 0xa0;
+        internal const Int32 WM_NCLBUTTONDOWN = 0xA1;
+        internal const Int32 WM_NCLBUTTONUP = 0xA2;
+        internal const Int32 WM_NCLBUTTONDBLCLK = 0xA3;
+        internal const Int32 WM_NCRBUTTONDOWN = 0xA4;
+        internal const Int32 WM_NCRBUTTONUP = 0xA5;
+        internal const Int32 WM_CAPTURECHANGED = 0x0215;
+        internal const Int32 WM_EXITSIZEMOVE = 0x0232;
+        internal const Int32 WM_ENTERSIZEMOVE = 0x0231;
+        internal const Int32 WM_MOVE = 0x0003;
+        internal const Int32 WM_MOVING = 0x0216;
+        internal const Int32 WM_KILLFOCUS = 0x0008;
+        internal const Int32 WM_SETFOCUS = 0x0007;
+        internal const Int32 WM_ACTIVATE = 0x0006;
+        internal const Int32 WM_NCHITTEST = 0x0084;
+        internal const Int32 WM_INITMENUPOPUP = 0x0117;
+        internal const Int32 WM_KEYDOWN = 0x0100;
+        internal const Int32 WM_KEYUP = 0x0101;
 
-        internal const int WA_INACTIVE = 0x0000;
+        internal const Int32 WA_INACTIVE = 0x0000;
 
-        internal const int WM_SYSCOMMAND = 0x0112;
+        internal const Int32 WM_SYSCOMMAND = 0x0112;
         // These are the wParam of WM_SYSCOMMAND
-        internal const int SC_MAXIMIZE = 0xF030;
-        internal const int SC_RESTORE = 0xF120;
+        internal const Int32 SC_MAXIMIZE = 0xF030;
+        internal const Int32 SC_RESTORE = 0xF120;
 
-        internal const int
-            WM_CREATE = 0x0001;
+        internal const int WM_CREATE = 0x0001;
 
         [DllImport("user32.dll", SetLastError = true)]
         public static extern IntPtr SetActiveWindow(IntPtr hWnd);
 
         [DllImport("user32.dll", EntryPoint = "DestroyWindow", CharSet = CharSet.Unicode)]
-        internal static extern bool DestroyWindow(IntPtr hwnd);
+        internal static extern Boolean DestroyWindow(IntPtr hwnd);
 
-        internal const int HT_CAPTION = 0x2;
+        internal const Int32 HT_CAPTION = 0x2;
 
         [DllImportAttribute("user32.dll")]
-        internal static extern int SendMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+        internal static extern Int32 SendMessage(IntPtr hWnd, Int32 Msg, IntPtr wParam, IntPtr lParam);
         [DllImportAttribute("user32.dll")]
-        internal static extern int PostMessage(IntPtr hWnd, int Msg, IntPtr wParam, IntPtr lParam);
+        internal static extern Int32 PostMessage(IntPtr hWnd, Int32 Msg, IntPtr wParam, IntPtr lParam);
 
 
         [DllImport("user32.dll")]
-        static extern bool GetClientRect(IntPtr hWnd, out RECT lpRect);
+        static extern Boolean GetClientRect(IntPtr hWnd, out RECT lpRect);
         [DllImport("user32.dll")]
-        internal static extern bool GetWindowRect(IntPtr hWnd, out RECT lpRect);
+        internal static extern Boolean GetWindowRect(IntPtr hWnd, out RECT lpRect);
 
         // Hook Types  
-        public enum HookType : int
+        public enum HookType : Int32
         {
             WH_JOURNALRECORD = 0,
             WH_JOURNALPLAYBACK = 1,
@@ -211,55 +210,85 @@ namespace Squalr.Theme
             WH_MOUSE_LL = 14
         }
 
-        public const int HCBT_SETFOCUS = 9;
-        public const int HCBT_ACTIVATE = 5;
+        public const Int32 HCBT_SETFOCUS = 9;
+        public const Int32 HCBT_ACTIVATE = 5;
 
         [DllImport("kernel32.dll")]
-        public static extern uint GetCurrentThreadId();
+        public static extern UInt32 GetCurrentThreadId();
 
-        public delegate int HookProc(int code, IntPtr wParam,
-           IntPtr lParam);
+        public delegate Int32 HookProc(Int32 code, IntPtr wParam, IntPtr lParam);
 
         [DllImport("user32.dll")]
-        public static extern IntPtr SetWindowsHookEx(HookType code,
-            HookProc func,
-            IntPtr hInstance,
-            int threadID);
+        public static extern IntPtr SetWindowsHookEx(HookType code, HookProc func, IntPtr hInstance, Int32 threadID);
+
         [DllImport("user32.dll")]
-        public static extern int UnhookWindowsHookEx(IntPtr hhook);
+        public static extern Int32 UnhookWindowsHookEx(IntPtr hhook);
+
         [DllImport("user32.dll")]
-        public static extern int CallNextHookEx(IntPtr hhook,
-            int code, IntPtr wParam, IntPtr lParam);
+        public static extern Int32 CallNextHookEx(IntPtr hhook, Int32 code, IntPtr wParam, IntPtr lParam);
 
         [Serializable, StructLayout(LayoutKind.Sequential)]
         internal struct RECT
         {
-            public int Left;
-            public int Top; 
-            public int Right; 
-            public int Bottom;
-            public RECT(int left_, int top_, int right_, int bottom_)
+            public Int32 Left;
+            public Int32 Top; 
+            public Int32 Right; 
+            public Int32 Bottom;
+            public RECT(Int32 left_, Int32 top_, Int32 right_, Int32 bottom_)
             {
-                Left = left_; Top = top_; Right = right_; Bottom = bottom_;
+                Left = left_;
+                Top = top_;
+                Right = right_;
+                Bottom = bottom_;
             }
 
-            public int Height
+            public Int32 Height
             {
-                get { return Bottom - Top; }
+                get
+                {
+                    return Bottom - Top;
+                }
             }
 
-            public int Width
+            public Int32 Width
             {
-                get { return Right - Left; }
+                get
+                {
+                    return Right - Left;
+                }
             }
-            public Size Size { get { return new Size(Width, Height); } }  
-            public Point Location { get { return new Point(Left, Top); } }
+
+            public Size Size
+            {
+                get
+                {
+                    return new Size(Width, Height);
+                }
+            }  
+
+            public Point Location
+            {
+                get
+                {
+                    return new Point(Left, Top);
+                }
+            }
+
             // Handy method for converting to a System.Drawing.Rectangle  
-            public Rect ToRectangle() { return new Rect(Left, Top, Right, Bottom); } 
+            public Rect ToRectangle()
+            {
+                return new Rect(Left, Top, Right, Bottom);
+            }
+
             public static RECT FromRectangle(Rect rectangle)
-            { return new Rect(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom); }   
-            public override int GetHashCode()
-            { return Left ^ ((Top << 13) | (Top >> 0x13)) ^ ((Width << 0x1a) | (Width >> 6)) ^ ((Height << 7) | (Height >> 0x19)); }
+            {
+                return new Rect(rectangle.Left, rectangle.Top, rectangle.Right, rectangle.Bottom);
+            }
+
+            public override Int32 GetHashCode()
+            {
+                return Left ^ ((Top << 13) | (Top >> 0x13)) ^ ((Width << 0x1a) | (Width >> 6)) ^ ((Height << 7) | (Height >> 0x19));
+            }
 
             #region Operator overloads
             public static implicit operator Rect(RECT rect) { return rect.ToRectangle(); }   public static implicit operator RECT(Rect rect) { return FromRectangle(rect); }
@@ -272,6 +301,7 @@ namespace Squalr.Theme
             GetClientRect(hWnd, out result);
             return result;
         }
+
         internal static RECT GetWindowRect(IntPtr hWnd)
         {
             RECT result = new RECT();
@@ -282,14 +312,14 @@ namespace Squalr.Theme
         [DllImport("user32.dll")]
         internal static extern IntPtr GetTopWindow(IntPtr hWnd);
 
-        internal const uint GW_HWNDNEXT = 2;
-        internal const uint GW_HWNDPREV = 3;
+        internal const UInt32 GW_HWNDNEXT = 2;
+        internal const UInt32 GW_HWNDPREV = 3;
 
 
         [DllImport("user32.dll", SetLastError = true)]
-        internal static extern IntPtr GetWindow(IntPtr hWnd, uint uCmd);
+        internal static extern IntPtr GetWindow(IntPtr hWnd, UInt32 uCmd);
 
-        internal enum GetWindow_Cmd : uint
+        internal enum GetWindow_Cmd : UInt32
         {
             GW_HWNDFIRST = 0,
             GW_HWNDLAST = 1,
@@ -300,33 +330,29 @@ namespace Squalr.Theme
             GW_ENABLEDPOPUP = 6
         } 
 
-        internal static int MakeLParam(int LoWord, int HiWord)
+        internal static Int32 MakeLParam(Int32 LoWord, Int32 HiWord)
         {
-
-          //System.Diagnostics.Trace.WriteLine("LoWord: " + LoWord2(((HiWord << 16) |
-         //(LoWord & 0xffff))));
-
-            return (int) ((HiWord << 16) | (LoWord & 0xffff));
+            return ((HiWord << 16) | (LoWord & 0xffff));
         }
 
 
-        internal const int WM_MOUSEMOVE = 0x200;
-        internal const int WM_LBUTTONDOWN = 0x201;
-        internal const int WM_LBUTTONUP = 0x202;
-        internal const int WM_LBUTTONDBLCLK = 0x203;
-        internal const int WM_RBUTTONDOWN = 0x204;
-        internal const int WM_RBUTTONUP = 0x205;
-        internal const int WM_RBUTTONDBLCLK = 0x206;
-        internal const int WM_MBUTTONDOWN = 0x207;
-        internal const int WM_MBUTTONUP = 0x208;
-        internal const int WM_MBUTTONDBLCLK = 0x209;
-        internal const int WM_MOUSEWHEEL = 0x20A;
-        internal const int WM_MOUSEHWHEEL = 0x20E;
+        internal const Int32 WM_MOUSEMOVE = 0x200;
+        internal const Int32 WM_LBUTTONDOWN = 0x201;
+        internal const Int32 WM_LBUTTONUP = 0x202;
+        internal const Int32 WM_LBUTTONDBLCLK = 0x203;
+        internal const Int32 WM_RBUTTONDOWN = 0x204;
+        internal const Int32 WM_RBUTTONUP = 0x205;
+        internal const Int32 WM_RBUTTONDBLCLK = 0x206;
+        internal const Int32 WM_MBUTTONDOWN = 0x207;
+        internal const Int32 WM_MBUTTONUP = 0x208;
+        internal const Int32 WM_MBUTTONDBLCLK = 0x209;
+        internal const Int32 WM_MOUSEWHEEL = 0x20A;
+        internal const Int32 WM_MOUSEHWHEEL = 0x20E;
 
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool GetCursorPos(ref Win32Point pt);
+        internal static extern Boolean GetCursorPos(ref Win32Point pt);
 
         [StructLayout(LayoutKind.Sequential)]
         internal struct Win32Point
@@ -334,6 +360,7 @@ namespace Squalr.Theme
             public Int32 X;
             public Int32 Y;
         };
+
         internal static Point GetMousePosition()
         {
             Win32Point w32Mouse = new Win32Point();
@@ -344,17 +371,18 @@ namespace Squalr.Theme
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool IsWindowVisible(IntPtr hWnd);
+        internal static extern Boolean IsWindowVisible(IntPtr hWnd);
+
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool IsWindowEnabled(IntPtr hWnd);
+        internal static extern Boolean IsWindowEnabled(IntPtr hWnd);
 
         [DllImport("user32.dll")]
         internal static extern IntPtr GetFocus();
 
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool BringWindowToTop(IntPtr hWnd);
+        internal static extern Boolean BringWindowToTop(IntPtr hWnd);
 
         [DllImport("user32.dll", SetLastError = true)]
         internal static extern IntPtr SetParent(IntPtr hWndChild, IntPtr hWndNewParent);
@@ -371,10 +399,10 @@ namespace Squalr.Theme
         /// <returns>If the function succeeds, the return value is the previous value of the specified 32-bit integer.
         /// If the function fails, the return value is zero. To get extended error information, call GetLastError. </returns>
         [DllImport("user32.dll")]
-        static extern int SetWindowLong(IntPtr hWnd, int nIndex, int dwNewLong);
+        static extern Int32 SetWindowLong(IntPtr hWnd, Int32 nIndex, Int32 dwNewLong);
 
         [DllImport("user32.dll", SetLastError = true)]
-        static extern int GetWindowLong(IntPtr hWnd, int nIndex);
+        static extern Int32 GetWindowLong(IntPtr hWnd, Int32 nIndex);
 
         public static void SetOwner(IntPtr childHandle, IntPtr ownerHandle)
         {
@@ -406,7 +434,7 @@ namespace Squalr.Theme
         /// If the rectangle does not intersect a display monitor, the return value depends on the value of dwFlags.
         /// </returns>
         [DllImport("user32.dll")]
-        public static extern IntPtr MonitorFromRect([In] ref RECT lprc, uint dwFlags);
+        public static extern IntPtr MonitorFromRect([In] ref RECT lprc, UInt32 dwFlags);
 
         /// <summary>
         /// The MonitorFromWindow function retrieves a handle to the display monitor that has the largest area of intersection with the bounding rectangle of a specified window. 
@@ -417,7 +445,7 @@ namespace Squalr.Theme
         /// If the window does not intersect a display monitor, the return value depends on the value of dwFlags.
         /// </returns>
         [DllImport("user32.dll")]
-        public static extern IntPtr MonitorFromWindow(IntPtr hwnd, uint dwFlags);
+        public static extern IntPtr MonitorFromWindow(IntPtr hwnd, UInt32 dwFlags);
 
 
         /// <summary>
@@ -429,7 +457,7 @@ namespace Squalr.Theme
             /// <summary>
             /// The size of the structure, in bytes. 
             /// </summary>
-            public int Size = Marshal.SizeOf(typeof(MonitorInfo));
+            public Int32 Size = Marshal.SizeOf(typeof(MonitorInfo));
             /// <summary>
             /// A RECT structure that specifies the display monitor rectangle, expressed 
             /// in virtual-screen coordinates. 
@@ -446,7 +474,7 @@ namespace Squalr.Theme
             /// <summary>
             /// A set of flags that represent attributes of the display monitor. 
             /// </summary>
-            public uint Flags;
+            public UInt32 Flags;
         }
 
         /// <summary>
@@ -459,7 +487,7 @@ namespace Squalr.Theme
         /// If the function fails, the return value is zero.</returns>
         [DllImport("user32.dll")]
         [return: MarshalAs(UnmanagedType.Bool)]
-        public static extern bool GetMonitorInfo(IntPtr hMonitor, [In, Out] MonitorInfo lpmi);
+        public static extern Boolean GetMonitorInfo(IntPtr hMonitor, [In, Out] MonitorInfo lpmi);
 
     }
 }

@@ -17,15 +17,16 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Properties\ProjectSettings.Designer.cs">
-      <DependentUpon>ProjectSettings.settings</DependentUpon>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DependentUpon>Settings.settings</DependentUpon>
       <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="Properties\ProjectSettings.settings">
-      <LastGenOutput>ProjectSettings.Designer.cs</LastGenOutput>
+    <None Update="Properties\Settings.settings">
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
       <Generator>SettingsSingleFileGenerator</Generator>
     </None>
   </ItemGroup>

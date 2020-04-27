@@ -2,6 +2,7 @@
 {
     using Squalr.Engine.Common.DataTypes;
     using Squalr.Engine.Common.Extensions;
+    using Squalr.Engine.Common.Logging;
     using Squalr.Engine.Memory.Windows.Native;
     using System;
     using System.Diagnostics;
@@ -94,7 +95,6 @@
 
             MemoryProtectionFlags oldProtection;
             Int32 bytesWritten;
-            Boolean success = false;
 
             try
             {
@@ -103,13 +103,17 @@
                 // Write the data to the target process
                 if (NativeMethods.WriteProcessMemory(processHandle, address.ToIntPtr(), byteArray, byteArray.Length, out bytesWritten))
                 {
-                    success = bytesWritten == byteArray.Length;
+                    if (bytesWritten != byteArray.Length)
+                    {
+                        Logger.Log(LogLevel.Error, "Error writing memory. Wrote " + bytesWritten + " bytes, but expected " + byteArray.Length);
+                    }
                 }
 
                 NativeMethods.VirtualProtectEx(processHandle, address.ToIntPtr(), byteArray.Length, oldProtection, out oldProtection);
             }
             catch (Exception ex)
             {
+                Logger.Log(LogLevel.Error, "Error writing memory.", ex);
             }
         }
 

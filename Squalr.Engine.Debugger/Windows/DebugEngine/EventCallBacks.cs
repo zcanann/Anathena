@@ -121,6 +121,7 @@
 
             String[] registers;
             throw new NotImplementedException();
+            /*
             Boolean isProcess32Bit = false;// ProcessQuery.Instance.IsProcessWindowed();
 
             if (isProcess32Bit)
@@ -170,6 +171,7 @@
 
             // Output.Output.Log(Output.LogLevel.Debug, "Breakpoint Hit: " + codeTraceInfo.Address);
             return (Int32)DEBUG_STATUS.BREAK;
+            */
         }
 
         public Int32 Exception([In] ref EXCEPTION_RECORD64 Exception, [In] uint FirstChance)

@@ -158,8 +158,6 @@
         /// <returns>A boolean indicating if the value could be parsed.</returns>
         private static Boolean IsByte(String value, Boolean isHex = false)
         {
-            Byte temp;
-
             if (isHex)
             {
                 return Byte.TryParse(value, NumberStyles.HexNumber, null, out _);
@@ -178,8 +176,6 @@
         /// <returns>A boolean indicating if the value could be parsed.</returns>
         private static Boolean IsSByte(String value, Boolean isHex = false)
         {
-            SByte temp;
-
             if (isHex)
             {
                 return SByte.TryParse(value, NumberStyles.HexNumber, null, out _);
@@ -198,8 +194,6 @@
         /// <returns>A boolean indicating if the value could be parsed.</returns>
         private static Boolean IsInt16(String value, Boolean isHex = false)
         {
-            Int16 temp;
-
             if (isHex)
             {
                 return Int16.TryParse(value, NumberStyles.HexNumber, null, out _);
@@ -218,8 +212,6 @@
         /// <returns>A boolean indicating if the value could be parsed.</returns>
         private static Boolean IsUInt16(String value, Boolean isHex = false)
         {
-            UInt16 temp;
-
             if (isHex)
             {
                 return UInt16.TryParse(value, NumberStyles.HexNumber, null, out _);
@@ -238,8 +230,6 @@
         /// <returns>A boolean indicating if the value could be parsed.</returns>
         private static Boolean IsInt32(String value, Boolean isHex = false)
         {
-            Int32 temp;
-
             if (isHex)
             {
                 return Int32.TryParse(value, NumberStyles.HexNumber, null, out _);
@@ -258,8 +248,6 @@
         /// <returns>A boolean indicating if the value could be parsed.</returns>
         private static Boolean IsUInt32(String value, Boolean isHex = false)
         {
-            UInt32 temp;
-
             if (isHex)
             {
                 return UInt32.TryParse(value, NumberStyles.HexNumber, null, out _);
@@ -278,8 +266,6 @@
         /// <returns>A boolean indicating if the value could be parsed.</returns>
         private static Boolean IsInt64(String value, Boolean isHex = false)
         {
-            Int64 temp;
-
             if (isHex)
             {
                 return Int64.TryParse(value, NumberStyles.HexNumber, null, out _);
@@ -298,8 +284,6 @@
         /// <returns>A boolean indicating if the value could be parsed.</returns>
         private static Boolean IsUInt64(String value, Boolean isHex = false)
         {
-            UInt64 temp;
-
             if (isHex)
             {
                 return UInt64.TryParse(value, NumberStyles.HexNumber, null, out _);
@@ -318,8 +302,6 @@
         /// <returns>A boolean indicating if the value could be parsed.</returns>
         private static Boolean IsSingle(String value, Boolean isHex = false)
         {
-            Single temp;
-
             if (isHex && IsUInt32(value, isHex))
             {
                 return Single.TryParse(Conversions.ParseHexStringAsPrimitiveString(DataTypeBase.Single, value), out _);
@@ -338,8 +320,6 @@
         /// <returns>A boolean indicating if the value could be parsed.</returns>
         private static Boolean IsDouble(String value, Boolean isHex = false)
         {
-            Double temp;
-
             if (isHex && IsUInt64(value, isHex))
             {
                 return Double.TryParse(Conversions.ParseHexStringAsPrimitiveString(DataTypeBase.Double, value), out _);

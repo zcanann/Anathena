@@ -8,36 +8,29 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Squalr.Engine.Projects.Properties
-{
-
-
+namespace Squalr.Engine.Projects.Properties {
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
-    public sealed partial class ProjectSettings : global::System.Configuration.ApplicationSettingsBase
-    {
-
-        private static ProjectSettings defaultInstance = ((ProjectSettings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new ProjectSettings())));
-
-        public static ProjectSettings Default
-        {
-            get
-            {
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "16.5.0.0")]
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
+        
+        private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
+        
+        public static Settings Default {
+            get {
                 return defaultInstance;
             }
         }
-
+        
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("")]
-        public string ProjectRoot
-        {
-            get
-            {
+        public string ProjectRoot {
+            get {
                 return ((string)(this["ProjectRoot"]));
             }
-            set
-            {
+            set {
                 this["ProjectRoot"] = value;
             }
         }

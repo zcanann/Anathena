@@ -1,6 +1,7 @@
 ﻿namespace Squalr.Cli.CommandHandlers.Project
 {
     using CommandLine;
+    using Squalr.Engine.Projects;
     using System;
 
     [Verb("list", HelpText = "List current project items.")]
@@ -9,6 +10,11 @@
         public Int32 Handle()
         {
             Console.WriteLine();
+
+            foreach (String next in ProjectQueryer.GetProjectNames())
+            {
+                Console.WriteLine(next);
+            }
 
             return 0;
         }

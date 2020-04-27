@@ -212,7 +212,6 @@
         protected override UInt64 ResolveAddress()
         {
             UInt64 pointer = MemoryQueryer.Instance.ResolveModule(null, this.ModuleName);
-            Boolean successReading = true;
 
             pointer = pointer.Add(this.ModuleOffset);
 
@@ -232,7 +231,7 @@
                 else
                 {
                     pointer = MemoryReader.Instance.Read<UInt64>(pointer, out successReading);
-                }*/
+                }
 
                 if (pointer == 0 || !successReading)
                 {
@@ -241,6 +240,7 @@
                 }
 
                 pointer = pointer.Add(offset);
+                */
             }
 
             return pointer;

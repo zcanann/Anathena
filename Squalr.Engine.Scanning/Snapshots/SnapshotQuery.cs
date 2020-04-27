@@ -70,7 +70,7 @@
 
             foreach (NormalizedRegion virtualPage in virtualPages)
             {
-                memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Default.Alignment));
+                memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Alignment));
             }
 
             return new Snapshot(process, null, memoryRegions);
@@ -89,15 +89,15 @@
             UInt64 startAddress;
             UInt64 endAddress;
 
-            if (ScanSettings.Default.IsUserMode)
+            if (ScanSettings.IsUserMode)
             {
                 startAddress = 0;
                 endAddress = MemoryQueryer.Instance.GetMaxUsermodeAddress(process);
             }
             else
             {
-                startAddress = ScanSettings.Default.StartAddress;
-                endAddress = ScanSettings.Default.EndAddress;
+                startAddress = ScanSettings.StartAddress;
+                endAddress = ScanSettings.EndAddress;
             }
 
             List<ReadGroup> memoryRegions = new List<ReadGroup>();
@@ -112,7 +112,7 @@
             // Convert each virtual page to a snapshot region
             foreach (NormalizedRegion virtualPage in virtualPages)
             {
-                memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Default.Alignment));
+                memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Alignment));
             }
 
             return new Snapshot(process, null, memoryRegions);
@@ -124,7 +124,7 @@
         /// <returns>The created snapshot.</returns>
         private static Snapshot CreateSnapshotFromModules(Process process, DataTypeBase dataType)
         {
-            IList<ReadGroup> moduleGroups = MemoryQueryer.Instance.GetModules(process).Select(region => new ReadGroup(region.BaseAddress, region.RegionSize, dataType, ScanSettings.Default.Alignment)).ToList();
+            IList<ReadGroup> moduleGroups = MemoryQueryer.Instance.GetModules(process).Select(region => new ReadGroup(region.BaseAddress, region.RegionSize, dataType, ScanSettings.Alignment)).ToList();
             Snapshot moduleSnapshot = new Snapshot(process, null, moduleGroups);
 
             return moduleSnapshot;
@@ -163,7 +163,7 @@
                     continue;
                 }
 
-                memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Default.Alignment));
+                memoryRegions.Add(new ReadGroup(virtualPage.BaseAddress, virtualPage.RegionSize, dataType, ScanSettings.Alignment));
             }
 
             return new Snapshot(process, null, memoryRegions);
@@ -177,22 +177,22 @@
         {
             MemoryTypeEnum result = 0;
 
-            if (ScanSettings.Default.MemoryTypeNone)
+            if (ScanSettings.MemoryTypeNone)
             {
                 result |= MemoryTypeEnum.None;
             }
 
-            if (ScanSettings.Default.MemoryTypePrivate)
+            if (ScanSettings.MemoryTypePrivate)
             {
                 result |= MemoryTypeEnum.Private;
             }
 
-            if (ScanSettings.Default.MemoryTypeImage)
+            if (ScanSettings.MemoryTypeImage)
             {
                 result |= MemoryTypeEnum.Image;
             }
 
-            if (ScanSettings.Default.MemoryTypeMapped)
+            if (ScanSettings.MemoryTypeMapped)
             {
                 result |= MemoryTypeEnum.Mapped;
             }
@@ -208,17 +208,17 @@
         {
             MemoryProtectionEnum result = 0;
 
-            if (ScanSettings.Default.RequiredWrite)
+            if (ScanSettings.RequiredWrite)
             {
                 result |= MemoryProtectionEnum.Write;
             }
 
-            if (ScanSettings.Default.RequiredExecute)
+            if (ScanSettings.RequiredExecute)
             {
                 result |= MemoryProtectionEnum.Execute;
             }
 
-            if (ScanSettings.Default.RequiredCopyOnWrite)
+            if (ScanSettings.RequiredCopyOnWrite)
             {
                 result |= MemoryProtectionEnum.CopyOnWrite;
             }
@@ -234,17 +234,17 @@
         {
             MemoryProtectionEnum result = 0;
 
-            if (ScanSettings.Default.ExcludedWrite)
+            if (ScanSettings.ExcludedWrite)
             {
                 result |= MemoryProtectionEnum.Write;
             }
 
-            if (ScanSettings.Default.ExcludedExecute)
+            if (ScanSettings.ExcludedExecute)
             {
                 result |= MemoryProtectionEnum.Execute;
             }
 
-            if (ScanSettings.Default.ExcludedCopyOnWrite)
+            if (ScanSettings.ExcludedCopyOnWrite)
             {
                 result |= MemoryProtectionEnum.CopyOnWrite;
             }

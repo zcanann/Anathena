@@ -1,6 +1,7 @@
 ﻿namespace Squalr.Cli.CommandHandlers.Project
 {
     using CommandLine;
+    using Squalr.Engine.Projects;
     using System;
 
     [Verb("add", HelpText = "Adds a new project item to the project. This item can come from scan results, or be a new item.")]
@@ -12,7 +13,7 @@
             {
                 Console.WriteLine("[Warn] - Not attached to any process.");
 
-                return 1;
+                return -1;
             }
 
             return 0;
