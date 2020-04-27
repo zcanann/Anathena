@@ -1,15 +1,42 @@
 ﻿namespace Squalr.Engine.Projects
 {
     using Squalr.Engine.Common.Logging;
+    using Squalr.Engine.Projects.Items;
     using System;
+    using System.Collections.Generic;
     using System.IO;
 
     public class Project
     {
-        public Project(String projectFilePath)
+        public Project(String projectFilePathOrName)
         {
-            this.WatchFileSystem(projectFilePath);
+            if (!Path.IsPathRooted(projectFilePathOrName))
+            {
+                projectFilePathOrName = Path.Combine(ProjectSettings.ProjectRoot, projectFilePathOrName);
+            }
+
+            this.FilePath = projectFilePathOrName;
+
+            this.WatchFileSystem(this.FilePath);
+
+            // Debugging
+            this.ProjectItems = new List<ProjectItem>()
+            {
+                new PointerItem()
+            };
         }
+
+        public String FilePath { get; private set; }
+
+        public String Name
+        {
+            get
+            {
+                return ProjectQueryer.ProjectPathToName(this.FilePath);
+            }
+        }
+
+        public IEnumerable<ProjectItem> ProjectItems { get; private set; }
 
         private FileSystemWatcher FileSystemWatcher { get; set; }
 
@@ -18,6 +45,7 @@
             try
             {
                 Directory.CreateDirectory(projectFilePath);
+
                 return new Project(projectFilePath);
             }
             catch (Exception ex)
@@ -27,12 +55,21 @@
             }
         }
 
-        public void Rename(String newProjectName)
+        public void Rename(String newProjectPathOrName)
         {
             try
             {
-                // Directory.Move(oldProjectPath, newProjectPath);
-                // this.WatchFileSystem(newProjectPath);
+                if (!Path.IsPathRooted(newProjectPathOrName))
+                {
+                    newProjectPathOrName = Path.Combine(ProjectSettings.ProjectRoot, newProjectPathOrName);
+                }
+
+                Directory.Move(this.FilePath, newProjectPathOrName);
+
+                this.FilePath = newProjectPathOrName;
+
+
+                this.WatchFileSystem(this.FilePath);
             }
             catch (Exception ex)
             {

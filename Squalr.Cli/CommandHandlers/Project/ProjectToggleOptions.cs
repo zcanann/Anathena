@@ -8,18 +8,15 @@
     {
         public Int32 Handle()
         {
-            if (SessionManager.Session == null)
+            if (SessionManager.Project == null)
             {
-                Console.WriteLine("[Warn] - Not attached to any process.");
+                Console.WriteLine("[Warn] - No project open.");
 
                 return -1;
             }
 
             return 0;
         }
-
-        [Option('a', "addresses", Required = false, HelpText = "Flag indicating that only addresses should be listed.")]
-        public Boolean OnlyAddressess { get; private set; }
     }
     //// End class
 }

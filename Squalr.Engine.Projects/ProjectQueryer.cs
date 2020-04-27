@@ -12,11 +12,25 @@
         {
             try
             {
-                return Directory.EnumerateDirectories(ProjectSettings.ProjectRoot).Select(path => ProjectQueryer.ProcessPath(path));
+                return Directory.EnumerateDirectories(ProjectSettings.ProjectRoot).Select(path => ProjectQueryer.ProjectPathToName(path));
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                Logger.Log(LogLevel.Error, "Error reading project files from disk", ex);
+                Logger.Log(LogLevel.Error, "Error reading project names from disk.", ex);
+
+                return new List<String>();
+            }
+        }
+
+        public static IEnumerable<String> GetProjectPaths()
+        {
+            try
+            {
+                return Directory.EnumerateDirectories(ProjectSettings.ProjectRoot);
+            }
+            catch (Exception ex)
+            {
+                Logger.Log(LogLevel.Error, "Error reading project paths from disk.", ex);
 
                 return new List<String>();
             }
@@ -24,12 +38,35 @@
 
         public static IEnumerable<Project> GetProjects()
         {
-            return ProjectQueryer.GetProjectNames().Select(name => new Project(name));
+            return ProjectQueryer.GetProjectPaths().Select(path => new Project(path));
         }
 
-        private static String ProcessPath(String path)
+        public static String ProjectNameToPath(String projectName)
         {
-            return new DirectoryInfo(path).Name;
+            try
+            {
+                return Path.Combine(ProjectSettings.ProjectRoot, projectName);
+            }
+            catch(Exception ex)
+            {
+                Logger.Log(LogLevel.Error, "Error converting project name to path.", ex);
+
+                return String.Empty;
+            }
+        }
+
+        public static String ProjectPathToName(String path)
+        {
+            try
+            {
+                return new DirectoryInfo(path).Name;
+            }
+            catch(Exception ex)
+            {
+                Logger.Log(LogLevel.Error, "Error converting project path to name.", ex);
+
+                return String.Empty;
+            }
         }
     }
     //// End class

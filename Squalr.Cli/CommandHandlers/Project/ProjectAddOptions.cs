@@ -9,21 +9,15 @@
     {
         public Int32 Handle()
         {
-            if (SessionManager.Session == null)
+            if (SessionManager.Project == null)
             {
-                Console.WriteLine("[Warn] - Not attached to any process.");
+                Console.WriteLine("[Warn] - No project open.");
 
                 return -1;
             }
 
             return 0;
         }
-
-        [Option('a', "addresses", Required = false, HelpText = "Flag indicating that only addresses should be listed.")]
-        public Boolean OnlyAddressess { get; private set; }
-
-        [Value(0, MetaName = "result id", HelpText = "The ID of the address to add from the current scan results.")]
-        public String ProcessTerm { get; set; }
     }
     //// End class
 }

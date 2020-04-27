@@ -1,11 +1,11 @@
-﻿namespace Squalr.Cli.CommandHandlers.Project
+﻿namespace Squalr.Cli.CommandHandlers.Projects
 {
     using CommandLine;
     using Squalr.Engine;
     using System;
     using System.Collections.Generic;
 
-    public class ProjectCommandHandler : ICommandHandler
+    public class ProjectsCommandHandler : ICommandHandler
     {
         public String GetCommandName()
         {
@@ -14,12 +14,12 @@
 
         public void TryHandle(ref Session session, Command command)
         {
-            Parser.Default.ParseArguments<ProjectAddOptions, ProjectRemoveOptions, ProjectListOptions, ProjectToggleOptions>(command.Args)
+            Parser.Default.ParseArguments<ProjectsNewOptions, ProjectsDeleteOptions, ProjectsListOptions, ProjectsOpenOptions>(command.Args)
                 .MapResult(
-                    (ProjectAddOptions options) => options.Handle(),
-                    (ProjectRemoveOptions options) => options.Handle(),
-                    (ProjectListOptions options) => options.Handle(),
-                    (ProjectToggleOptions options) => options.Handle(),
+                    (ProjectsNewOptions options) => options.Handle(),
+                    (ProjectsDeleteOptions options) => options.Handle(),
+                    (ProjectsListOptions options) => options.Handle(),
+                    (ProjectsOpenOptions options) => options.Handle(),
                     errs => 1
                 );
 
@@ -30,8 +30,8 @@
         {
             return new List<String>()
             {
-                "proj",
-                "project"
+                "projs",
+                "projects"
             };
         }
     }

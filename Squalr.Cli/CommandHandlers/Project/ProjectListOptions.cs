@@ -2,6 +2,7 @@
 {
     using CommandLine;
     using Squalr.Engine.Projects;
+    using Squalr.Engine.Projects.Items;
     using System;
 
     [Verb("list", HelpText = "List current project items.")]
@@ -9,12 +10,25 @@
     {
         public Int32 Handle()
         {
+            if (SessionManager.Project == null)
+            {
+                Console.WriteLine("[Warn] - No project open.");
+
+                return -1;
+            }
+
             Console.WriteLine();
 
-            foreach (String next in ProjectQueryer.GetProjectNames())
+            Console.WriteLine("------------------------------------------------------------------");
+            Console.WriteLine("Enabled " + "\t|\t" + "Name" + "\t|\t" + "Address" + "\t|\t" + "Value" + "\t|\t" + "Description");
+            Console.WriteLine("------------------------------------------------------------------");
+
+            foreach (ProjectItem next in SessionManager.Project.ProjectItems)
             {
-                Console.WriteLine(next);
+                Console.WriteLine((next.IsEnabled ? "X" : "") + "\t|\t" + next.Name + "\t|\t" + "TODO" + "\t|\t" + "TODO" + "\t|\t" + next.Description);
             }
+
+            Console.WriteLine();
 
             return 0;
         }

@@ -21,7 +21,7 @@
 
             if (String.IsNullOrWhiteSpace(this.ProcessTerm))
             {
-                Console.WriteLine("[Error] - Please specify a process id.");
+                Console.WriteLine("[Error] - Please specify a process term.");
 
                 return -1;
             }
